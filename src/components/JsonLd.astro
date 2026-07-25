@@ -1,0 +1,14 @@
+---
+import { SITE } from '../data/site';
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.description,
+  sameAs: [SITE.linkedin, SITE.hubsellUrl, SITE.kadancoUrl],
+  knowsLanguage: ['de', 'nl', 'en'],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(org)} />

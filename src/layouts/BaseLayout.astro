@@ -1,0 +1,99 @@
+---
+// <head>, fonts, meta/OG, nav + footer. Every page uses this (directly or
+// via PageLayout / LegalLayout). Same role as hubsell's BaseLayout.
+import '@fontsource-variable/instrument-sans';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { SITE } from '../data/site';
+import { pageTitle } from '../data/seo';
+import { translatedRoutes, defaultLocale } from '../i18n/ui';
+import { delocalizePath, englishPathFor, getLangFromUrl, localizeRoute } from '../i18n/utils';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const { title, description = SITE.description, noindex = false } = Astro.props;
+const fullTitle = pageTitle(title);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// hreflang alternates: English always; a locale only once the current
+// path is listed as translated in src/i18n/ui.ts.
+const currentLocale = getLangFromUrl(Astro.url);
+const basePath = englishPathFor(delocalizePath(Astro.url.pathname), currentLocale);
+const alternates: { lang: string; href: URL }[] = [
+  { lang: defaultLocale, href: new URL(basePath, Astro.site) },
+  ...Object.entries(translatedRoutes)
+    .filter(([loc, routes]) =>
+      routes.includes(localizeRoute(basePath, loc as never).replace(`/${loc}`, '') || '/')
+    )
+    .map(([loc]) => ({
+      lang: loc,
+      href: new URL(localizeRoute(basePath, loc as never), Astro.site),
+    })),
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {noindex && <meta name="robots" content="noindex" />}
+    {alternates.map((a) => (
+      <link rel="alternate" hreflang={a.lang} href={a.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(basePath, Astro.site)} />
+    <script is:inline>
+      // No-flash dark mode: apply stored/system theme before first paint.
+      (() => {
+        try {
+          const stored = localStorage.getItem('theme');
+          const dark =
+            stored === 'dark' ||
+            (!stored && matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) document.documentElement.classList.add('dark');
+        } catch {}
+      })();
+    </script>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <JsonLd />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <style>
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: 0.5rem;
+        background: var(--ink);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius);
+        z-index: 100;
+      }
+      .skip-link:focus { left: 0.5rem; }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+---
+// Layout for markdown legal pages (privacy.md, terms.md, legal-notice.md).
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  frontmatter: { title: string; description?: string };
+}
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <article class="section">
+    <div class="container prose">
+      <h1>{frontmatter.title}</h1>
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

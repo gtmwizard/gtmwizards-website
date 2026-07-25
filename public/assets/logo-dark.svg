@@ -1,0 +1,5 @@
+<!-- PLACEHOLDER wordmark for dark backgrounds. Replace with the real
+     brand file in R2 at /assets/logo-dark.svg (same path). -->
+<svg xmlns="http://www.w3.org/2000/svg" width="170" height="28" viewBox="0 0 170 28" role="img" aria-label="gtmWizards">
+  <text x="0" y="21" font-family="Instrument Sans, system-ui, sans-serif" font-size="20" font-weight="700" letter-spacing="-0.4" fill="#fbfbfa">gtm<tspan fill="#34d399">Wizards</tspan></text>
+</svg>

@@ -1,0 +1,26 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { SITE } from '../data/site';
+---
+
+<PageLayout
+  title="Contact"
+  eyebrow="Contact"
+  heading="Write to us"
+  sub="Tell us what you sell and into which market. A senior operator — not an autoresponder — replies within one business day."
+  description="Contact gtmWizards. Tell us your market and we'll tell you honestly whether outbound can work there."
+>
+  <section class="section section--tight">
+    <div class="container">
+      <ContactForm />
+      <p class="direct">
+        Or directly: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+      </p>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .direct { margin-top: 1.4rem; color: var(--steel); font-size: 0.95rem; }
+</style>

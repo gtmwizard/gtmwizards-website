@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const terms = await getCollection('glossary');
+  return terms.map((term) => ({
+    params: { slug: term.id.replace(/\.md$/, '') },
+    props: { term },
+  }));
+}
+
+const { term } = Astro.props;
+const { Content } = await render(term);
+---
+
+<BaseLayout title={term.data.term} description={term.data.description}>
+  <article class="section">
+    <div class="container prose">
+      <p class="eyebrow">Glossary</p>
+      <h1>{term.data.term}</h1>
+      <Content />
+      <p><a href="/glossary">← All terms</a></p>
+    </div>
+  </article>
+</BaseLayout>

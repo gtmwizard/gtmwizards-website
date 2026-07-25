@@ -1,0 +1,43 @@
+---
+// Light/dark toggle, hubsell style: icon + text label. Pairs with the
+// no-flash script in BaseLayout <head>.
+---
+
+<button id="theme-toggle" class="ttoggle" type="button">
+  <svg class="ttoggle__moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+  <svg class="ttoggle__sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  <span class="ttoggle__label ttoggle__label--dark">Dark mode</span>
+  <span class="ttoggle__label ttoggle__label--light">Light mode</span>
+</button>
+
+<script>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const dark = document.documentElement.classList.toggle('dark');
+    try {
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    } catch {}
+  });
+</script>
+
+<style>
+  .ttoggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.2rem 0;
+  }
+  .ttoggle:hover { opacity: 0.75; }
+  /* light mode: moon + "Dark mode" (what you switch TO) */
+  .ttoggle__sun, .ttoggle__label--light { display: none; }
+  :global(html.dark) .ttoggle__moon,
+  :global(html.dark) .ttoggle__label--dark { display: none; }
+  :global(html.dark) .ttoggle__sun,
+  :global(html.dark) .ttoggle__label--light { display: inline; }
+</style>

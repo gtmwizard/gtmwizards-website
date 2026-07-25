@@ -1,0 +1,24 @@
+---
+import { channels } from '../data/home-content';
+---
+
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">{channels.eyebrow}</p>
+    <h2>{channels.heading}</h2>
+    <p class="lede">{channels.sub}</p>
+    <div class="grid grid--3 ch">
+      {channels.items.map((item) => (
+        <article class="card">
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ch { margin-top: 1.6rem; }
+  .ch .card p { margin-bottom: 0; color: var(--ink-soft); }
+</style>

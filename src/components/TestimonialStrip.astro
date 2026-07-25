@@ -1,0 +1,34 @@
+---
+// Renders nothing until testimonials exist in src/data/testimonials.ts.
+// We do not fake social proof for a new brand.
+import { testimonials } from '../data/testimonials';
+---
+
+{testimonials.length > 0 && (
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Client results</p>
+      <div class="grid grid--3">
+        {testimonials.map((t) => (
+          <figure class="card">
+            {t.metric && (
+              <p class="metric">
+                <strong>{t.metric.value}</strong> {t.metric.label}
+              </p>
+            )}
+            <blockquote>{t.quote}</blockquote>
+            <figcaption>
+              {t.name} · {t.role}, {t.company}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  blockquote { margin: 0 0 0.8rem; color: var(--ink-soft); }
+  figcaption { font-size: 0.88rem; color: var(--steel); }
+  .metric strong { font-family: var(--font-display); font-size: 1.6rem; color: var(--brand-strong); }
+</style>

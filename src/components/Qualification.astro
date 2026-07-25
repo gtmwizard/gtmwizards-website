@@ -1,0 +1,37 @@
+---
+import { qualification } from '../data/home-content';
+---
+
+<section class="section section--raised">
+  <div class="container qual">
+    <div>
+      <p class="eyebrow">{qualification.eyebrow}</p>
+      <h2>{qualification.heading}</h2>
+      <p class="lede">{qualification.sub}</p>
+    </div>
+    <div class="spec">
+      <p class="spec__head">Meeting checklist</p>
+      {qualification.checks.map((c) => (
+        <div class="spec__row">
+          <span class="spec__value" style="text-align:left; font-weight:500;">
+            <span class={`dot ${c.pass ? 'dot--ok' : 'dot--skip'}`} aria-hidden="true"></span>
+            {c.label}
+          </span>
+          <span class="spec__label">{c.pass ? 'Pass' : 'Hold'}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .qual {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  @media (max-width: 56rem) {
+    .qual { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('insights', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<PageLayout
+  title="Insights"
+  eyebrow="Insights"
+  heading="Notes from the outbound trenches"
+  sub="What actually works in European traditional industries — written by the operators, not a content agency."
+  description="gtmWizards insights: practical writing on outbound for traditional industries in DACH, Benelux, and beyond."
+>
+  <section class="section section--tight">
+    <div class="container posts">
+      {posts.map((post) => (
+        <a class="card post" href={`/insights/${post.id.replace(/\.md$/, '')}`}>
+          <p class="post__date">
+            {post.data.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .posts { display: grid; gap: 1.1rem; max-width: 46rem; }
+  .post { color: var(--ink); display: block; }
+  .post:hover { text-decoration: none; border-color: var(--brand); }
+  .post p:last-child { margin-bottom: 0; color: var(--ink-soft); }
+  .post__date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+</style>

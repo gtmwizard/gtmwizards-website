@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ProofStrip from '../components/ProofStrip.astro';
+import PillarGrid from '../components/PillarGrid.astro';
+import GraduationPath from '../components/GraduationPath.astro';
+import Channels from '../components/Channels.astro';
+import Qualification from '../components/Qualification.astro';
+import Timeline from '../components/Timeline.astro';
+import TestimonialStrip from '../components/TestimonialStrip.astro';
+import Faq from '../components/Faq.astro';
+import CtaSection from '../components/CtaSection.astro';
+import { homeCta } from '../data/home-content';
+---
+
+<BaseLayout>
+  <Hero />
+  <ProofStrip />
+  <PillarGrid />
+  <GraduationPath />
+  <Channels />
+  <Qualification />
+  <Timeline />
+  <TestimonialStrip />
+  <Faq />
+  <CtaSection
+    tone="dark"
+    heading={homeCta.heading}
+    sub={homeCta.sub}
+    primaryLabel={homeCta.primaryCta.label}
+    primaryHref={homeCta.primaryCta.href}
+    secondaryLabel={homeCta.secondaryCta.label}
+    secondaryHref={homeCta.secondaryCta.href}
+  />
+</BaseLayout>

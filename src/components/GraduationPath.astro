@@ -1,0 +1,77 @@
+---
+// The signature section: the three-stage handover rail. This is the one
+// claim no competitor can copy, so it gets the most deliberate treatment.
+import { graduation } from '../data/home-content';
+---
+
+<section class="section section--dark" id="graduate">
+  <div class="container">
+    <p class="eyebrow">{graduation.eyebrow}</p>
+    <h2>{graduation.heading}</h2>
+    <p class="lede">{graduation.sub}</p>
+
+    <ol class="rail">
+      {graduation.stages.map((stage, i) => (
+        <li class="rail__stage">
+          <span class="rail__marker" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{stage.label}</h3>
+          <p>{stage.text}</p>
+        </li>
+      ))}
+    </ol>
+
+    <p class="rail__note">{graduation.note}</p>
+  </div>
+</section>
+
+<style>
+  .rail {
+    list-style: none;
+    margin: 2.2rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.1rem;
+    position: relative;
+  }
+  .rail::before {
+    content: '';
+    position: absolute;
+    top: 1.05rem;
+    left: 2rem;
+    right: 2rem;
+    height: 1px;
+    background: var(--line);
+  }
+  .rail__stage {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.4rem;
+    position: relative;
+  }
+  .rail__marker {
+    display: inline-grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    margin-bottom: 0.9rem;
+  }
+  .rail__stage p { margin-bottom: 0; color: var(--ink-soft); font-size: 0.97rem; }
+  .rail__note {
+    margin-top: 1.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    color: var(--brand-strong);
+  }
+  @media (max-width: 56rem) {
+    .rail { grid-template-columns: 1fr; }
+    .rail::before { display: none; }
+  }
+</style>

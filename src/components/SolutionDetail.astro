@@ -1,0 +1,36 @@
+---
+import type { Solution } from '../data/solutions-content';
+import CtaSection from './CtaSection.astro';
+
+interface Props { solution: Solution }
+const { solution } = Astro.props;
+---
+
+<header class="section gridpaper sol-hero">
+  <div class="container">
+    <p class="eyebrow">Solutions · {solution.navLabel}</p>
+    <h1>{solution.hero.heading}</h1>
+    <p class="lede">{solution.hero.sub}</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container grid grid--3">
+    {solution.sections.map((s) => (
+      <article class="card">
+        <h3>{s.title}</h3>
+        <p>{s.text}</p>
+      </article>
+    ))}
+  </div>
+</section>
+
+<CtaSection
+  heading="See it applied to your market"
+  sub="A strategy call is a working session with a senior operator, not a sales pitch."
+/>
+
+<style>
+  .sol-hero { border-bottom: 1px solid var(--line-soft); }
+  .card p { margin-bottom: 0; color: var(--ink-soft); }
+</style>

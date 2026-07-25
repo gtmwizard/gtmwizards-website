@@ -1,0 +1,59 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+import { SITE } from '../data/site';
+---
+
+<PageLayout
+  title="About"
+  eyebrow="About"
+  heading="One ownership. Tech, data, and 15+ years of know-how."
+  sub="gtmWizards is founded and owned by the people behind hubsell and Kadanco. That is not a partnership or an integration — it is one house, and everything a modern outbound engine needs lives inside it."
+  description="gtmWizards is owned by the founders of hubsell and Kadanco — outbound technology, B2B data, and senior European sales expertise under one roof."
+>
+  <section class="section section--tight">
+    <div class="container prose">
+      <h2>Why we started gtmWizards</h2>
+      <p>
+        After 15+ years building outbound technology and running campaigns
+        across Europe, we kept seeing the same two failure modes: tools that
+        demand expertise most teams don't have, and agencies that rent their
+        tooling, hide their data sources, and design engagements you can
+        never leave.
+      </p>
+      <p>
+        gtmWizards is our answer to both. We run outbound as a fully managed
+        service — but on <a href={SITE.hubsellUrl}>hubsell</a>, the platform
+        we own, with data from <a href={SITE.kadancoUrl}>Kadanco</a>, the
+        data company we own. Nothing is a black box, and nothing is designed
+        to trap you.
+      </p>
+      <h2>What we believe</h2>
+      <ul>
+        <li>
+          <strong>Proof over claims.</strong> Our technology is a public
+          product you can demo, not a slide in a pitch deck.
+        </li>
+        <li>
+          <strong>Seniors do the work.</strong> Campaigns are planned and
+          run by experienced operators. We never sell seniority and deliver
+          juniors.
+        </li>
+        <li>
+          <strong>Language is strategy.</strong> German, Dutch, and English —
+          natively, because traditional European industries reply to people
+          who sound like they belong.
+        </li>
+        <li>
+          <strong>The best agency makes itself optional.</strong> Your data
+          and campaigns live in your hubsell workspace from day one. When
+          you're ready to in-source, we hand over the keys.
+        </li>
+      </ul>
+    </div>
+  </section>
+  <CtaSection
+    heading="Talk to the people who will actually run your campaigns"
+    sub="No SDR farm, no account-manager relay. A strategy call here is with a founder or senior operator."
+  />
+</PageLayout>

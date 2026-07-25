@@ -1,0 +1,24 @@
+---
+// Simple inner-page layout: page header + slotted content.
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  heading?: string;
+  sub?: string;
+  eyebrow?: string;
+}
+const { title, description, heading = title, sub, eyebrow } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="section section--tight">
+    <div class="container">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1>{heading}</h1>
+      {sub && <p class="lede">{sub}</p>}
+    </div>
+  </header>
+  <slot />
+</BaseLayout>

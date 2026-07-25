@@ -1,0 +1,24 @@
+---
+import { proofStrip } from '../data/home-content';
+---
+
+<section class="section section--raised">
+  <div class="container">
+    <p class="eyebrow">Provable, not claimed</p>
+    <h2>{proofStrip.heading}</h2>
+    <div class="grid grid--3 proof">
+      {proofStrip.items.map((item) => (
+        <article class="card">
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+          <a class="proof__link" href={item.href}>{item.linkLabel} →</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .proof { margin-top: 1.6rem; }
+  .proof__link { font-weight: 600; font-size: 0.94rem; }
+</style>

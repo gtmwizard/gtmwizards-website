@@ -1,0 +1,53 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { SITE } from '../data/site';
+---
+
+<PageLayout
+  title="Book a call"
+  eyebrow="Strategy call"
+  heading="A working session, not a pitch"
+  sub="Thirty minutes with a senior operator. We'll pressure-test whether outbound can work in your market and language — and tell you honestly if we're not the right fit."
+  description="Apply for a gtmWizards strategy call — a working session with a senior operator on your market, ICP, and outbound potential."
+>
+  <section class="section section--tight">
+    <div class="container book">
+      <div class="card book__what">
+        <p class="eyebrow">What we'll cover</p>
+        <ul>
+          <li>Your ICP and whether our data reaches it</li>
+          <li>Which languages and channels fit your buyers</li>
+          <li>What a pilot would look like — scope, timeline, price</li>
+          <li>Whether in-sourcing later should shape the setup now</li>
+        </ul>
+      </div>
+      <div class="book__embed">
+        <!--
+          TODO: replace with the real scheduling embed once the booking
+          link is live. Cal.com embed snippet goes here; the button below
+          works either way.
+        -->
+        <a class="btn btn--primary" href={SITE.bookingUrl} rel="noopener">
+          Open the booking calendar
+        </a>
+        <p class="book__alt">
+          Prefer email? <a href="/contact">Use the contact form</a> or write to
+          <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .book {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .book__what ul { padding-left: 1.2rem; margin: 0; }
+  .book__what li { margin-bottom: 0.5rem; }
+  .book__alt { margin-top: 1rem; font-size: 0.94rem; color: var(--steel); }
+  @media (max-width: 56rem) { .book { grid-template-columns: 1fr; } }
+</style>

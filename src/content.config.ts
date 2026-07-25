@@ -1,0 +1,24 @@
+// Content collections: long-form content lives in markdown, typed here.
+// Same role as hubsell's src/content/ directories.
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+const insights = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/insights' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.coerce.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+const glossary = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/glossary' }),
+  schema: z.object({
+    term: z.string(),
+    description: z.string(),
+  }),
+});
+
+export const collections = { insights, glossary };

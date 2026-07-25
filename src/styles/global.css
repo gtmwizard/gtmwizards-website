@@ -1,0 +1,342 @@
+/* ==========================================================================
+   gtmWizards — global styles & design tokens
+   Theme: shadcn preset b2qMGARRY
+     base color: olive · theme: emerald · style: rhea
+     font: Instrument Sans · radius: 0.625rem (default) · icons: lucide
+   Token values extracted verbatim from shadcn-ui/ui
+   (apps/v4/registry/themes.ts) — olive scaffold with emerald overrides.
+   Layer 1: shadcn semantic tokens (:root / .dark) — 1:1 with the preset,
+            so a future shadcn/Tailwind adoption maps directly.
+   Layer 2: site aliases (--paper, --ink, …) that all components consume.
+   Fonts are self-hosted (@fontsource) for GDPR compliance in DACH.
+   ========================================================================== */
+
+:root {
+  /* ---- shadcn tokens: olive base (light) ---- */
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.153 0.006 107.1);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.153 0.006 107.1);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.153 0.006 107.1);
+  /* emerald theme overrides */
+  --primary: oklch(0.508 0.118 165.612);
+  --primary-foreground: oklch(0.979 0.021 166.113);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  /* olive continues */
+  --muted: oklch(0.966 0.005 106.5);
+  --muted-foreground: oklch(0.58 0.031 107.3);
+  --accent: oklch(0.966 0.005 106.5);
+  --accent-foreground: oklch(0.228 0.013 107.4);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.93 0.007 106.5);
+  --input: oklch(0.93 0.007 106.5);
+  --ring: oklch(0.737 0.021 106.9);
+  /* emerald chart ramp */
+  --chart-1: oklch(0.845 0.143 164.978);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.596 0.145 163.225);
+  --chart-4: oklch(0.508 0.118 165.612);
+  --chart-5: oklch(0.432 0.095 166.913);
+
+  /* ---- radius scale (shadcn convention) ---- */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+
+  /* ---- fonts (preset: instrument-sans; mono kept for spec labels) ---- */
+  --font-sans: 'Instrument Sans Variable', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* ---- site aliases consumed by components ---- */
+  --paper: var(--background);
+  --paper-raised: var(--card);
+  --surface-alt: var(--muted); /* raised sections */
+  --ink: var(--foreground);
+  --ink-soft: oklch(0.286 0.016 107.4); /* olive chart-5 */
+  --steel: var(--muted-foreground);
+  --line: var(--border);
+  --line-soft: oklch(0.962 0.006 106.5);
+  --brand: var(--primary);
+  --brand-strong: oklch(0.432 0.095 166.913); /* emerald hover */
+  --brand-tint: oklch(0.965 0.055 166.113); /* emerald wash */
+  --ok: oklch(0.596 0.145 163.225);
+  --skip: var(--destructive);
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
+  --max-w: 72rem;
+}
+
+/* Dark mode: toggled by adding class="dark" on <html> (see ThemeToggle
+   + the no-flash script in BaseLayout). Olive dark + emerald dark. */
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.153 0.006 107.1);
+  --foreground: oklch(0.988 0.003 106.5);
+  --card: oklch(0.228 0.013 107.4);
+  --card-foreground: oklch(0.988 0.003 106.5);
+  --primary: oklch(0.432 0.095 166.913);
+  --primary-foreground: oklch(0.979 0.021 166.113);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.286 0.016 107.4);
+  --muted-foreground: oklch(0.737 0.021 106.9);
+  --accent: oklch(0.286 0.016 107.4);
+  --accent-foreground: oklch(0.988 0.003 106.5);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.58 0.031 107.3);
+  /* dark values for literal-valued site aliases (var()-based aliases
+     follow the tokens above automatically) */
+  --ink-soft: oklch(0.86 0.012 106.9);
+  --line-soft: oklch(1 0 0 / 7%);
+  --brand-strong: oklch(0.696 0.17 162.48); /* lighter emerald on dark */
+  --brand-tint: oklch(0.262 0.051 172.552);
+  --ok: oklch(0.696 0.17 162.48);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  margin: 0 0 0.6em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.4rem, 5.2vw, 3.8rem); }
+h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); }
+h3 { font-size: clamp(1.2rem, 2vw, 1.4rem); font-weight: 600; letter-spacing: -0.01em; }
+
+p { margin: 0 0 1em; }
+
+a { color: var(--brand-strong); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+img, svg { max-width: 100%; height: auto; }
+
+/* ---------- layout primitives ---------- */
+
+.container {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: clamp(1.1rem, 4vw, 2rem);
+}
+
+.section { padding-block: clamp(3.5rem, 8vw, 6rem); }
+.section--tight { padding-block: clamp(2.2rem, 5vw, 3.5rem); }
+.section--raised { background: var(--surface-alt); border-block: 1px solid var(--line-soft); }
+
+/* ---------- contrast sections ----------
+   Light mode: olive-dark bands on the white page (strong light/dark
+   rhythm). Dark mode: the same bands become "less dark" elevated
+   surfaces, so contrast comes from dark vs less-dark. Child components
+   restyle automatically because they consume the remapped variables. */
+.section--dark {
+  background: oklch(0.153 0.006 107.1);
+  color: oklch(0.988 0.003 106.5);
+  --ink: oklch(0.988 0.003 106.5);
+  --ink-soft: oklch(0.86 0.012 106.9);
+  --steel: oklch(0.737 0.021 106.9);
+  --card: oklch(0.228 0.013 107.4);
+  --paper: oklch(0.153 0.006 107.1);
+  --paper-raised: var(--card);
+  --surface-alt: oklch(0.19 0.008 107.2);
+  --line: oklch(1 0 0 / 12%);
+  --line-soft: oklch(1 0 0 / 7%);
+  --input: oklch(1 0 0 / 15%);
+  --brand-strong: oklch(0.696 0.17 162.48);
+  --brand-tint: oklch(0.262 0.051 172.552);
+  --ok: oklch(0.696 0.17 162.48);
+}
+html.dark .section--dark {
+  background: oklch(0.21 0.011 107.2);
+  --paper: oklch(0.21 0.011 107.2);
+  --card: oklch(0.262 0.015 107.4);
+  --paper-raised: var(--card);
+  --surface-alt: oklch(0.24 0.013 107.3);
+}
+
+/* Mono eyebrow with a trailing rule — the datasheet label */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 1.1rem;
+}
+.eyebrow::after {
+  content: '';
+  flex: 1;
+  max-width: 8rem;
+  height: 1px;
+  background: var(--line);
+}
+
+.lede {
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  color: var(--ink-soft);
+  max-width: 46rem;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1;
+  padding: 0.85rem 1.35rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
+}
+.btn:hover { text-decoration: none; }
+.btn:active { transform: translateY(1px); }
+
+.btn--primary { background: var(--primary); color: var(--primary-foreground); }
+.btn--primary:hover { background: var(--brand-strong); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn--ghost:hover { border-color: var(--ring); background: var(--accent); }
+
+/* ---------- cards & grids ---------- */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem;
+}
+
+.grid { display: grid; gap: 1.1rem; }
+.grid--2 { grid-template-columns: repeat(2, 1fr); }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+.grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 60rem) {
+  .grid--3, .grid--4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 40rem) {
+  .grid--2, .grid--3, .grid--4 { grid-template-columns: 1fr; }
+}
+
+/* ---------- spec table (the signature element) ---------- */
+
+.spec {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 45px -30px oklch(0.153 0.006 107.1 / 0.35);
+}
+.spec__head {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--steel);
+  padding: 0.8rem 1.2rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-alt);
+}
+.spec__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.72rem 1.2rem;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 0.94rem;
+}
+.spec__row:last-child { border-bottom: 0; }
+.spec__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--steel);
+  padding-top: 0.2rem;
+  flex-shrink: 0;
+}
+.spec__value { text-align: right; font-weight: 550; }
+
+.dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  margin-right: 0.45rem;
+  vertical-align: 0.05rem;
+}
+.dot--live { background: var(--ok); animation: pulse 2s ease-in-out infinite; }
+.dot--ok { background: var(--ok); }
+.dot--skip { background: var(--skip); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .dot--live { animation: none; }
+  * { transition-duration: 0.01ms !important; }
+}
+
+/* ---------- fine grid backdrop (hero) ---------- */
+
+.gridpaper {
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ---------- prose (legal & long-form pages) ---------- */
+
+.prose { max-width: 44rem; }
+.prose h2 { font-size: 1.5rem; margin-top: 2.2em; }
+.prose h3 { font-size: 1.15rem; margin-top: 1.8em; }
+.prose ul { padding-left: 1.2rem; }
+.prose li { margin-bottom: 0.4em; }

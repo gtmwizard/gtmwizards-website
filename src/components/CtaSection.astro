@@ -1,0 +1,51 @@
+---
+interface Props {
+  heading: string;
+  tone?: 'base' | 'dark';
+  sub?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+const {
+  heading,
+  tone = 'base',
+  sub,
+  primaryLabel = 'Apply for a strategy call',
+  primaryHref = '/book-a-call',
+  secondaryLabel,
+  secondaryHref,
+} = Astro.props;
+---
+
+<section class:list={['section', { 'section--dark': tone === 'dark' }]}>
+  <div class="container">
+    <div class="cta gridpaper">
+      <h2>{heading}</h2>
+      {sub && <p class="lede">{sub}</p>}
+      <div class="cta__actions">
+        <a class="btn btn--primary" href={primaryHref}>{primaryLabel}</a>
+        {secondaryLabel && secondaryHref && (
+          <a class="btn btn--ghost" href={secondaryHref}>{secondaryLabel}</a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(2rem, 5vw, 3.5rem);
+    background-color: var(--card);
+    text-align: left;
+  }
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.4rem;
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+const terms = (await getCollection('glossary')).sort((a, b) =>
+  a.data.term.localeCompare(b.data.term)
+);
+---
+
+<PageLayout
+  title="Glossary"
+  eyebrow="Glossary"
+  heading="Outbound, defined properly"
+  sub="Short, honest definitions of the terms this industry likes to inflate."
+  description="The gtmWizards outbound glossary: ICP, deliverability, multichannel outreach, and more — defined without the hype."
+>
+  <section class="section section--tight">
+    <div class="container grid grid--2">
+      {terms.map((t) => (
+        <a class="card term" href={`/glossary/${t.id.replace(/\.md$/, '')}`}>
+          <h3>{t.data.term}</h3>
+          <p>{t.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .term { color: var(--ink); display: block; }
+  .term:hover { text-decoration: none; border-color: var(--brand); }
+  .term p { margin-bottom: 0; color: var(--ink-soft); font-size: 0.96rem; }
+</style>

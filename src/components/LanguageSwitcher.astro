@@ -1,0 +1,44 @@
+---
+// hubsell-style locale switcher: live locales link to the localized path,
+// upcoming locales render as "Soon". Shown in the footer.
+import { locales, localeLabels, liveLocales, defaultLocale } from '../i18n/ui';
+import { getLangFromUrl, delocalizePath, englishPathFor, localizeRoute } from '../i18n/utils';
+
+const current = getLangFromUrl(Astro.url);
+const englishPath = englishPathFor(delocalizePath(Astro.url.pathname), current);
+---
+
+<nav class="lang" aria-label="Language">
+  {locales.map((loc) =>
+    liveLocales[loc] || loc === defaultLocale ? (
+      <a
+        href={localizeRoute(englishPath, loc)}
+        aria-current={loc === current ? 'true' : undefined}
+        class:list={['lang__item', { 'lang__item--active': loc === current }]}
+      >
+        {localeLabels[loc]}
+      </a>
+    ) : (
+      <span class="lang__item lang__item--soon" title="Coming soon">
+        {localeLabels[loc]} <small>soon</small>
+      </span>
+    )
+  )}
+</nav>
+
+<style>
+  .lang {
+    display: inline-flex;
+    gap: 0.9rem;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+  .lang__item--active { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .lang__item--soon { opacity: 0.55; cursor: default; }
+  .lang__item small {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+</style>

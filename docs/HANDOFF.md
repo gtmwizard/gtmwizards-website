@@ -78,6 +78,18 @@ launch (changing slugs later means permanent redirects).
 5. Add `_redirects` entries from Astro's auto fallback stubs at English
    slugs (`/de/solutions/*`) to the translated URLs.
 
+## Repository & deployment
+
+- GitHub: https://github.com/gtmwizard/gtmwizards-website (branch `main`).
+- Hosting: Cloudflare Pages connected to the repo — every push to `main`
+  builds and deploys production; pushes to other branches create preview
+  deployments with unique URLs.
+- Pages build settings: framework preset **Astro**, build command
+  `npm run build`, output directory `dist`. Node version can be pinned
+  with an `NODE_VERSION` env var if builds ever drift from local.
+- The contact form only works on Pages (it is a Pages Function), not in
+  `npm run dev`. Test it on a preview deployment.
+
 ## Environment variables (Cloudflare Pages dashboard)
 
 | Var                  | Purpose                                   |

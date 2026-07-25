@@ -43,6 +43,26 @@ Rules:
 5. No `cd` commands, no `sudo`, no `git` unless explicitly relevant.
 6. After the block, at most 1–2 sentences on what to verify.
 
+## Git workflow
+
+The repo lives at https://github.com/gtmwizard/gtmwizards-website and
+auto-deploys to Cloudflare Pages on push to `main`.
+
+After extracting each tarball, the update ritual is:
+
+```
+git add -A
+git commit -m "Drop <YYYYMMDD>-<N> from Claude"
+git push
+```
+
+Rules for Claude:
+- Remind about the commit step when delivering a drop, but keep the
+  extract commands and the git commands in SEPARATE blocks (extraction
+  must stay pastable on its own).
+- Never include `git push --force` or history rewrites in instructions.
+- Assume pushes to `main` deploy to production immediately.
+
 ## Project conventions
 
 - All copy lives in `src/data/*.ts` — components are dumb renderers.

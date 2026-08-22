@@ -1,10 +1,10 @@
 // Cloudflare Pages Function: POST /api/contact
-// Same pattern as hubsell's functions/api/subscribe.ts — the static site
+// Same pattern as hubsell's functions/api/subscribe.ts. The static site
 // never holds provider credentials; they live in Pages env vars.
 //
 // Env vars to set in the Cloudflare Pages dashboard:
-//   PLUNK_API_KEY   — secret key for Plunk (or swap the provider below)
-//   CONTACT_TO      — inbox that receives submissions, e.g. hello@gtmwizards.com
+//   PLUNK_API_KEY:  secret key for Plunk (or swap the provider below)
+//   CONTACT_TO:     inbox that receives submissions, e.g. hello@gtmwizards.com
 
 interface Env {
   PLUNK_API_KEY?: string;
@@ -47,11 +47,11 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     },
     body: JSON.stringify({
       to: env.CONTACT_TO,
-      subject: `gtmwizards.com contact — ${name}${company ? ` (${company})` : ''}`,
+      subject: `gtmwizards.com contact from ${name}${company ? ` (${company})` : ''}`,
       body: [
         `Name: ${name}`,
         `Email: ${email}`,
-        `Company: ${company || '—'}`,
+        `Company: ${company || 'not given'}`,
         '',
         message,
       ].join('\n'),

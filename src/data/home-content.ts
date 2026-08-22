@@ -5,12 +5,12 @@ import { SITE } from './site';
 export const hero = {
   eyebrow: 'Outbound for traditional industries · DE / NL / EN',
   heading: 'Qualified meetings with buyers who ignore everyone else.',
-  sub: `We run your entire outbound — lists, messaging, email, calling, LinkedIn — for companies selling into manufacturing, logistics, industrial and other hard-to-crack markets across DACH, Benelux, and beyond. In the buyer's own language, on technology we own and you can inspect.`,
+  sub: `We run your entire outbound (lists, messaging, email, calling, LinkedIn) for companies selling into manufacturing, logistics, industrial and other hard-to-crack markets across DACH, Benelux, and beyond. In the buyer's own language, on technology we own and you can inspect.`,
   primaryCta: { label: 'Apply for a strategy call', href: '/book-a-call' },
   secondaryCta: { label: 'How the handover works', href: '/solutions/platform-handover' },
 } as const;
 
-// The "datasheet" card next to the hero — a snapshot of a running campaign.
+// The "datasheet" card next to the hero, a snapshot of a running campaign.
 export const heroSpec = {
   title: 'Campaign datasheet',
   rows: [
@@ -20,7 +20,7 @@ export const heroSpec = {
     { label: 'Channels', value: 'Email · Phone · LinkedIn' },
     { label: 'Data source', value: 'Kadanco + custom research' },
     { label: 'Engine', value: 'hubsell' },
-    { label: 'Status', value: 'Live — day 6', live: true },
+    { label: 'Status', value: 'Live, day 6', live: true },
   ],
 } as const;
 
@@ -29,7 +29,7 @@ export const proofStrip = {
   items: [
     {
       title: 'hubsell',
-      text: 'Every campaign runs on hubsell — the outbound platform our founders built and operate. You can inspect it, demo it, and one day run it yourself.',
+      text: 'Every campaign runs on hubsell, the outbound platform our founders built and operate. You can inspect it, demo it, and one day run it yourself.',
       href: SITE.hubsellUrl,
       linkLabel: 'See the platform',
     },
@@ -41,7 +41,7 @@ export const proofStrip = {
     },
     {
       title: '15+ years in market',
-      text: 'The people who plan and run your campaigns have been doing European B2B outbound since before it was a category. Seniors only — nothing is handed to juniors.',
+      text: 'The people who plan and run your campaigns have been doing European B2B outbound since before it was a category. Seniors only, nothing is handed to juniors.',
       href: '/about',
       linkLabel: 'Meet the team',
     },
@@ -54,7 +54,7 @@ export const pillars = {
   items: [
     {
       title: 'Native-language outbound',
-      text: 'German, Dutch, and English — written and spoken by natives, not translated. In relationship-driven industries, language precision is the difference between a reply and the bin.',
+      text: 'German, Dutch, and English: written and spoken by natives, not translated. In relationship-driven industries, language precision is the difference between a reply and the bin.',
     },
     {
       title: 'Own tech, own data',
@@ -74,7 +74,7 @@ export const pillars = {
 export const graduation = {
   eyebrow: 'The exit path',
   heading: 'The agency you can graduate from',
-  sub: 'Every other agency is designed to keep you dependent. gtmWizards is designed to make itself optional. Your campaigns, sequences, and data live in hubsell — the platform our founders own — so in-sourcing is a handover, not a rebuild.',
+  sub: 'Every other agency is designed to keep you dependent. gtmWizards is designed to make itself optional. Your campaigns, sequences, and data live in hubsell (the platform our founders own), so in-sourcing is a handover, not a rebuild.',
   stages: [
     {
       label: 'Done for you',
@@ -86,7 +86,7 @@ export const graduation = {
     },
     {
       label: 'Done by you',
-      text: 'You take over the hubsell account — campaigns, sequences, data, and playbooks included. We step back, or stay on call.',
+      text: 'You take over the hubsell account, campaigns, sequences, data, and playbooks included. We step back, or stay on call.',
     },
   ],
   note: 'No other outbound agency can offer this, because no other agency owns its platform.',
@@ -94,7 +94,7 @@ export const graduation = {
 
 export const channels = {
   eyebrow: 'Channels',
-  heading: 'Email, phone, and LinkedIn — one team, one system',
+  heading: 'Email, phone, and LinkedIn: one team, one system',
   sub: 'Set up and managed by our senior team, executed on hubsell. Every channel works from the same list, the same messaging strategy, and the same qualification criteria.',
   items: [
     {
@@ -103,7 +103,7 @@ export const channels = {
     },
     {
       title: 'Cold calling',
-      text: 'Native-language callers who qualify and handle objections — because in traditional industries, buyers still pick up the phone. What matters is the approach, not a headcount figure.',
+      text: 'Native-language callers who qualify and handle objections, because in traditional industries, buyers still pick up the phone. What matters is the approach, not a headcount figure.',
     },
     {
       title: 'LinkedIn',
@@ -120,22 +120,22 @@ export const qualification = {
     { label: 'Company fits the ICP', pass: true },
     { label: 'Decision-maker confirmed', pass: true },
     { label: 'Objections handled in-channel', pass: true },
-    { label: 'Timing unclear — nurture, not book', pass: false },
+    { label: 'Timing unclear, nurture, not book', pass: false },
   ],
 } as const;
 
 export const timeline = {
   eyebrow: 'Ramp-up',
   heading: 'Live within the first week',
-  sub: 'Pilot first. Then quarterly, if the numbers earn it. No long-term contracts — we would rather make a name than make you a hostage.',
+  sub: 'Pilot first. Then quarterly, if the numbers earn it. No long-term contracts, we would rather make a name than make you a hostage.',
   steps: [
     {
-      phase: 'Days 1–2',
+      phase: 'Days 1 to 2',
       title: 'Strategy & ICP',
-      text: 'ICP, personas, qualification criteria, and messaging frameworks agreed with a senior operator — not an account manager reading a script.',
+      text: 'ICP, personas, qualification criteria, and messaging frameworks agreed with a senior operator, not an account manager reading a script.',
     },
     {
-      phase: 'Days 3–5',
+      phase: 'Days 3 to 5',
       title: 'Buildout',
       text: 'Lists built from Kadanco and custom research. Sequences drafted in the buyer\u2019s language. Sending infrastructure warmed on hubsell.',
     },
@@ -146,7 +146,7 @@ export const timeline = {
     },
     {
       phase: 'Ongoing',
-      title: 'Optimise — honestly',
+      title: 'Optimise, honestly',
       text: 'Weekly reporting and A/B testing by humans who read every reply. No \u201cself-learning agents\u201d theatre: real analysis of your data, for your campaigns only.',
     },
   ],

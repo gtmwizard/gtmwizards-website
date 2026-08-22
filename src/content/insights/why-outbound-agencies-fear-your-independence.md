@@ -1,11 +1,11 @@
 ---
-title: "Why outbound agencies fear your independence — and why we don't"
+title: "Why outbound agencies fear your independence, and why we don't"
 description: "The economics of agency lock-in, and how owning the platform lets gtmWizards design engagements you can graduate from."
 date: 2026-07-20
 ---
 
 Every outbound agency faces the same conflict of interest: the better they
-teach you, the sooner you leave. So the incentives push toward opacity —
+teach you, the sooner you leave. So the incentives push toward opacity:
 proprietary "black box" tech you can't inspect, data you can't export,
 playbooks that live in someone else's head.
 

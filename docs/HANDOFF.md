@@ -1,7 +1,7 @@
-# Handoff — gtmwizards.com
+# Handoff: gtmwizards.com
 
 Everything a developer (or future Claude session) needs to take over this
-project. Last updated: 2026-07-25.
+project. Last updated: 2026-08-22.
 
 ## What this is
 
@@ -9,7 +9,7 @@ Static marketing site for gtmWizards, a done-for-you outbound agency for
 traditional industries (DACH / Benelux / international), owned by the
 founders of hubsell.com (outbound platform) and kadanco.com (B2B data).
 Core positioning: provable tech and data, native-language outbound
-(DE/NL/EN), senior operators, no lock-in — "the agency you can graduate
+(DE/NL/EN), senior operators, no lock-in, "the agency you can graduate
 from" (clients can in-source onto hubsell).
 
 Architecture intentionally mirrors the `hubsell-website` repo so both
@@ -23,7 +23,7 @@ sites stay maintainable by the same people.
 | Hosting    | Cloudflare Pages (build: `npm run build`, output: `dist`)  |
 | Forms      | Pages Function `functions/api/contact.ts` → Plunk          |
 | Assets     | Cloudflare R2 behind `PUBLIC_ASSETS_BASE` custom domain    |
-| Theme      | shadcn preset `b2qMGARRY` (olive base, emerald theme, rhea style, Instrument Sans, radius 0.625rem) as CSS variables |
+| Theme      | Plum and green. Accent `#17E769`, dark sections `#2B0A33`, ink `#0C0D0E`, Instrument Sans, radius 0.625rem, as CSS variables. Light mode only |
 | Fonts      | Self-hosted via `@fontsource` (GDPR / DACH requirement)    |
 | i18n       | Astro built-in; en live, de/nl prepped as redirect stubs   |
 
@@ -37,10 +37,10 @@ src/data/            ALL site copy (typed TS). Components never hold copy.
   faqs.ts, testimonials.ts, navigation.ts, seo.ts, assets.ts
 src/components/      Section components (Hero, GraduationPath, Nav, …)
 src/layouts/         BaseLayout (head/meta/theme/nav/footer), PageLayout, LegalLayout
-src/content/         Markdown collections: insights/ (blog), glossary/
+src/content/         Markdown collections: insights/ (blog)
 src/i18n/            ui.ts (locale registry), utils.ts (path helpers)
 src/styles/global.css  Token layer + all shared styles
-src/pages/           Routes — see docs/SITEMAP.md
+src/pages/           Routes, see docs/SITEMAP.md
 functions/api/       contact.ts (Pages Function)
 scripts/             upload-assets.mjs (local → R2 sync)
 public/assets/       Placeholder logos (mirrors R2 paths for local dev)
@@ -48,8 +48,12 @@ public/assets/       Placeholder logos (mirrors R2 paths for local dev)
 
 ## Behaviors to know
 
-- **Dark mode**: `.dark` class on `<html>`. Toggle in nav; no-flash inline
-  script in `BaseLayout` head reads localStorage + system preference.
+- **No dark mode.** Removed on 2026-08-22. The page rhythm is a plum
+  `.section--dark` band on a white page; the band repaints its own tokens
+  so child components restyle with no extra CSS.
+- **Colour rules.** White on green fails at 1.66:1, and green fails as
+  type on white. On light surfaces the accent is plum `#7A2A8C`. Green
+  appears on light surfaces only as a fill.
 - **Section-aware header**: script in `Nav.astro` re-tints the sticky
   header per section under it (`base` / `raised` / `dark`). Auto-detects
   `.section--raised` and the footer; override with
@@ -58,14 +62,14 @@ public/assets/       Placeholder logos (mirrors R2 paths for local dev)
   purpose (new brand, no fake proof). Homepage section renders as soon as
   the array is non-empty.
 - **Sitemap**: locale URLs excluded until listed in `translatedRoutes`
-  (`src/i18n/ui.ts`) — same policy as hubsell-website.
+  (`src/i18n/ui.ts`), same policy as hubsell-website.
 
 ## i18n: launching German (or Dutch)
 
 URLs are translated per locale (e.g. `/de/loesungen/kaltakquise`), with
 `routeMap` in `src/i18n/ui.ts` as the single source of truth mapping
 English paths to localized slugs. The nav/footer switchers and hreflang
-all read from it. Current slugs are drafts — review, then freeze before
+all read from it. Current slugs are drafts. Review, then freeze before
 launch (changing slugs later means permanent redirects).
 
 1. Review/freeze the locale's slugs in `routeMap`.
@@ -81,7 +85,7 @@ launch (changing slugs later means permanent redirects).
 ## Repository & deployment
 
 - GitHub: https://github.com/gtmwizard/gtmwizards-website (branch `main`).
-- Hosting: Cloudflare Pages connected to the repo — every push to `main`
+- Hosting: Cloudflare Pages connected to the repo. Every push to `main`
   builds and deploys production; pushes to other branches create preview
   deployments with unique URLs.
 - Pages build settings: framework preset **Astro**, build command
@@ -110,8 +114,8 @@ Local R2 upload creds go in `.env` (see `.env.example`), used only by
       `legal-notice.md` (Impressum is mandatory for Germany, § 5 DDG)
 - [ ] Real logos → `public/assets/` → `npm run assets:sync` → set
       `PUBLIC_ASSETS_BASE`
-- [ ] OG image (`/assets/og-image.png`) — referenced in assets.ts, not
-      yet wired into BaseLayout meta
+- [ ] OG image: the `og:image` meta tag is wired in BaseLayout, but the
+      file `/assets/og-image.png` does not exist yet. Add it.
 - [ ] Set Pages env vars; test contact form end to end
 - [ ] Verify the "handover" claim wording against actual contracts
       (campaigns/data live in client's hubsell workspace from day one)
@@ -119,10 +123,19 @@ Local R2 upload creds go in `.env` (see `.env.example`), used only by
 
 ## Decisions log
 
+- Brand (2026-08-22): plum and green palette, real gtmWizards wordmark
+  and favicon in place, dark mode removed, glossary removed, every em
+  dash and en dash swept out with `npm run check:dashes` to keep it that
+  way. Instrument Sans kept: it is already self-hosted and GDPR-clean,
+  and it suits this brand better than Kadanco's Fira Sans.
+- Positioning (2026-08-22): gtmWizards moves to the Kadanco Group story,
+  merged with the outbound offer already on this site. Copy rewrite is a
+  separate, later drop.
+
 - Astro 5 → 7 (2026-07-25): resolved all `npm audit` findings; matches
   hubsell-website's major version.
 - shadcn preset applied as raw CSS variables, not a Tailwind/React
-  conversion — a static marketing site gains nothing from the runtime,
+  conversion. A static marketing site gains nothing from the runtime,
   and the token layer maps 1:1 if shadcn components are added later.
 - Display font Bricolage Grotesque was dropped in favor of preset-faithful
   Instrument Sans everywhere; revert = one line (`--font-display`).

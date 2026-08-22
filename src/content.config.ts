@@ -13,12 +13,4 @@ const insights = defineCollection({
   }),
 });
 
-const glossary = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/glossary' }),
-  schema: z.object({
-    term: z.string(),
-    description: z.string(),
-  }),
-});
-
-export const collections = { insights, glossary };
+export const collections = { insights };

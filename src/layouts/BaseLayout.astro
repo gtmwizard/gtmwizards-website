@@ -9,6 +9,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { SITE } from '../data/site';
+import { ASSETS } from '../data/assets';
 import { pageTitle } from '../data/seo';
 import { translatedRoutes, defaultLocale } from '../i18n/ui';
 import { delocalizePath, englishPathFor, getLangFromUrl, localizeRoute } from '../i18n/utils';
@@ -49,30 +50,21 @@ const alternates: { lang: string; href: URL }[] = [
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href={ASSETS.appleTouchIcon} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     {noindex && <meta name="robots" content="noindex" />}
     {alternates.map((a) => (
       <link rel="alternate" hreflang={a.lang} href={a.href} />
     ))}
     <link rel="alternate" hreflang="x-default" href={new URL(basePath, Astro.site)} />
-    <script is:inline>
-      // No-flash dark mode: apply stored/system theme before first paint.
-      (() => {
-        try {
-          const stored = localStorage.getItem('theme');
-          const dark =
-            stored === 'dark' ||
-            (!stored && matchMedia('(prefers-color-scheme: dark)').matches);
-          if (dark) document.documentElement.classList.add('dark');
-        } catch {}
-      })();
-    </script>
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ASSETS.ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ASSETS.ogImage} />
     <JsonLd />
   </head>
   <body>

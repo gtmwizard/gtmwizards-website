@@ -41,15 +41,18 @@
   --primary: var(--green);
   --primary-foreground: #0C0D0E;
   --primary-hover: var(--green-hover);
-  --secondary: #F5F1F4;
+  /* Pale surfaces sit close to neutral on purpose. Plum at 4% reads as
+     pink next to the green, which looks like a mistake rather than a
+     choice, so the chroma is pulled almost all the way out. */
+  --secondary: #F4F3F5;
   --secondary-foreground: #2B0A33;
-  --muted: #F5F1F4;
+  --muted: #F4F3F5;
   --muted-foreground: #6A5A6E;
-  --accent: #F8F4F8;
+  --accent: #F7F6F9;
   --accent-foreground: #2B0A33;
   --destructive: #C8324B;
-  --border: #E8DFEA;
-  --input: #E8DFEA;
+  --border: #E5E3E9;
+  --input: #E5E3E9;
   --ring: #7A2A8C;
 
   /* ---- fonts ---- */
@@ -64,10 +67,10 @@
   --ink-soft: #3A2F3D;              /* body copy one step down from ink */
   --steel: var(--muted-foreground);
   --line: var(--border);
-  --line-soft: #F1EAF3;
+  --line-soft: #EFEEF2;
   --brand: var(--primary);
   --brand-strong: var(--plum);      /* link colour. Green fails on white */
-  --brand-tint: #F6ECF8;
+  --brand-tint: #F3EDF6;
   --ok: var(--green-deep);          /* status dots on light surfaces */
   --skip: var(--destructive);
   --footer-bg: #0C0D0E;             /* ink, so it separates from a plum CTA */

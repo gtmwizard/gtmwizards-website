@@ -2,7 +2,7 @@
 import { hero, heroSpec } from '../data/home-content';
 ---
 
-<section class="hero gridpaper">
+<section class="hero gridpaper section--dark">
   <div class="container hero__inner">
     <div class="hero__copy">
       <p class="eyebrow">{hero.eyebrow}</p>
@@ -29,9 +29,12 @@ import { hero, heroSpec } from '../data/home-content';
 </section>
 
 <style>
+  /* Plum band. .section--dark repaints the tokens, so the eyebrow goes
+     lilac, the datasheet turns translucent and the live dot goes bright
+     green with no extra rules here. */
   .hero {
-    border-bottom: 1px solid var(--line-soft);
-    padding-block: clamp(3.5rem, 9vw, 6.5rem);
+    border-bottom: 0;
+    padding-block: clamp(4rem, 10vw, 7.5rem);
   }
   .hero__inner {
     display: grid;

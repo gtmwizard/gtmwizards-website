@@ -69,3 +69,14 @@ export const routeMap: Record<string, Partial<Record<Locale, string>>> = {
   '/terms': { de: '/agb', nl: '/voorwaarden' },
   '/legal-notice': { de: '/impressum', nl: '/colofon' },
 };
+
+/**
+ * Open Graph wants full locale codes (language plus region), not the bare
+ * language tags used in our URLs and hreflang. Mapped here so the two
+ * cannot drift apart.
+ */
+export const ogLocales: Record<string, string> = {
+  en: 'en_GB',
+  de: 'de_DE',
+  nl: 'nl_NL',
+};

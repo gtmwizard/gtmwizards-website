@@ -1,0 +1,105 @@
+---
+// Decorative background layer: the four-point spark lifted straight out of
+// the wordmark's hat, scattered across a dark band and slowly twinkling.
+//
+// Dark bands only. The colours are green and lilac at low opacity, so on a
+// light surface they disappear.
+//
+// Usage: put it as the first child of a position:relative section, and give
+// the section's real content a higher stacking context:
+//   <section class="hero section--dark">
+//     <Sparks />
+//     <div class="container hero__inner"> ... </div>
+//   </section>
+//
+// Positions are hand-placed to sit in the margins around the headline and
+// the datasheet, not behind them. If the section's layout changes, move
+// them rather than adding more.
+
+type Spark = {
+  x: number;      // percent from the left, this is the spark's centre
+  y: number;      // percent from the top
+  size: number;   // px
+  tone: 'green' | 'lilac';
+  tilt: number;   // degrees
+  delay: number;  // seconds, staggers the twinkle
+};
+
+const sparks: Spark[] = [
+  { x: 6,  y: 20, size: 34, tone: 'green', tilt: -12, delay: 0 },
+  { x: 47, y: 11, size: 17, tone: 'lilac', tilt: 18,  delay: 1.2 },
+  { x: 91, y: 17, size: 25, tone: 'green', tilt: 8,   delay: 2.4 },
+  { x: 96, y: 60, size: 16, tone: 'lilac', tilt: -20, delay: 0.9 },
+  { x: 55, y: 80, size: 21, tone: 'lilac', tilt: 10,  delay: 0.6 },
+  { x: 79, y: 90, size: 29, tone: 'green', tilt: -8,  delay: 1.8 },
+  { x: 29, y: 93, size: 14, tone: 'green', tilt: 22,  delay: 2.1 },
+  { x: 9,  y: 84, size: 19, tone: 'lilac', tilt: -6,  delay: 3.1 },
+];
+
+// The spark path, normalised from the 512px mark to a 0 to 100 box.
+const PATH = 'M33.33 33.33L50 0L66.67 33.33L100 50L66.67 66.67L50 100L33.33 66.67L0 50Z';
+---
+
+<div class="sparks" aria-hidden="true">
+  {sparks.map((s) => (
+    <svg
+      class:list={['spark', `spark--${s.tone}`]}
+      viewBox="0 0 100 100"
+      style={`left:${s.x}%;top:${s.y}%;width:${s.size}px;height:${s.size}px;--tilt:${s.tilt}deg;--delay:${s.delay}s`}
+      focusable="false"
+    >
+      <path d={PATH} />
+    </svg>
+  ))}
+</div>
+
+<style>
+  .sparks {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Visible by default, so a broken bundle or a reduced-motion visitor still
+     gets the sparks. When motion is armed they start hidden, the entrance
+     animation in src/scripts/motion.ts fades them in, and it then adds
+     .is-live to hand off to the twinkle loop below. */
+  .spark {
+    position: absolute;
+    display: block;
+    /* `scale` is its own property, so the twinkle animates it without
+       clobbering the translate and rotate here. */
+    transform: translate(-50%, -50%) rotate(var(--tilt));
+    scale: 1;
+    opacity: var(--peak);
+  }
+
+  :global([data-motion='on']) .spark { opacity: 0; }
+
+  .spark.is-live {
+    animation: twinkle 6s ease-in-out infinite;
+    animation-delay: var(--delay);
+    will-change: opacity, scale;
+  }
+
+  .spark--green { fill: var(--green); --peak: 0.55; }
+  .spark--lilac { fill: var(--lilac); --peak: 0.32; }
+
+  @keyframes twinkle {
+    0%, 100% { scale: 1; opacity: var(--peak); }
+    50% { scale: 0.82; opacity: calc(var(--peak) * 0.35); }
+  }
+
+  /* Fewer sparks on small screens: the inner ones would crowd the copy. */
+  @media (max-width: 56rem) {
+    .spark:nth-child(2),
+    .spark:nth-child(4),
+    .spark:nth-child(5) { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spark { animation: none; opacity: var(--peak); }
+  }
+</style>

@@ -4,13 +4,21 @@
 import { graduation } from '../data/home-content';
 ---
 
-<section class="section section--dark" id="graduate">
+<section class="section section--dark" id="graduate" data-motion-rail>
   <div class="container">
     <p class="eyebrow">{graduation.eyebrow}</p>
     <h2>{graduation.heading}</h2>
     <p class="lede">{graduation.sub}</p>
 
     <ol class="rail">
+      <svg
+        class="rail__line"
+        viewBox="0 0 1000 2"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path d="M0 1 H1000" data-motion-rail-line vector-effect="non-scaling-stroke" />
+      </svg>
       {graduation.stages.map((stage, i) => (
         <li class="rail__stage">
           <span class="rail__marker" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
@@ -34,16 +42,25 @@ import { graduation } from '../data/home-content';
     gap: 1.1rem;
     position: relative;
   }
-  .rail::before {
-    content: '';
+  /* The connector is an SVG rather than a pseudo-element so the motion
+     module can draw it stroke-first. It sits behind the stage cards. */
+  .rail__line {
     position: absolute;
     top: 1.05rem;
     left: 2rem;
     right: 2rem;
-    height: 1px;
-    background: var(--line);
+    width: auto;
+    height: 2px;
+    overflow: visible;
+    z-index: 0;
+  }
+  .rail__line path {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1;
   }
   .rail__stage {
+    z-index: 1;
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
@@ -57,10 +74,11 @@ import { graduation } from '../data/home-content';
     height: 2.1rem;
     border-radius: 50%;
     background: var(--brand);
-    color: #fff;
+    color: var(--primary-foreground);
     font-family: var(--font-mono);
     font-size: 0.75rem;
     margin-bottom: 0.9rem;
+    transform-origin: center;
   }
   .rail__stage p { margin-bottom: 0; color: var(--ink-soft); font-size: 0.97rem; }
   .rail__note {
@@ -72,6 +90,6 @@ import { graduation } from '../data/home-content';
   }
   @media (max-width: 56rem) {
     .rail { grid-template-columns: 1fr; }
-    .rail::before { display: none; }
+    .rail__line { display: none; }
   }
 </style>

@@ -51,6 +51,12 @@ public/assets/       Placeholder logos (mirrors R2 paths for local dev)
 - **No dark mode.** Removed on 2026-08-22. The page rhythm is a plum
   `.section--dark` band on a white page; the band repaints its own tokens
   so child components restyle with no extra CSS.
+- **Sparks.** `Sparks.astro` scatters the wordmark's four-point spark
+  across a dark band, slowly twinkling, reduced-motion safe. It is on the
+  hero and the dark CTA band. Drop it in as the first child of any
+  `position: relative` `.section--dark` and give the real content
+  `z-index: 1`. Positions, sizes and opacities are all in that one file.
+  Light sections keep `.gridpaper` instead.
 - **Colour rules.** White on green fails at 1.66:1, and green fails as
   type on white. On light surfaces the accent is plum `#7A2A8C`. Green
   appears on light surfaces only as a fill.
@@ -114,15 +120,86 @@ Local R2 upload creds go in `.env` (see `.env.example`), used only by
       `legal-notice.md` (Impressum is mandatory for Germany, § 5 DDG)
 - [ ] Real logos → `public/assets/` → `npm run assets:sync` → set
       `PUBLIC_ASSETS_BASE`
-- [ ] OG image: the `og:image` meta tag is wired in BaseLayout, but the
-      file `/assets/og-image.png` does not exist yet. Add it.
+- [ ] OG image: a working 1200 x 630 version is in `public/assets/og-image.png`
+      with its source SVG beside it. Replace with a final design if you want.
 - [ ] Set Pages env vars; test contact form end to end
 - [ ] Verify the "handover" claim wording against actual contracts
       (campaigns/data live in client's hubsell workspace from day one)
 - [ ] First testimonials into `src/data/testimonials.ts` when available
 
+## Motion
+
+All motion is choreographed in **`src/scripts/motion.ts`**, one file, loaded
+once from `BaseLayout`. Components carry a hook attribute at most
+(`data-motion-hero`, `data-motion-item`, `data-motion-rail`) and never a timing
+value. Two constants at the top of that file, `EASE` and `DUR`, set the feel of
+the whole site.
+
+- **Library:** `animejs` v4, bundled from npm, never from a CDN. A German site
+  that self-hosts its fonts for GDPR reasons must not then hand visitor IPs to
+  a US CDN. Cost is about 16 KB gzipped, the only JS bundle on the site.
+- **What animates:** the hero entrance on load (eyebrow, headline, lede,
+  buttons, then the datasheet filling in row by row), scroll reveals for every
+  other section via one shared IntersectionObserver, the sparks fading in
+  before handing off to their CSS twinkle loop, and the graduation rail, where
+  the connector draws itself and each marker springs in as the line reaches it.
+- **What it degrades to:** an inline script in `BaseLayout` sets
+  `data-motion="on"` on `<html>` only when JS is running and the visitor has
+  not asked for reduced motion. `global.css` hides reveal targets only under
+  that attribute. The same script arms a 2.5 second fallback timer that strips
+  the attribute if `motion.ts` never runs, so a blocked bundle, a JS error or
+  a slow network all end with a readable page rather than a blank one.
+  `motion.ts` clears that timer as its first action.
+- **If you add a new section component**, its `.eyebrow`, `h2`, `.lede` and
+  `.card` elements are picked up automatically. Opt out with `data-no-motion`
+  on the section. If you introduce a new structural class that should reveal,
+  add it to `REVEAL` in `motion.ts` **and** to the matching selector list in
+  `global.css`. They must stay in sync or you get a flash of hidden content.
+
+## Open Graph and share cards
+
+Every page emits a full Open Graph set from `BaseLayout`. Nothing needs to be
+done per page unless you want to override the share image.
+
+- **Always emitted:** `og:type`, `og:site_name`, `og:title`, `og:description`,
+  `og:url`, `og:locale` plus `og:locale:alternate` for the other two languages,
+  `og:image` with `:type`, `:width`, `:height` and `:alt`, and the matching
+  `twitter:card`, `twitter:title`, `twitter:description` and `twitter:image`.
+- **Insight posts** switch to `og:type="article"` and add
+  `article:published_time`, `article:modified_time` (from an optional `updated`
+  date in frontmatter) and `article:author`.
+- **Per-page override:** pass `ogImage` and `ogImageAlt` to `BaseLayout` or
+  `PageLayout`, or set `image` and `imageAlt` in an insight post's frontmatter.
+  Root-relative paths are fine, they get resolved to absolute automatically.
+
+**The absolute URL trap.** Open Graph requires a fully qualified image URL.
+`ASSETS.ogImage` is only absolute when `PUBLIC_ASSETS_BASE` is set, so it is
+relative in local dev and in any build missing that env var. `BaseLayout`
+runs it through `new URL(..., Astro.site)`, which passes an already absolute
+R2 URL straight through and resolves a relative one against the site origin.
+Do not bypass that.
+
+**The image.** `public/assets/og-image.png`, 1200 x 630 (1.91:1), which is
+LinkedIn's preferred ratio and above its 1200 x 627 minimum. The source is
+`public/assets/og-image.source.svg`, so it can be re-rendered or edited. It is
+a working version built from the brand assets, not a final design.
+
+**Testing.** Scrapers cannot see localhost, so this can only be verified after
+deploy. LinkedIn caches aggressively and there is no manual purge, so check
+with the LinkedIn Post Inspector before sharing any URL widely. Facebook's
+Sharing Debugger and Slack both re-scrape on demand.
+
 ## Decisions log
 
+- Open Graph (2026-08-23): full OG and Twitter card set, article metadata on
+  insight posts, per-page image overrides. Fixed two bugs found on the way:
+  the share image URL could be emitted relative (invalid for OG), and
+  `<html lang>` was hardcoded to `en` on every page including the German and
+  Dutch routes.
+- Motion (2026-08-22): Anime.js adopted after a side-by-side against a
+  CSS-only build. The entrances look near identical either way; the library
+  was chosen for the timeline choreography and for the SVG rail draw, which
+  CSS cannot do. It is the first and only JS bundle on the site.
 - Brand (2026-08-22): plum and green palette, real gtmWizards wordmark
   and favicon in place, dark mode removed, glossary removed, every em
   dash and en dash swept out with `npm run check:dashes` to keep it that

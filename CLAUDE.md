@@ -74,6 +74,11 @@ Rules for Claude:
   the accent is plum; green appears there only as a fill.
 - The site is **light mode only**. There is no dark-mode toggle. Dark
   rhythm comes from `.section--dark`, which repaints its own tokens.
+- **All motion lives in `src/scripts/motion.ts`.** Components get a hook
+  attribute, never a duration or a delay. Never hide content behind JS
+  without the `data-motion` fallback timer described in `docs/HANDOFF.md`.
+  `REVEAL` in `motion.ts` and the matching selector list in `global.css`
+  must stay in sync.
 - **No em dashes and no en dashes anywhere.** Use commas, colons,
   periods or parentheses, and write ranges out ("days 1 to 2"). Run
   `npm run check:dashes` before every drop; it exits non-zero on a hit.

@@ -1,4 +1,6 @@
 ---
+import Sparks from './Sparks.astro';
+
 interface Props {
   heading: string;
   tone?: 'base' | 'dark';
@@ -19,9 +21,10 @@ const {
 } = Astro.props;
 ---
 
-<section class:list={['section', { 'section--dark': tone === 'dark' }]}>
+<section class:list={['section', 'cta-band', { 'section--dark': tone === 'dark' }]}>
+  {tone === 'dark' && <Sparks />}
   <div class="container">
-    <div class="cta gridpaper">
+    <div class:list={['cta', { gridpaper: tone !== 'dark' }]}>
       <h2>{heading}</h2>
       {sub && <p class="lede">{sub}</p>}
       <div class="cta__actions">
@@ -35,6 +38,10 @@ const {
 </section>
 
 <style>
+  /* On the dark tone the grid paper is replaced by the spark layer, so the
+     plum CTA band matches the plum hero at the top of the page. */
+  .cta-band { position: relative; }
+  .cta-band > .container { position: relative; z-index: 1; }
   .cta {
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);

@@ -9,20 +9,46 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { SITE } from '../data/site';
-import { ASSETS } from '../data/assets';
+import { ASSETS, OG_IMAGE } from '../data/assets';
 import { pageTitle } from '../data/seo';
-import { translatedRoutes, defaultLocale } from '../i18n/ui';
+import { translatedRoutes, defaultLocale, ogLocales } from '../i18n/ui';
 import { delocalizePath, englishPathFor, getLangFromUrl, localizeRoute } from '../i18n/utils';
 
 interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  /** 'article' for insight posts, 'website' for everything else. */
+  ogType?: 'website' | 'article';
+  /** Absolute or root-relative override for the share image. */
+  ogImage?: string;
+  ogImageAlt?: string;
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  author?: string;
 }
 
-const { title, description = SITE.description, noindex = false } = Astro.props;
+const {
+  title,
+  description = SITE.description,
+  noindex = false,
+  ogType = 'website',
+  ogImage,
+  ogImageAlt = OG_IMAGE.alt,
+  publishedTime,
+  modifiedTime,
+  author,
+} = Astro.props;
+
 const fullTitle = pageTitle(title);
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// Open Graph requires an absolute URL. ASSETS.ogImage is only absolute when
+// PUBLIC_ASSETS_BASE is set, so it is relative in local dev and in any build
+// where the env var is missing. new URL() fixes both cases: an already
+// absolute R2 URL passes straight through, a relative one resolves against
+// the site origin.
+const ogImageUrl = new URL(ogImage ?? ASSETS.ogImage, Astro.site).href;
 
 // hreflang alternates: English always; a locale only once the current
 // path is listed as translated in src/i18n/ui.ts.
@@ -42,13 +68,29 @@ const alternates: { lang: string; href: URL }[] = [
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLocale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <script is:inline>
+      // Opt in to motion only when JS runs and the visitor has not asked for
+      // less of it. Runs before first paint so nothing flashes.
+      // The fallback timer is the safety net: if src/scripts/motion.ts never
+      // executes, the attribute is stripped and every hidden element returns.
+      (() => {
+        try {
+          if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          document.documentElement.dataset.motion = 'on';
+          window.__motionFallback = setTimeout(() => {
+            delete document.documentElement.dataset.motion;
+          }, 2500);
+        } catch {}
+      })();
+    </script>
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href={ASSETS.appleTouchIcon} />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -57,14 +99,34 @@ const alternates: { lang: string; href: URL }[] = [
       <link rel="alternate" hreflang={a.lang} href={a.href} />
     ))}
     <link rel="alternate" hreflang="x-default" href={new URL(basePath, Astro.site)} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={ASSETS.ogImage} />
+    <meta property="og:locale" content={ogLocales[currentLocale] ?? ogLocales.en} />
+    {Object.entries(ogLocales)
+      .filter(([loc]) => loc !== currentLocale)
+      .map(([, ogLocale]) => (
+        <meta property="og:locale:alternate" content={ogLocale} />
+      ))}
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:type" content={OG_IMAGE.type} />
+    <meta property="og:image:width" content={String(OG_IMAGE.width)} />
+    <meta property="og:image:height" content={String(OG_IMAGE.height)} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    {ogType === 'article' && publishedTime && (
+      <meta property="article:published_time" content={publishedTime.toISOString()} />
+    )}
+    {ogType === 'article' && modifiedTime && (
+      <meta property="article:modified_time" content={modifiedTime.toISOString()} />
+    )}
+    {ogType === 'article' && author && <meta property="article:author" content={author} />}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content={ASSETS.ogImage} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <JsonLd />
   </head>
   <body>
@@ -87,5 +149,8 @@ const alternates: { lang: string; href: URL }[] = [
       }
       .skip-link:focus { left: 0.5rem; }
     </style>
+    <script>
+      import '../scripts/motion';
+    </script>
   </body>
 </html>

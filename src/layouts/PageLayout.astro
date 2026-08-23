@@ -8,11 +8,30 @@ interface Props {
   heading?: string;
   sub?: string;
   eyebrow?: string;
+  /** Forwarded to BaseLayout so inner pages can set their own share card. */
+  ogImage?: string;
+  ogImageAlt?: string;
+  noindex?: boolean;
 }
-const { title, description, heading = title, sub, eyebrow } = Astro.props;
+const {
+  title,
+  description,
+  heading = title,
+  sub,
+  eyebrow,
+  ogImage,
+  ogImageAlt,
+  noindex,
+} = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  ogImageAlt={ogImageAlt}
+  noindex={noindex}
+>
   <header class="section section--tight">
     <div class="container">
       {eyebrow && <p class="eyebrow">{eyebrow}</p>}

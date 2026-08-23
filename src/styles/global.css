@@ -302,6 +302,26 @@ img, svg { max-width: 100%; height: auto; }
   * { transition-duration: 0.01ms !important; }
 }
 
+/* ---------- motion ----------
+   These rules only bite when the inline script in BaseLayout has set
+   data-motion="on", which happens only with JS running and reduced motion
+   not requested. Keep this selector list in sync with REVEAL in
+   src/scripts/motion.ts. If the module fails to load, the fallback timer
+   in BaseLayout strips the attribute and everything below stops applying. */
+
+[data-motion='on'] main .eyebrow,
+[data-motion='on'] main h2,
+[data-motion='on'] main .lede,
+[data-motion='on'] main .card,
+[data-motion='on'] main .faq__item,
+[data-motion='on'] main .rail__stage,
+[data-motion='on'] main .spec,
+[data-motion='on'] main .cta,
+[data-motion='on'] main .spec__row,
+[data-motion='on'] main .rail__marker {
+  opacity: 0;
+}
+
 /* ---------- fine grid backdrop (hero) ---------- */
 
 .gridpaper {

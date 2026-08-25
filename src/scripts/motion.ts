@@ -224,8 +224,11 @@ function triggerTicker(): void {
 }
 
 /* ------------------------------------------------------------------------
-   Signal funnel: signals scroll in, most are dropped, a few go green and
-   become the written message on the right. Runs once the band is in view.
+   Signal funnel: the list builds one row at a time. Noise dims, real signals
+   go green and become the written message on the right. Runs once, when the
+   band comes into view, and stops on the finished list. No loop: a looping
+   version leaves the column empty between cycles and pulls the eye off the
+   copy.
    ------------------------------------------------------------------------ */
 
 function signalFunnel(section: HTMLElement): void {
@@ -244,7 +247,6 @@ function signalFunnel(section: HTMLElement): void {
     return src + ', ' + text;
   });
 
-  const height = feed.getBoundingClientRect().height || 336;
   let watched = 0;
   let written = 0;
   const setCount = () => {
@@ -252,44 +254,42 @@ function signalFunnel(section: HTMLElement): void {
   };
   setCount();
 
-  const STEP = 620;
-  const tl = createTimeline({ defaults: { ease: EASE }, loop: true });
+  utils.set(rows, { opacity: 0, y: 10 });
+
+  /* Slow enough to read a row before the next one lands. Eight rows at this
+     pace runs about three seconds, then it stops on the finished list. */
+  const STEP = 340;
+  const tl = createTimeline({ defaults: { ease: EASE } });
 
   rows.forEach((row, i) => {
     const at = i * STEP;
 
-    tl.add(row, { top: [height, 8], opacity: [0, 1], duration: 560 }, at);
+    /* Arrive in place. The row never moves position, it only fades up, so
+       nothing jumps and nothing overwrites the row above it. */
+    tl.add(row, { opacity: 1, y: 0, duration: 460 }, at);
+
     tl.call(() => {
       watched += 1;
       setCount();
-    }, at + 300);
+    }, at + 260);
 
-    tl.add(
-      row,
-      kept[i]
-        ? { borderColor: '#17E769', background: 'rgba(23,231,105,0.14)', duration: 260 }
-        : { opacity: 0.26, duration: 260 },
-      at + 620,
-    );
-
+    /* A beat later it resolves: noise dims, a real signal goes green and
+       becomes the message on the right. */
     if (kept[i]) {
+      /* The colour change is a CSS transition on .is-resolved, not a JS
+         colour tween. Tweening a colour needs a computed starting value,
+         which is fragile; a class toggle is not. */
+      tl.call(() => row.classList.add('is-resolved'), at + 380);
       tl.call(() => {
         written += 1;
         setCount();
         titleEl.textContent = labels[i];
-        animate(titleEl, { opacity: [0, 1], y: [8, 0], duration: 400, ease: EASE });
-      }, at + 880);
+        animate(titleEl, { opacity: [0, 1], y: [8, 0], duration: 380, ease: EASE });
+      }, at + 420);
+    } else {
+      tl.add(row, { opacity: 0.34, duration: 320 }, at + 380);
     }
-
-    tl.add(row, { top: -80, opacity: 0, duration: 520 }, at + 980);
   });
-
-  /* Reset the counters before the loop starts again. */
-  tl.call(() => {
-    watched = 0;
-    written = 0;
-    setCount();
-  }, rows.length * STEP + 1100);
 }
 
 /* ------------------------------------------------------------------------

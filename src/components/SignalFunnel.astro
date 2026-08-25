@@ -2,12 +2,10 @@
 // The signal funnel. Signals scroll in, most are dimmed and dropped, a few go
 // green and become one written message.
 //
-// Degradation matters here more than anywhere else on the page, because the
-// animated version stacks the rows on top of each other. Without motion the
-// rows sit in normal document flow as a plain readable list, with the kept
-// ones marked. They only become absolutely positioned under [data-motion='on'],
-// which is set by BaseLayout and stripped again by its fallback timer if
-// src/scripts/motion.ts never runs.
+// The rows are a normal flow list at all times. Motion only fades them in one
+// at a time, dims the ones that are noise, and marks the ones worth writing to.
+// It runs once and stops on the finished list, which is byte for byte the state
+// a no-JS or reduced-motion visitor sees. No loop, so the column is never empty.
 import { signalFunnel } from '../data/home-content';
 ---
 
@@ -109,23 +107,24 @@ import { signalFunnel } from '../data/home-content';
     color: var(--steel);
   }
 
-  /* Animated only when motion is armed. The rows stack and scroll. */
-  :global([data-motion='on']) .feed {
-    position: relative;
-    display: block;
-    height: 21rem;
-    overflow: hidden;
-  }
+  /* Motion only fades rows in and marks them. Rows stay in normal flow, so
+     the column is never empty and there is no layout shift. The finished
+     state is identical to the no-JS state below. */
   :global([data-motion='on']) .sig {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 21rem;
     opacity: 0;
+    transition:
+      border-color 320ms cubic-bezier(0.16, 0.84, 0.44, 1),
+      background-color 320ms cubic-bezier(0.16, 0.84, 0.44, 1);
   }
+  /* A kept row starts looking like any other and turns green when the
+     animation resolves it, so the viewer sees the decision being made. */
   :global([data-motion='on']) .sig--keep {
     border-color: var(--line);
     background: rgba(255, 255, 255, 0.05);
+  }
+  :global([data-motion='on']) .sig--keep.is-resolved {
+    border-color: var(--green);
+    background: rgba(23, 231, 105, 0.12);
   }
 
   .out {
@@ -170,7 +169,5 @@ import { signalFunnel } from '../data/home-content';
   @media (max-width: 60rem) {
     .funnel { grid-template-columns: 1fr; }
     .funnel__arrow { transform: rotate(90deg); justify-self: start; }
-    :global([data-motion='on']) .feed { height: 17rem; }
-    :global([data-motion='on']) .sig { top: 17rem; }
   }
 </style>

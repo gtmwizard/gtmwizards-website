@@ -56,7 +56,7 @@ export const solutions: Solution[] = [
       },
       {
         title: 'In the buyer\u2019s language',
-        text: 'German, Dutch, and English: natively written and natively spoken. In relationship-driven markets, a translated template is worse than silence.',
+        text: 'English by default, German natively where the buyer works in German. In relationship-driven markets a translated template is worse than silence.',
       },
       {
         title: 'Managed by seniors',
@@ -68,12 +68,12 @@ export const solutions: Solution[] = [
     slug: 'cold-calling',
     navLabel: 'Cold calling',
     title: 'Cold calling',
-    seoTitle: 'Native-language cold calling for DACH and Benelux',
+    seoTitle: 'Cold calling that starts from a signal',
     description:
-      'Native German, Dutch, and English callers who qualify, handle objections, and book meetings your team can close.',
+      'Callers who ring because something happened, qualify properly, handle objections, and book meetings your team can close.',
     hero: {
       heading: 'Your buyers pick up the phone. In their language.',
-      sub: 'In manufacturing, logistics, and industrial markets, the phone still works, if the person calling sounds like they belong in the market. Our callers are native speakers who understand the industry, not a script farm reading transliterated English.',
+      sub: 'In manufacturing, logistics, and industrial markets, the phone still works, if the person calling has a reason to be ringing and belongs in the market. Our callers are native speakers who understand the industry, not a script farm reading transliterated English.',
     },
     sections: [
       {
@@ -93,26 +93,30 @@ export const solutions: Solution[] = [
   {
     slug: 'deliverability',
     navLabel: 'Deliverability',
-    title: 'Deliverability',
-    seoTitle: 'Managed email deliverability',
+    title: 'Sending from your own domain',
+    seoTitle: 'Sending from your own domain',
     description:
-      'Managed sending infrastructure on hubsell that keeps your emails in inboxes and your main domain out of trouble.',
+      'No satellite domains and no warm-up schedules. Volume low enough that your real domain does the sending.',
     hero: {
-      heading: 'Emails that land, on infrastructure we manage',
-      sub: 'Deliverability is won in the setup: dedicated sending domains, proper authentication, gradual warm-up, and volumes that respect providers\u2019 limits. We run all of it on hubsell so your primary domain never takes the risk.',
+      heading: 'Your domain. Your name. No infrastructure in between.',
+      sub: 'Most outbound agencies buy a fleet of lookalike domains, warm them for weeks, and send from addresses your buyer has never seen. They have to, because of the volume they run. We do not run that volume, so we do not need any of it.',
     },
     sections: [
       {
-        title: 'Protected by design',
-        text: 'Campaigns send from warmed satellite domains with SPF, DKIM, and DMARC configured correctly from day one. Your corporate domain stays clean.',
+        title: 'A lookalike domain is a tell',
+        text: 'In relationship-driven markets, buyers check. A message from an address that almost matches the company they know is not a neutral technical choice, it is the first thing that makes them suspicious. Sending from the real domain means the prospect can look you up, find you on your own website, match the signature to a real person, and reply to an inbox that person actually reads.',
       },
       {
-        title: 'Monitored continuously',
-        text: 'Bounce rates, spam placement, and reply health are watched weekly by the same team that writes your copy, because deliverability and messaging quality are the same problem.',
+        title: 'Low volume is what makes it safe',
+        text: 'Sending from your primary domain is reckless at scale, which is exactly why agencies avoid it. It is safe here because every message waits for a signal, so volume never approaches the level that puts a domain at risk. The constraint that defines the offer is the same one that protects your reputation.',
       },
       {
-        title: 'Volume with judgement',
-        text: 'We send at volumes that sustain inbox placement, not vanity activity metrics. Fewer, better emails outperform blasted sequences in every market we work in.',
+        title: 'Authentication, not infrastructure',
+        text: 'SPF, DKIM and DMARC set up correctly on the domain you already own. That is hygiene every company should have regardless, and it is the whole technical footprint. There is no warm-up period to sit through, which means the first campaign goes live in days rather than after weeks spent preparing domains nobody will ever recognise.',
+      },
+      {
+        title: 'Watched, not automated away',
+        text: 'Bounce rates, inbox placement and reply health reviewed by the same people who write the copy, because deliverability and message quality are the same problem. When volume is low, a bad reply rate tells you the message was wrong. It does not tell you the infrastructure needs tuning.',
       },
     ],
   },

@@ -189,8 +189,38 @@ deploy. LinkedIn caches aggressively and there is no manual purge, so check
 with the LinkedIn Post Inspector before sharing any URL widely. Facebook's
 Sharing Debugger and Slack both re-scrape on demand.
 
+## Language and locales
+
+**The site is English only, in British English.** `<html lang>` is `en-GB`.
+The entire i18n layer was removed on 25 August 2026: no locales in
+`astro.config.mjs`, no language switcher, no top bar, no hreflang, no
+`og:locale:alternate`, and no redirect stubs. The build went from 53 HTML
+files to 17 as a result.
+
+This is not a decision against translating later. The German and Dutch slugs
+were already worked out and are parked in `docs/TRANSLATION-ROUTES.md`, along
+with the steps to bring a locale back and the two traps that bit us before.
+
+**German is an offer, not a frame.** Plenty of clients never sell into a
+German-speaking market and need everything else the site describes. So German
+lives in one dedicated band (`LanguageEdge.astro`) rather than running through
+the hero, the datasheet, the pillars and every signal example. If you find
+yourself adding "native German" to copy outside that section, that is the
+thing this decision was meant to stop.
+
+**Benelux is gone** (D24). Dutch is no longer claimed as a delivery language.
+`SITE.languages` is now English and German, and it describes what the service
+delivers, not what the site is published in.
+
 ## Decisions log
 
+- English only (2026-08-25): i18n layer removed entirely, language switcher
+  and top bar deleted, Benelux and Dutch dropped per D24. Slugs parked in
+  docs/TRANSLATION-ROUTES.md.
+- Positioning (2026-08-25): signal-led outbound. Every campaign starts from an
+  observable event. Low volume is the consequence, which is what allows sending
+  from the client's own domain. German de-framed into its own section. Kadanco
+  removed as a data claim and replaced with a named tools strip.
 - Open Graph (2026-08-23): full OG and Twitter card set, article metadata on
   insight posts, per-page image overrides. Fixed two bugs found on the way:
   the share image URL could be emitted relative (invalid for OG), and

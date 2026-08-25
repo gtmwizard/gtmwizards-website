@@ -1,0 +1,37 @@
+---
+// The language edge, stated once in its own band. Deliberately NOT woven
+// through the rest of the copy: plenty of clients never sell into a
+// German-speaking market and need everything else on this page regardless.
+// Copy lives in src/data/home-content.ts.
+import { language } from '../data/home-content';
+---
+
+<section class="section section--raised" aria-labelledby="language-heading">
+  <div class="container">
+    <p class="eyebrow">{language.eyebrow}</p>
+    <h2 id="language-heading">{language.heading}</h2>
+    <p class="lede">{language.sub}</p>
+
+    <div class="grid grid--2 lang">
+      {language.points.map((point) => (
+        <article class="card">
+          <h3>{point.title}</h3>
+          <p>{point.text}</p>
+        </article>
+      ))}
+    </div>
+
+    <p class="lang__note">{language.note}</p>
+  </div>
+</section>
+
+<style>
+  .lang { margin-top: 2.2rem; }
+  .lang__note {
+    margin: 1.6rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--steel);
+  }
+</style>

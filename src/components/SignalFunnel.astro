@@ -1,0 +1,176 @@
+---
+// The signal funnel. Signals scroll in, most are dimmed and dropped, a few go
+// green and become one written message.
+//
+// Degradation matters here more than anywhere else on the page, because the
+// animated version stacks the rows on top of each other. Without motion the
+// rows sit in normal document flow as a plain readable list, with the kept
+// ones marked. They only become absolutely positioned under [data-motion='on'],
+// which is set by BaseLayout and stripped again by its fallback timer if
+// src/scripts/motion.ts never runs.
+import { signalFunnel } from '../data/home-content';
+---
+
+<section class="section section--dark funnel-band" data-motion-funnel>
+  <div class="container">
+    <p class="eyebrow">{signalFunnel.eyebrow}</p>
+    <h2>{signalFunnel.heading}</h2>
+    <p class="lede">{signalFunnel.sub}</p>
+
+    <div class="funnel">
+      <div class="funnel__col">
+        <p class="funnel__label">{signalFunnel.watchedLabel}</p>
+        <ul class="feed" data-motion-feed>
+          {signalFunnel.signals.map((sig) => (
+            <li class:list={['sig', { 'sig--keep': sig.keep }]}>
+              <span class="sig__text">{sig.text}</span>
+              <span class="sig__src">{sig.src}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="funnel__arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+          <path d="M3 12h16M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <div class="funnel__col">
+        <p class="funnel__label">{signalFunnel.writtenLabel}</p>
+        <div class="out">
+          <p class="out__label">{signalFunnel.output.label}</p>
+          <h3 data-motion-funnel-title>{signalFunnel.output.title}</h3>
+          <p class="out__body">{signalFunnel.output.body}</p>
+          <p class="out__from">{signalFunnel.output.from}</p>
+        </div>
+        <p class="funnel__count" data-motion-funnel-count></p>
+      </div>
+    </div>
+
+    <p class="funnel__note">{signalFunnel.note}</p>
+  </div>
+</section>
+
+<style>
+  .funnel {
+    display: grid;
+    grid-template-columns: 1fr 3rem 1fr;
+    gap: clamp(1.2rem, 3vw, 2.2rem);
+    align-items: start;
+    margin-top: 2.4rem;
+  }
+  .funnel__label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin: 0 0 0.9rem;
+  }
+  .funnel__arrow {
+    display: grid;
+    place-items: center;
+    color: var(--steel);
+    align-self: center;
+  }
+
+  /* Static by default: a plain list anyone can read. */
+  .feed {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .sig {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--line);
+    font-size: 0.9rem;
+  }
+  .sig--keep {
+    border-color: var(--green);
+    background: rgba(23, 231, 105, 0.12);
+  }
+  .sig__src {
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+
+  /* Animated only when motion is armed. The rows stack and scroll. */
+  :global([data-motion='on']) .feed {
+    position: relative;
+    display: block;
+    height: 21rem;
+    overflow: hidden;
+  }
+  :global([data-motion='on']) .sig {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 21rem;
+    opacity: 0;
+  }
+  :global([data-motion='on']) .sig--keep {
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .out {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.3rem 1.4rem;
+  }
+  .out__label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin: 0 0 0.35rem;
+  }
+  .out h3 { margin: 0 0 0.45rem; font-size: 1.05rem; }
+  .out__body { margin: 0; font-size: 0.92rem; line-height: 1.55; color: var(--ink-soft); }
+  .out__from {
+    margin: 1rem 0 0;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--green);
+  }
+  .funnel__count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--steel);
+    margin: 0.8rem 0 0;
+    min-height: 1.2em;
+  }
+  .funnel__note {
+    margin: 2rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--steel);
+  }
+
+  @media (max-width: 60rem) {
+    .funnel { grid-template-columns: 1fr; }
+    .funnel__arrow { transform: rotate(90deg); justify-self: start; }
+    :global([data-motion='on']) .feed { height: 17rem; }
+    :global([data-motion='on']) .sig { top: 17rem; }
+  }
+</style>

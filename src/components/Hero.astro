@@ -18,11 +18,13 @@ import Sparks from './Sparks.astro';
     <aside class="spec hero__spec" data-motion-item aria-label="Example campaign datasheet">
       <p class="spec__head">{heroSpec.title}</p>
       {heroSpec.rows.map((row) => (
-        <div class="spec__row">
+        <div class:list={['spec__row', { 'spec__row--trigger': 'cycle' in row && row.cycle }]}>
           <span class="spec__label">{row.label}</span>
           <span class="spec__value">
             {'live' in row && row.live && <span class="dot dot--live" aria-hidden="true"></span>}
-            {row.value}
+            {'cycle' in row && row.cycle
+              ? <span data-motion-trigger data-cycle={JSON.stringify(heroSpec.triggerCycle)}>{row.value}</span>
+              : row.value}
           </span>
         </div>
       ))}

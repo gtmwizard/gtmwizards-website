@@ -2,7 +2,6 @@
 import { SITE } from '../data/site';
 import { footerNav } from '../data/navigation';
 import { ASSETS } from '../data/assets';
-import LanguageSwitcher from './LanguageSwitcher.astro';
 const year = new Date().getFullYear();
 ---
 
@@ -13,8 +12,7 @@ const year = new Date().getFullYear();
         <img class="footer__logo-img" src={ASSETS.logoDark} alt={SITE.name} width="125" height="24" loading="lazy" />
         <p class="footer__tag">{SITE.tagline}</p>
         <p class="footer__powered">
-          Powered by <a href={SITE.hubsellUrl}>hubsell</a> · Data by
-          <a href={SITE.kadancoUrl}>Kadanco</a>
+          Powered by <a href={SITE.hubsellUrl}>hubsell</a>
         </p>
       </div>
       <div class="footer__cols">
@@ -33,7 +31,6 @@ const year = new Date().getFullYear();
     <div class="footer__bottom">
       <p>© {year} {SITE.name}. All rights reserved.</p>
       <div class="footer__meta">
-        <LanguageSwitcher />
         <a href={SITE.linkedin} rel="noopener">LinkedIn</a>
       </div>
     </div>
@@ -44,8 +41,9 @@ const year = new Date().getFullYear();
   .footer {
     background: var(--footer-bg);
     color: rgba(255, 255, 255, 0.82);
-    padding-block: clamp(2.5rem, 6vw, 4rem) 1.5rem;
-    margin-top: clamp(2rem, 6vw, 4rem);
+    /* No margin-top. The last section runs straight into the footer, so any
+       margin here shows the white body background as a bar. */
+    padding-block: clamp(3rem, 6vw, 4.5rem) 1.5rem;
   }
   .footer a { color: #FFFFFF; }
   .footer__top {

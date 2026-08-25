@@ -152,6 +152,7 @@ function revealSection(section: HTMLElement): void {
   }
 
   if (section.hasAttribute('data-motion-rail')) railDraw(section);
+  if (section.hasAttribute('data-motion-funnel')) signalFunnel(section);
 }
 
 /* ------------------------------------------------------------------------
@@ -190,6 +191,108 @@ function railDraw(section: HTMLElement): void {
 }
 
 /* ------------------------------------------------------------------------
+   Hero datasheet: the trigger row cycles, so the mechanism is visible in
+   three seconds without a second object competing with the headline.
+   ------------------------------------------------------------------------ */
+
+function triggerTicker(): void {
+  const el = document.querySelector<HTMLElement>('[data-motion-trigger]');
+  if (!el) return;
+
+  let values: string[] = [];
+  try {
+    values = JSON.parse(el.dataset.cycle || '[]');
+  } catch {
+    return;
+  }
+  if (values.length < 2) return;
+
+  let i = 0;
+  window.setInterval(() => {
+    i = (i + 1) % values.length;
+    animate(el, {
+      opacity: [1, 0],
+      y: [0, -8],
+      duration: 200,
+      ease: EASE,
+      onComplete: () => {
+        el.textContent = values[i];
+        animate(el, { opacity: [0, 1], y: [8, 0], duration: 340, ease: EASE });
+      },
+    });
+  }, 2600);
+}
+
+/* ------------------------------------------------------------------------
+   Signal funnel: signals scroll in, most are dropped, a few go green and
+   become the written message on the right. Runs once the band is in view.
+   ------------------------------------------------------------------------ */
+
+function signalFunnel(section: HTMLElement): void {
+  const feed = section.querySelector<HTMLElement>('[data-motion-feed]');
+  const titleEl = section.querySelector<HTMLElement>('[data-motion-funnel-title]');
+  const countEl = section.querySelector<HTMLElement>('[data-motion-funnel-count]');
+  if (!feed || !titleEl || !countEl) return;
+
+  const rows = list<HTMLElement>('.sig', feed);
+  if (!rows.length) return;
+
+  const kept = rows.map((r) => r.classList.contains('sig--keep'));
+  const labels = rows.map((r) => {
+    const text = r.querySelector('.sig__text')?.textContent ?? '';
+    const src = r.querySelector('.sig__src')?.textContent ?? '';
+    return src + ', ' + text;
+  });
+
+  const height = feed.getBoundingClientRect().height || 336;
+  let watched = 0;
+  let written = 0;
+  const setCount = () => {
+    countEl.textContent = 'watched ' + watched + ' \u00b7 written ' + written;
+  };
+  setCount();
+
+  const STEP = 620;
+  const tl = createTimeline({ defaults: { ease: EASE }, loop: true });
+
+  rows.forEach((row, i) => {
+    const at = i * STEP;
+
+    tl.add(row, { top: [height, 8], opacity: [0, 1], duration: 560 }, at);
+    tl.call(() => {
+      watched += 1;
+      setCount();
+    }, at + 300);
+
+    tl.add(
+      row,
+      kept[i]
+        ? { borderColor: '#17E769', background: 'rgba(23,231,105,0.14)', duration: 260 }
+        : { opacity: 0.26, duration: 260 },
+      at + 620,
+    );
+
+    if (kept[i]) {
+      tl.call(() => {
+        written += 1;
+        setCount();
+        titleEl.textContent = labels[i];
+        animate(titleEl, { opacity: [0, 1], y: [8, 0], duration: 400, ease: EASE });
+      }, at + 880);
+    }
+
+    tl.add(row, { top: -80, opacity: 0, duration: 520 }, at + 980);
+  });
+
+  /* Reset the counters before the loop starts again. */
+  tl.call(() => {
+    watched = 0;
+    written = 0;
+    setCount();
+  }, rows.length * STEP + 1100);
+}
+
+/* ------------------------------------------------------------------------
    Boot
    ------------------------------------------------------------------------ */
 
@@ -199,6 +302,7 @@ function start(): void {
   if (w.__motionFallback) window.clearTimeout(w.__motionFallback);
 
   heroEntrance();
+  triggerTicker();
   scrollReveals();
 }
 

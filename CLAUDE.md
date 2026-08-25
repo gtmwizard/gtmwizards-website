@@ -79,6 +79,12 @@ Rules for Claude:
   without the `data-motion` fallback timer described in `docs/HANDOFF.md`.
   `REVEAL` in `motion.ts` and the matching selector list in `global.css`
   must stay in sync.
+- **British English.** The site is English only, `lang="en-GB"`. Use -ise
+  endings, "programme", "licence" as a noun. There is no i18n layer; do not
+  reintroduce one without reading `docs/TRANSLATION-ROUTES.md`.
+- **German is an offer, not a frame.** It belongs in `LanguageEdge.astro` and
+  nowhere else. Do not thread "native German" back through the hero, the
+  datasheet, the pillars or the signal examples.
 - **No em dashes and no en dashes anywhere.** Use commas, colons,
   periods or parentheses, and write ranges out ("days 1 to 2"). Run
   `npm run check:dashes` before every drop; it exits non-zero on a hit.

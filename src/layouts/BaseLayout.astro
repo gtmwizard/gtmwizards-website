@@ -11,8 +11,6 @@ import JsonLd from '../components/JsonLd.astro';
 import { SITE } from '../data/site';
 import { ASSETS, OG_IMAGE } from '../data/assets';
 import { pageTitle } from '../data/seo';
-import { translatedRoutes, defaultLocale, ogLocales } from '../i18n/ui';
-import { delocalizePath, englishPathFor, getLangFromUrl, localizeRoute } from '../i18n/utils';
 
 interface Props {
   title?: string;
@@ -50,25 +48,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 // the site origin.
 const ogImageUrl = new URL(ogImage ?? ASSETS.ogImage, Astro.site).href;
 
-// hreflang alternates: English always; a locale only once the current
-// path is listed as translated in src/i18n/ui.ts.
-const currentLocale = getLangFromUrl(Astro.url);
-const basePath = englishPathFor(delocalizePath(Astro.url.pathname), currentLocale);
-const alternates: { lang: string; href: URL }[] = [
-  { lang: defaultLocale, href: new URL(basePath, Astro.site) },
-  ...Object.entries(translatedRoutes)
-    .filter(([loc, routes]) =>
-      routes.includes(localizeRoute(basePath, loc as never).replace(`/${loc}`, '') || '/')
-    )
-    .map(([loc]) => ({
-      lang: loc,
-      href: new URL(localizeRoute(basePath, loc as never), Astro.site),
-    })),
-];
 ---
 
 <!doctype html>
-<html lang={currentLocale}>
+<html lang="en-GB">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -95,21 +78,12 @@ const alternates: { lang: string; href: URL }[] = [
     <link rel="apple-touch-icon" href={ASSETS.appleTouchIcon} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     {noindex && <meta name="robots" content="noindex" />}
-    {alternates.map((a) => (
-      <link rel="alternate" hreflang={a.lang} href={a.href} />
-    ))}
-    <link rel="alternate" hreflang="x-default" href={new URL(basePath, Astro.site)} />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content={ogLocales[currentLocale] ?? ogLocales.en} />
-    {Object.entries(ogLocales)
-      .filter(([loc]) => loc !== currentLocale)
-      .map(([, ogLocale]) => (
-        <meta property="og:locale:alternate" content={ogLocale} />
-      ))}
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:type" content={OG_IMAGE.type} />
     <meta property="og:image:width" content={String(OG_IMAGE.width)} />

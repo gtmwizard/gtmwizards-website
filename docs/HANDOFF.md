@@ -212,8 +212,46 @@ thing this decision was meant to stop.
 `SITE.languages` is now English and German, and it describes what the service
 delivers, not what the site is published in.
 
+## The thread and the sparks
+
+Two devices tie the page together across section boundaries.
+
+**The thread.** One continuous line down the left margin of the whole page,
+with the wordmark's spark as a node at the top of each section. It is *not*
+one long SVG. Every `main > section` draws its own segment via `::before`,
+and because the segments are contiguous they read as a single line. That
+buys two things for free: the line recolours per band, since `--line` is
+already remapped inside `.section--dark`, and it draws progressively on
+scroll without any scroll-linked animation.
+
+The reveal is a CSS transition on `.is-threaded`, not an Anime.js tween,
+because pseudo-elements cannot be targeted from JavaScript. `motion.ts` only
+adds the class. This is the one place where timing values live outside
+`motion.ts`; they are in `global.css` beside the rule.
+
+The thread hides below 48rem, where the margin runs out and it would crowd
+the copy.
+
+**Sparks across the seams.** `Sparks.astro` now takes `tone` (`dark` or
+`light`) and `density` (`full` or `seam`). Light bands get plum and deep
+green at roughly a tenth opacity, which is texture rather than decoration.
+Several sparks are positioned outside 0 to 100 percent on purpose so they
+hang over the edge into the neighbouring band.
+
+Two things make that safe, and both will look like mistakes to a future
+reader who does not know why they are there:
+
+- `overflow-x: clip` on `html` and `body`. `clip` rather than `hidden`,
+  because `hidden` creates a scroll container and would break the sticky nav.
+- `main > section > .container { position: relative; z-index: 1 }`. The
+  sparks layer is positioned, so without this it paints over the copy in any
+  section whose container is not itself positioned.
+
 ## Decisions log
 
+- Continuum (2026-08-26): a thread down the page plus sparks crossing the
+  section seams, so the bands stop reading as separate slabs. Chosen over
+  overlapping cards, which would have cost far more per instance.
 - English only (2026-08-25): i18n layer removed entirely, language switcher
   and top bar deleted, Benelux and Dutch dropped per D24. Slugs parked in
   docs/TRANSLATION-ROUTES.md.

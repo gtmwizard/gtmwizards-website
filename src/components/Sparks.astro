@@ -1,49 +1,77 @@
 ---
 // Decorative background layer: the four-point spark lifted straight out of
-// the wordmark's hat, scattered across a dark band and slowly twinkling.
+// the wordmark's hat.
 //
-// Dark bands only. The colours are green and lilac at low opacity, so on a
-// light surface they disappear.
+// Two tones. 'dark' is green and lilac for plum and ink bands. 'light' is
+// plum and deep green at much lower opacity, for white and paper bands, so
+// the motif runs the whole page instead of stopping at every seam.
 //
-// Usage: put it as the first child of a position:relative section, and give
-// the section's real content a higher stacking context:
+// Some sparks sit deliberately outside the section (negative y, or y past
+// 100) so they spill across the boundary into the neighbouring band. That
+// needs the layer to overflow visibly, which is why nothing here clips.
+// `body { overflow-x: clip }` in global.css stops that becoming a sideways
+// scrollbar.
+//
+// Usage: first child of a position:relative section, with the section's real
+// content given a higher stacking context:
 //   <section class="hero section--dark">
 //     <Sparks />
 //     <div class="container hero__inner"> ... </div>
 //   </section>
 //
-// Positions are hand-placed to sit in the margins around the headline and
-// the datasheet, not behind them. If the section's layout changes, move
-// them rather than adding more.
+// Positions are hand-placed to sit in the margins around the content, not
+// behind it. If a section's layout changes, move them rather than add more.
+
+interface Props {
+  /** 'dark' for plum and ink bands, 'light' for white and paper bands. */
+  tone?: 'dark' | 'light';
+  /** 'full' scatters across the band, 'seam' only straddles its edges. */
+  density?: 'full' | 'seam';
+}
+
+const { tone = 'dark', density = 'full' } = Astro.props;
 
 type Spark = {
   x: number;      // percent from the left, this is the spark's centre
-  y: number;      // percent from the top
+  y: number;      // percent from the top. Outside 0 to 100 means it spills
   size: number;   // px
-  tone: 'green' | 'lilac';
+  hue: 'a' | 'b'; // 'a' is green on dark, plum on light
   tilt: number;   // degrees
   delay: number;  // seconds, staggers the twinkle
 };
 
-const sparks: Spark[] = [
-  { x: 6,  y: 20, size: 34, tone: 'green', tilt: -12, delay: 0 },
-  { x: 47, y: 11, size: 17, tone: 'lilac', tilt: 18,  delay: 1.2 },
-  { x: 91, y: 17, size: 25, tone: 'green', tilt: 8,   delay: 2.4 },
-  { x: 96, y: 60, size: 16, tone: 'lilac', tilt: -20, delay: 0.9 },
-  { x: 55, y: 80, size: 21, tone: 'lilac', tilt: 10,  delay: 0.6 },
-  { x: 79, y: 90, size: 29, tone: 'green', tilt: -8,  delay: 1.8 },
-  { x: 29, y: 93, size: 14, tone: 'green', tilt: 22,  delay: 2.1 },
-  { x: 9,  y: 84, size: 19, tone: 'lilac', tilt: -6,  delay: 3.1 },
+/* Scattered through the band, plus two that cross each edge. */
+const FULL: Spark[] = [
+  { x: 6,  y: 20,  size: 34, hue: 'a', tilt: -12, delay: 0 },
+  { x: 47, y: 11,  size: 17, hue: 'b', tilt: 18,  delay: 1.2 },
+  { x: 91, y: 17,  size: 25, hue: 'a', tilt: 8,   delay: 2.4 },
+  { x: 96, y: 60,  size: 16, hue: 'b', tilt: -20, delay: 0.9 },
+  { x: 55, y: 80,  size: 21, hue: 'b', tilt: 10,  delay: 0.6 },
+  { x: 79, y: 90,  size: 29, hue: 'a', tilt: -8,  delay: 1.8 },
+  { x: 29, y: 93,  size: 14, hue: 'a', tilt: 22,  delay: 2.1 },
+  { x: 9,  y: 84,  size: 19, hue: 'b', tilt: -6,  delay: 3.1 },
+  /* These two hang over the edges and land in the next band along. */
+  { x: 68, y: 101, size: 26, hue: 'a', tilt: 14,  delay: 1.5 },
+  { x: 17, y: -2,  size: 22, hue: 'b', tilt: -16, delay: 2.7 },
 ];
+
+/* Just the seams, for light bands where a full scatter would be busy. */
+const SEAM: Spark[] = [
+  { x: 88, y: -3,  size: 24, hue: 'a', tilt: 12,  delay: 0.4 },
+  { x: 12, y: 102, size: 28, hue: 'b', tilt: -10, delay: 1.9 },
+  { x: 62, y: 101, size: 16, hue: 'a', tilt: 20,  delay: 2.6 },
+];
+
+const sparks: Spark[] = density === 'seam' ? SEAM : FULL;
 
 // The spark path, normalised from the 512px mark to a 0 to 100 box.
 const PATH = 'M33.33 33.33L50 0L66.67 33.33L100 50L66.67 66.67L50 100L33.33 66.67L0 50Z';
 ---
 
-<div class="sparks" aria-hidden="true">
+<div class:list={['sparks', `sparks--${tone}`]} aria-hidden="true">
   {sparks.map((s) => (
     <svg
-      class:list={['spark', `spark--${s.tone}`]}
+      class:list={['spark', `spark--${s.hue}`]}
       viewBox="0 0 100 100"
       style={`left:${s.x}%;top:${s.y}%;width:${s.size}px;height:${s.size}px;--tilt:${s.tilt}deg;--delay:${s.delay}s`}
       focusable="false"
@@ -54,10 +82,13 @@ const PATH = 'M33.33 33.33L50 0L66.67 33.33L100 50L66.67 66.67L50 100L33.33 66.6
 </div>
 
 <style>
+  /* Nothing clips here: sparks placed outside 0 to 100 percent are meant to
+     hang over the edge into the next band. The layer sits above neighbouring
+     section backgrounds but below all content, which is z-index 1. */
   .sparks {
     position: absolute;
     inset: 0;
-    overflow: hidden;
+    overflow: visible;
     pointer-events: none;
     z-index: 0;
   }
@@ -84,19 +115,27 @@ const PATH = 'M33.33 33.33L50 0L66.67 33.33L100 50L66.67 66.67L50 100L33.33 66.6
     will-change: opacity, scale;
   }
 
-  .spark--green { fill: var(--green); --peak: 0.55; }
-  .spark--lilac { fill: var(--lilac); --peak: 0.32; }
+  /* Dark bands: the brand green and its lilac tint. */
+  .sparks--dark .spark--a { fill: var(--green); --peak: 0.55; }
+  .sparks--dark .spark--b { fill: var(--lilac); --peak: 0.32; }
+
+  /* Light bands: plum and deep green, much quieter. Bright green on white is
+     1.66:1, so it reads as a smudge rather than a mark. These are texture,
+     not decoration you should notice. */
+  .sparks--light .spark--a { fill: var(--plum); --peak: 0.11; }
+  .sparks--light .spark--b { fill: var(--green-deep); --peak: 0.13; }
 
   @keyframes twinkle {
     0%, 100% { scale: 1; opacity: var(--peak); }
     50% { scale: 0.82; opacity: calc(var(--peak) * 0.35); }
   }
 
-  /* Fewer sparks on small screens: the inner ones would crowd the copy. */
+  /* Fewer sparks on small screens: the inner ones would crowd the copy. The
+     edge-crossing ones are kept, since they are the point. */
   @media (max-width: 56rem) {
-    .spark:nth-child(2),
-    .spark:nth-child(4),
-    .spark:nth-child(5) { display: none; }
+    .sparks--full .spark:nth-child(2),
+    .sparks--full .spark:nth-child(4),
+    .sparks--full .spark:nth-child(5) { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {

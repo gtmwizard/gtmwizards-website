@@ -112,6 +112,10 @@ function scrollReveals(): void {
 }
 
 function revealSection(section: HTMLElement): void {
+  /* Draws this section's segment of the thread. The transition itself lives
+     in global.css because pseudo-elements cannot be animated from JS. */
+  section.classList.add('is-threaded');
+
   const targets = list<HTMLElement>(REVEAL, section);
   if (targets.length) {
     animate(targets, {
@@ -301,6 +305,7 @@ function start(): void {
   const w = window as Window & { __motionFallback?: number };
   if (w.__motionFallback) window.clearTimeout(w.__motionFallback);
 
+  document.querySelector('[data-motion-hero]')?.classList.add('is-threaded');
   heroEntrance();
   triggerTicker();
   scrollReveals();

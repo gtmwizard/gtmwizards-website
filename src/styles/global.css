@@ -83,12 +83,17 @@
 * { box-sizing: border-box; }
 
 html {
+  /* Sparks hang over section edges on purpose. `clip` contains that
+     horizontally without creating a scroll container the way `hidden` would,
+     so position: sticky on the nav keeps working. */
+  overflow-x: clip;
   color-scheme: light;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
+  overflow-x: clip;
   margin: 0;
   background: var(--background);
   color: var(--foreground);
@@ -301,6 +306,83 @@ img, svg { max-width: 100%; height: auto; }
   .dot--live { animation: none; }
   * { transition-duration: 0.01ms !important; }
 }
+
+/* ---------- the thread ----------
+   One continuous line down the left margin of the whole page, with a spark
+   at the top of each section.
+
+   It is not one long SVG. Each section draws its own segment, top to bottom,
+   and because the segments are contiguous they read as a single line. That
+   buys two things for free: the line recolours itself per band, because
+   --line is already remapped inside .section--dark, and it draws
+   progressively as you scroll rather than needing scroll-linked animation.
+
+   The segment and node are pseudo-elements, so the reveal is a CSS
+   transition rather than an Anime.js tween. Pseudo-elements cannot be
+   targeted by JS. src/scripts/motion.ts only adds the .is-threaded class. */
+
+main > section {
+  position: relative;
+}
+
+/* The sparks layer is positioned, so without this it would paint on top of
+   the copy in any section whose container is not itself positioned. */
+main > section > .container {
+  position: relative;
+  z-index: 1;
+}
+
+main > section::before,
+main > section::after {
+  content: '';
+  position: absolute;
+  /* Sits in the outer margin on wide screens, tucks toward the viewport
+     edge on narrow ones, always clear of the container's text edge. */
+  left: max(1rem, calc((100% - var(--max-w)) / 2 - 1.35rem));
+  pointer-events: none;
+}
+
+/* The segment. */
+main > section::before {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+}
+
+/* The node: the wordmark's spark, masked so it takes a token colour. */
+main > section::after {
+  top: 0;
+  width: 11px;
+  height: 11px;
+  margin-left: -5px;
+  background: var(--brand);
+  -webkit-mask: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20d%3D%22M33.33%2033.33L50%200L66.67%2033.33L100%2050L66.67%2066.67L50%20100L33.33%2066.67L0%2050Z%22%2F%3E%3C%2Fsvg%3E') center / contain no-repeat;
+  mask: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20d%3D%22M33.33%2033.33L50%200L66.67%2033.33L100%2050L66.67%2066.67L50%20100L33.33%2066.67L0%2050Z%22%2F%3E%3C%2Fsvg%3E') center / contain no-repeat;
+}
+
+/* Below the point where the margin runs out, the thread would crowd the
+   copy, so it goes. */
+@media (max-width: 48rem) {
+  main > section::before,
+  main > section::after { display: none; }
+}
+
+/* Draws in as each section arrives. Static and fully drawn without motion. */
+[data-motion='on'] main > section::before {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 900ms cubic-bezier(0.16, 0.84, 0.44, 1);
+}
+[data-motion='on'] main > section::after {
+  opacity: 0;
+  scale: 0.4;
+  transition:
+    opacity 420ms cubic-bezier(0.16, 0.84, 0.44, 1),
+    scale 420ms cubic-bezier(0.16, 0.84, 0.44, 1);
+}
+[data-motion='on'] main > section.is-threaded::before { transform: scaleY(1); }
+[data-motion='on'] main > section.is-threaded::after { opacity: 1; scale: 1; }
 
 /* ---------- motion ----------
    These rules only bite when the inline script in BaseLayout has set

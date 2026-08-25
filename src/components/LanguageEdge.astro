@@ -4,9 +4,11 @@
 // German-speaking market and need everything else on this page regardless.
 // Copy lives in src/data/home-content.ts.
 import { language } from '../data/home-content';
+import Sparks from './Sparks.astro';
 ---
 
 <section class="section section--raised" aria-labelledby="language-heading">
+  <Sparks tone="light" density="seam" />
   <div class="container">
     <p class="eyebrow">{language.eyebrow}</p>
     <h2 id="language-heading">{language.heading}</h2>

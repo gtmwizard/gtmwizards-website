@@ -1,8 +1,10 @@
 ---
 import { timeline } from '../data/home-content';
+import Sparks from './Sparks.astro';
 ---
 
 <section class="section">
+  <Sparks tone="light" density="seam" />
   <div class="container">
     <p class="eyebrow">{timeline.eyebrow}</p>
     <h2>{timeline.heading}</h2>

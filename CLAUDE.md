@@ -72,8 +72,12 @@ Rules for Claude:
   or alias instead. Two rules that are easy to break: white on green
   fails at 1.66:1, and green fails as type on white. On light surfaces
   the accent is plum; green appears there only as a fill.
-- The site is **light mode only**. There is no dark-mode toggle. Dark
-  rhythm comes from `.section--dark`, which repaints its own tokens.
+- The site supports **light and dark mode**. The toggle sits in the nav and
+  the choice is stored in `localStorage`, defaulting to the system
+  preference, applied before first paint by an inline script in
+  `BaseLayout`. Band rhythm comes from `.section--dark`, which repaints its
+  own tokens: on light it is the dark beat against white, on dark it is the
+  lighter beat against ink. Anything new must be checked in both modes.
 - **All motion lives in `src/scripts/motion.ts`.** Components get a hook
   attribute, never a duration or a delay. Never hide content behind JS
   without the `data-motion` fallback timer described in `docs/HANDOFF.md`.

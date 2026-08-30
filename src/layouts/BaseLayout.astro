@@ -59,6 +59,20 @@ const ogImageUrl = new URL(ogImage ?? ASSETS.ogImage, Astro.site).href;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <script is:inline>
+      // Theme, applied before first paint so nothing flashes white.
+      // Stored choice wins; otherwise follow the system preference.
+      (() => {
+        try {
+          const stored = localStorage.getItem('theme');
+          const dark =
+            stored === 'dark' ||
+            (!stored && matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) document.documentElement.classList.add('dark');
+        } catch {}
+      })();
+    </script>
+
+    <script is:inline>
       // Opt in to motion only when JS runs and the visitor has not asked for
       // less of it. Runs before first paint so nothing flashes.
       // The fallback timer is the safety net: if src/scripts/motion.ts never

@@ -5,7 +5,8 @@ you are adding a section or a page, read this first. The working agreement
 for delivery lives in `CLAUDE.md`; the architecture lives in
 `docs/HANDOFF.md`.
 
-The site is **light mode only**. There is no dark-mode toggle.
+The site runs in **light and dark mode**. Check both before you ship
+anything; the token layer does most of the work, but only if you use it.
 
 ## 1. Colour
 
@@ -51,7 +52,24 @@ inside a dark band looks right with no extra CSS. If you build something
 new, consume the aliases and it will inherit the same behaviour for free.
 
 The page rhythm on the homepage alternates white, pale (`--surface-alt`)
-and plum bands. Two plum bands should not touch.
+and plum bands. Two plum bands should not touch, and the homepage is
+deliberately dense with them: hero, signals, language, handover,
+qualifying and the closing CTA are all plum, with a pale or white beat
+between each.
+
+### Dark mode
+
+The rhythm inverts rather than disappears. On light, plum bands are the
+dark beats against white. On dark, the page base is ink and the same plum
+bands become the lighter beats, so the alternation survives and
+`.section--dark` needs almost no special casing.
+
+Two things change on dark and nothing else should:
+
+1. **Links.** Plum is too dim on ink, so green takes over as the accent
+   for type. This is what `.section--dark` already did on light.
+2. **Green stays a fill with ink type.** `--primary-foreground` is ink in
+   both modes. Never white on green, in either mode.
 
 ## 2. Type
 

@@ -82,6 +82,61 @@
   --rail-x: max(1rem, calc((100% - var(--max-w)) / 2 - 1.35rem));
 }
 
+/* ---------- dark mode ----------
+   Toggled by class="dark" on <html>. The no-flash script in BaseLayout
+   applies it before first paint from localStorage, falling back to the
+   visitor's system preference.
+
+   The rhythm inverts rather than disappears. On light, plum bands are the
+   dark beats against white. On dark, the page base is ink and the same
+   plum bands read as the LIGHTER beats, so the alternation survives and
+   .section--dark needs almost no special casing.
+
+   Green keeps its rule in both modes: it is a light colour, so type on a
+   green fill stays ink. What changes is the link colour. Plum has too
+   little contrast on ink, so on dark surfaces green takes over as the
+   accent for type, which is exactly what .section--dark already does. */
+html.dark {
+  color-scheme: dark;
+
+  --background: #0C0D0E;
+  --foreground: #F7F6F9;
+  --card: #16151A;
+  --card-foreground: #F7F6F9;
+  --popover: #16151A;
+  --popover-foreground: #F7F6F9;
+  --primary: var(--green);
+  --primary-foreground: #0C0D0E;  /* ink on green, in both modes */
+  --primary-hover: var(--green-hover);
+  --secondary: #1A181E;
+  --secondary-foreground: #F7F6F9;
+  --muted: #17161B;
+  --muted-foreground: #A79BAB;
+  --accent: #1E1A22;
+  --accent-foreground: #F3ECF6;
+  --destructive: #E4657C;
+  --border: rgba(255, 255, 255, 0.13);
+  --input: rgba(255, 255, 255, 0.16);
+  --ring: var(--green);
+
+  /* aliases that hold literals rather than var() references */
+  --ink-soft: rgba(255, 255, 255, 0.76);
+  --line-soft: rgba(255, 255, 255, 0.08);
+  --brand-strong: var(--green);   /* plum is too dim on ink */
+  --brand-tint: #241029;
+  --ok: var(--green);
+  --footer-bg: #08080A;           /* a step below the page, so it separates */
+  --shadow-colour: rgba(0, 0, 0, 0.6);
+}
+
+/* Plum bands sit above the ink page rather than below the white one. The
+   surface tokens lift a step so cards inside them stay readable. */
+html.dark .section--dark {
+  background: #2B0A33;
+  --surface-alt: #3A1044;
+  --card: rgba(255, 255, 255, 0.06);
+}
+
 * { box-sizing: border-box; }
 
 html {
@@ -402,10 +457,18 @@ main > section::after {
 
 .srail {
   position: absolute;
-  top: 2.4rem;
-  bottom: 0;
-  left: var(--rail-x);
-  width: 0;
+  /* Inset from both seams so the label never touches the band edge and
+     the sticky travel stops short of the next section. */
+  top: 4.5rem;
+  bottom: 4.5rem;
+  /* The region runs from the page edge to just short of the thread, and
+     the label is pushed to its right end, so it always sits LEFT of the
+     line with the line unbroken beside it. */
+  left: 0;
+  width: calc(var(--rail-x) - 0.62rem);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
   pointer-events: none;
   z-index: 1;
 }
@@ -414,9 +477,6 @@ main > section::after {
   position: sticky;
   /* Clears the 4rem nav with room to breathe. */
   top: 6.5rem;
-  display: block;
-  /* Sits to the left of the line so the thread stays unbroken. */
-  transform: translateX(-1.55rem);
   writing-mode: vertical-rl;
   rotate: 180deg;
   font-family: var(--font-mono);

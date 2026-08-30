@@ -2,6 +2,7 @@
 import { SITE } from '../data/site';
 import { mainNav } from '../data/navigation';
 import { ASSETS } from '../data/assets';
+import ThemeToggle from './ThemeToggle.astro';
 ---
 
 <header class="nav" id="site-header" data-over="base">
@@ -31,6 +32,7 @@ import { ASSETS } from '../data/assets';
           <a href={item.href}>{item.label}</a>
         )
       )}
+      <ThemeToggle />
       <a class="btn btn--primary nav__cta" href="/book-a-call">Apply for a strategy call</a>
     </nav>
   </div>
@@ -125,9 +127,12 @@ import { ASSETS } from '../data/assets';
   .nav__logo:hover { text-decoration: none; }
   .nav__logo-img { display: block; height: 24px; width: auto; }
   .nav__logo-img--dark { display: none; }
-  /* swap the wordmark when the header sits over a dark section */
-  .nav[data-over='dark'] .nav__logo-img--light { display: none; }
-  .nav[data-over='dark'] .nav__logo-img--dark { display: block; }
+  /* swap the wordmark when the header sits over a dark section, and
+     whenever the whole site is in dark mode */
+  .nav[data-over='dark'] .nav__logo-img--light,
+  :global(html.dark) .nav__logo-img--light { display: none; }
+  .nav[data-over='dark'] .nav__logo-img--dark,
+  :global(html.dark) .nav__logo-img--dark { display: block; }
 
   .nav__links {
     display: flex;

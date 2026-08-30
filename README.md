@@ -18,9 +18,11 @@ deploy to production via Cloudflare Pages; other branches get preview URLs.
   Two contrast rules are easy to break: never white on green (1.66:1), and
   never green as type on white. On light surfaces the accent colour is
   plum. See `docs/STYLEGUIDE.md`.
-- **Light mode only.** There is no dark-mode toggle. The light and dark
-  rhythm comes from `.section--dark`, which repaints its own tokens so the
-  cards, rules and status dots inside it restyle automatically.
+- **Light and dark mode.** Toggle in the nav, stored in `localStorage`,
+  defaulting to the system preference and applied before first paint by an
+  inline script in `BaseLayout`. Band rhythm comes from `.section--dark`,
+  which repaints its own tokens, so the cards, rules and status dots inside
+  it restyle automatically in both modes.
 - **Type**: Instrument Sans for display and body, IBM Plex Mono for spec
   labels and eyebrows. Self-hosted through `@fontsource` for GDPR.
 - **Motion**: all of it in `src/scripts/motion.ts`, driven by Anime.js.

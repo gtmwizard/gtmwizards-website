@@ -1,6 +1,6 @@
 ---
 term: "Deliverability"
-description: "The share of your emails that reach the inbox instead of spam — determined by infrastructure, volume discipline, and content quality."
+description: "The share of your emails that reach the inbox instead of spam, determined by infrastructure, volume discipline, and content quality."
 ---
 
 Deliverability is won before the first email is sent: dedicated sending

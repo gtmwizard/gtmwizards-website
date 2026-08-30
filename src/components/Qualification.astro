@@ -1,8 +1,10 @@
 ---
 import { qualification } from '../data/home-content';
+import SectionRail from './SectionRail.astro';
 ---
 
 <section class="section section--raised">
+  <SectionRail label={qualification.label} />
   <div class="container qual">
     <div>
       <p class="eyebrow">{qualification.eyebrow}</p>

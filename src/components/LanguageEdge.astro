@@ -5,9 +5,11 @@
 // Copy lives in src/data/home-content.ts.
 import { language } from '../data/home-content';
 import Sparks from './Sparks.astro';
+import SectionRail from './SectionRail.astro';
 ---
 
 <section class="section section--raised" aria-labelledby="language-heading">
+  <SectionRail label={language.label} />
   <Sparks tone="light" density="seam" />
   <div class="container">
     <p class="eyebrow">{language.eyebrow}</p>

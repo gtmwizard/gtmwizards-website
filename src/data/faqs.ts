@@ -1,3 +1,9 @@
+export const faqSection = {
+  label: 'Questions',
+  eyebrow: 'FAQs',
+  heading: 'Questions founders ask us',
+} as const;
+
 export type Faq = { q: string; a: string };
 
 export const faqs: Faq[] = [

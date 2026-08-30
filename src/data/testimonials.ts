@@ -1,6 +1,11 @@
 // Empty for launch, gtmWizards is new and we do not fake social proof.
 // When the first client references arrive, add them here and the
 // TestimonialStrip component will render automatically on the homepage.
+export const testimonialSection = {
+  label: 'Results',
+  eyebrow: 'Client results',
+} as const;
+
 export type Testimonial = {
   quote: string;
   name: string;

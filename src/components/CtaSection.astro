@@ -2,6 +2,8 @@
 import Sparks from './Sparks.astro';
 
 interface Props {
+  /** Margin label. Omit to leave the section unlabelled. */
+  label?: string;
   heading: string;
   tone?: 'base' | 'dark';
   sub?: string;
@@ -11,6 +13,7 @@ interface Props {
   secondaryHref?: string;
 }
 const {
+  label,
   heading,
   tone = 'base',
   sub,
@@ -19,9 +22,11 @@ const {
   secondaryLabel,
   secondaryHref,
 } = Astro.props;
+import SectionRail from './SectionRail.astro';
 ---
 
 <section class:list={['section', 'cta-band', { 'section--dark': tone === 'dark' }]}>
+  {label && <SectionRail label={label} />}
   {tone === 'dark' && <Sparks />}
   <div class="container">
     <div class:list={['cta', { gridpaper: tone !== 'dark' }]}>

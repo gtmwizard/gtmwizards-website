@@ -1,0 +1,33 @@
+---
+// The margin label: one or two words running vertically down the left
+// margin, naming the section you are currently reading.
+//
+// It rides the same axis as the thread in global.css, sitting just outside
+// the line so the line stays unbroken, and it sticks while its section is
+// in view then hands off to the next one.
+//
+// Two things to know before changing it:
+//
+//   1. The horizontal position is derived from the same expression the
+//      thread uses. If the thread moves in global.css, this moves with it,
+//      because both read `--rail-x`. Do not hard-code a second offset.
+//   2. It carries no timing values. The fade is driven by the `.is-threaded`
+//      class that src/scripts/motion.ts already adds to each section, so the
+//      label appears with its own segment of the thread and needs no entry
+//      in REVEAL.
+//
+// Decorative: the section headings already carry the document structure, so
+// this is hidden from assistive technology rather than repeated to it.
+//
+// Usage: any child of a `main > section`, conventionally after <Sparks />.
+//   <SectionRail label={proofStrip.label} />
+interface Props {
+  /** One or two words. Longer labels crowd the margin and get cropped. */
+  label: string;
+}
+const { label } = Astro.props;
+---
+
+<span class="srail" aria-hidden="true">
+  <span class="srail__text">{label}</span>
+</span>

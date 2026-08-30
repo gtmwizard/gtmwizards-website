@@ -47,6 +47,13 @@ public/assets/       Placeholder logos (mirrors R2 paths for local dev)
 ```
 
 ## Behaviors to know
+- **Margin labels**: `SectionRail.astro` sets one or two words vertically
+  in the left margin, naming the current section. It shares the `--rail-x`
+  axis with the thread, so both move together, and it fades with the
+  `.is-threaded` class motion.ts already sets, so it needs no `REVEAL`
+  entry. Labels live in the section's data file as `label`. Hidden below
+  80rem. Conventions in `docs/STYLEGUIDE.md`.
+
 
 - **No dark mode.** Removed on 2026-08-22. The page rhythm is a plum
   `.section--dark` band on a white page; the band repaints its own tokens

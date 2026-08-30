@@ -78,6 +78,8 @@
   --font-display: var(--font-sans);
   --font-body: var(--font-sans);
   --max-w: 72rem;
+  /* Shared left-margin axis for the thread and the section labels. */
+  --rail-x: max(1rem, calc((100% - var(--max-w)) / 2 - 1.35rem));
 }
 
 * { box-sizing: border-box; }
@@ -337,8 +339,10 @@ main > section::after {
   content: '';
   position: absolute;
   /* Sits in the outer margin on wide screens, tucks toward the viewport
-     edge on narrow ones, always clear of the container's text edge. */
-  left: max(1rem, calc((100% - var(--max-w)) / 2 - 1.35rem));
+     edge on narrow ones, always clear of the container's text edge.
+     --rail-x is the shared axis: SectionRail reads it too, so the line and
+     the margin labels can never drift apart. */
+  left: var(--rail-x);
   pointer-events: none;
 }
 
@@ -383,6 +387,59 @@ main > section::after {
 }
 [data-motion='on'] main > section.is-threaded::before { transform: scaleY(1); }
 [data-motion='on'] main > section.is-threaded::after { opacity: 1; scale: 1; }
+
+/* ---------- the margin label ----------
+   One or two words per section, set vertically in the margin just outside
+   the thread, so you always know what you are looking at without scrolling
+   back to the heading. Rendered by src/components/SectionRail.astro.
+
+   It starts below the section's spark node and sticks under the nav while
+   its section is in view.
+
+   The label needs real margin to live in, more than the 1px thread does.
+   Below 80rem the margin is too tight and it would crowd the copy, so it
+   goes and the thread carries on alone. */
+
+.srail {
+  position: absolute;
+  top: 2.4rem;
+  bottom: 0;
+  left: var(--rail-x);
+  width: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.srail__text {
+  position: sticky;
+  /* Clears the 4rem nav with room to breathe. */
+  top: 6.5rem;
+  display: block;
+  /* Sits to the left of the line so the thread stays unbroken. */
+  transform: translateX(-1.55rem);
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--steel);
+}
+
+@media (max-width: 80rem) {
+  .srail { display: none; }
+}
+
+/* Fades in with its own segment of the thread. No timing lives in the
+   component, and this needs no REVEAL entry because it reuses the
+   .is-threaded hook motion.ts already sets. */
+[data-motion='on'] main > section .srail {
+  opacity: 0;
+  transition: opacity 520ms cubic-bezier(0.16, 0.84, 0.44, 1) 160ms;
+}
+[data-motion='on'] main > section.is-threaded .srail { opacity: 1; }
 
 /* ---------- motion ----------
    These rules only bite when the inline script in BaseLayout has set

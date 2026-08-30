@@ -1,9 +1,11 @@
 ---
 import { pillars } from '../data/home-content';
 import Sparks from './Sparks.astro';
+import SectionRail from './SectionRail.astro';
 ---
 
 <section class="section">
+  <SectionRail label={pillars.label} />
   <Sparks tone="light" density="seam" />
   <div class="container">
     <p class="eyebrow">{pillars.eyebrow}</p>

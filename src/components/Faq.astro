@@ -1,11 +1,13 @@
 ---
-import { faqs } from '../data/faqs';
+import { faqs, faqSection } from '../data/faqs';
+import SectionRail from './SectionRail.astro';
 ---
 
 <section class="section section--raised">
+  <SectionRail label={faqSection.label} />
   <div class="container">
-    <p class="eyebrow">FAQs</p>
-    <h2>Questions founders ask us</h2>
+    <p class="eyebrow">{faqSection.eyebrow}</p>
+    <h2>{faqSection.heading}</h2>
     <div class="faq">
       {faqs.map((f) => (
         <details class="faq__item">

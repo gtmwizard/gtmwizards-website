@@ -8,9 +8,11 @@
 // partner wall, which is the tone the rest of the page is in.
 import { tools } from '../data/home-content';
 import Sparks from './Sparks.astro';
+import SectionRail from './SectionRail.astro';
 ---
 
 <section class="section section--tight" aria-labelledby="tools-heading">
+  <SectionRail label={tools.label} />
   <Sparks tone="light" density="seam" />
   <div class="container">
     <p class="eyebrow">{tools.eyebrow}</p>

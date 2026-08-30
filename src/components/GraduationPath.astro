@@ -2,9 +2,11 @@
 // The signature section: the three-stage handover rail. This is the one
 // claim no competitor can copy, so it gets the most deliberate treatment.
 import { graduation } from '../data/home-content';
+import SectionRail from './SectionRail.astro';
 ---
 
 <section class="section section--dark" id="graduate" data-motion-rail>
+  <SectionRail label={graduation.label} />
   <div class="container">
     <p class="eyebrow">{graduation.eyebrow}</p>
     <h2>{graduation.heading}</h2>

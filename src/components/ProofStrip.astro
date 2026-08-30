@@ -1,9 +1,11 @@
 ---
 import { proofStrip } from '../data/home-content';
 import Sparks from './Sparks.astro';
+import SectionRail from './SectionRail.astro';
 ---
 
 <section class="section section--raised">
+  <SectionRail label={proofStrip.label} />
   <Sparks tone="light" density="seam" />
   <div class="container">
     <p class="eyebrow">Provable, not claimed</p>

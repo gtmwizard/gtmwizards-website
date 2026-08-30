@@ -1,13 +1,15 @@
 ---
 // Renders nothing until testimonials exist in src/data/testimonials.ts.
 // We do not fake social proof for a new brand.
-import { testimonials } from '../data/testimonials';
+import { testimonials, testimonialSection } from '../data/testimonials';
+import SectionRail from './SectionRail.astro';
 ---
 
 {testimonials.length > 0 && (
   <section class="section">
+    <SectionRail label={testimonialSection.label} />
     <div class="container">
-      <p class="eyebrow">Client results</p>
+      <p class="eyebrow">{testimonialSection.eyebrow}</p>
       <div class="grid grid--3">
         {testimonials.map((t) => (
           <figure class="card">

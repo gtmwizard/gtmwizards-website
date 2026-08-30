@@ -7,9 +7,11 @@
 // It runs once and stops on the finished list, which is byte for byte the state
 // a no-JS or reduced-motion visitor sees. No loop, so the column is never empty.
 import { signalFunnel } from '../data/home-content';
+import SectionRail from './SectionRail.astro';
 ---
 
 <section class="section section--dark funnel-band" data-motion-funnel>
+  <SectionRail label={signalFunnel.label} />
   <div class="container">
     <p class="eyebrow">{signalFunnel.eyebrow}</p>
     <h2>{signalFunnel.heading}</h2>

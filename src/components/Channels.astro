@@ -1,8 +1,10 @@
 ---
 import { channels } from '../data/home-content';
+import SectionRail from './SectionRail.astro';
 ---
 
 <section class="section">
+  <SectionRail label={channels.label} />
   <div class="container">
     <p class="eyebrow">{channels.eyebrow}</p>
     <h2>{channels.heading}</h2>

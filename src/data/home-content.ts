@@ -37,6 +37,7 @@ export const heroSpec = {
 // a few become one written message. The discarding is the argument, so it has
 // to be visible rather than implied.
 export const signalFunnel = {
+  label: 'Signals',
   eyebrow: 'How a campaign starts',
   heading: 'Most signals are noise. A few are a reason to write.',
   sub: 'We watch exhibitor lists, job postings, event attendance and engagement in your category. Most of what comes back is discarded. What survives becomes one message, in the buyer\u2019s language, from your own domain.',
@@ -62,6 +63,7 @@ export const signalFunnel = {
 } as const;
 
 export const proofStrip = {
+  label: 'Proof',
   heading: 'Not a black box. Our tech has a name.',
   items: [
     {
@@ -92,6 +94,7 @@ export const proofStrip = {
 // clients never touch a German-speaking market and still need everything else
 // on this page, so this is an edge we offer, not the premise we sell on.
 export const language = {
+  label: 'Language',
   eyebrow: 'Where it gets harder',
   heading: 'And if your buyer does not work in English',
   sub: 'Traditional industries are relationship markets. In a lot of Europe the buyer will read an English email and quietly decide you are not serious. A translated template reads worse than no email at all, because it proves nobody in the room understands their market.',
@@ -109,6 +112,7 @@ export const language = {
 } as const;
 
 export const tools = {
+  label: 'Stack',
   eyebrow: 'The stack',
   heading: 'Named tools, not a black box',
   sub: 'Most agencies will not tell you what they run on, because the answer is a rented seat on somebody else\u2019s platform. Here is ours.',
@@ -133,6 +137,7 @@ export const tools = {
 } as const;
 
 export const pillars = {
+  label: 'Why us',
   eyebrow: 'Why gtmWizards',
   heading: 'Built for the markets where outbound is hardest',
   items: [
@@ -156,6 +161,7 @@ export const pillars = {
 } as const;
 
 export const graduation = {
+  label: 'Handover',
   eyebrow: 'The exit path',
   heading: 'The agency you can graduate from',
   sub: 'Every other agency is designed to keep you dependent. gtmWizards is designed to make itself optional. Your campaigns, sequences, and data live in hubsell, the platform our co-founder built and runs, so in-sourcing is a handover, not a rebuild.',
@@ -177,6 +183,7 @@ export const graduation = {
 } as const;
 
 export const channels = {
+  label: 'Channels',
   eyebrow: 'Channels',
   heading: 'Email, phone, and LinkedIn: one team, one system',
   sub: 'Set up and managed by our senior team, executed on hubsell. Every channel works from the same list, the same messaging strategy, and the same qualification criteria.',
@@ -197,6 +204,7 @@ export const channels = {
 } as const;
 
 export const qualification = {
+  label: 'Qualifying',
   eyebrow: 'Qualification',
   heading: 'We qualify and objection-handle before you ever join a call',
   sub: 'A meeting only reaches your calendar when the company fits your ICP, the person can decide, and the timing is real. Objections get handled in the conversation, not forwarded to you.',
@@ -209,6 +217,7 @@ export const qualification = {
 } as const;
 
 export const timeline = {
+  label: 'Ramp up',
   eyebrow: 'Ramp-up',
   heading: 'Live within the first week',
   sub: 'Pilot first. Then quarterly, if the numbers earn it. No long-term contracts, we would rather make a name than make you a hostage.',
@@ -237,6 +246,7 @@ export const timeline = {
 } as const;
 
 export const homeCta = {
+  label: 'Next step',
   heading: 'Start with a pilot. Keep the platform.',
   sub: 'Apply for a strategy call. If we don\u2019t believe we can book you meetings in your market and language, we will tell you on that call.',
   primaryCta: { label: 'Apply for a strategy call', href: '/book-a-call' },

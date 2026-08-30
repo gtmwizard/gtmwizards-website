@@ -1,6 +1,7 @@
 ---
 import type { Solution } from '../data/solutions-content';
 import CtaSection from './CtaSection.astro';
+import SectionRail from './SectionRail.astro';
 
 interface Props { solution: Solution }
 const { solution } = Astro.props;
@@ -15,6 +16,7 @@ const { solution } = Astro.props;
 </header>
 
 <section class="section">
+  <SectionRail label="Approach" />
   <div class="container grid grid--3">
     {solution.sections.map((s) => (
       <article class="card">
@@ -26,6 +28,7 @@ const { solution } = Astro.props;
 </section>
 
 <CtaSection
+  label="Next step"
   heading="See it applied to your market"
   sub="A strategy call is a working session with a senior operator, not a sales pitch."
 />

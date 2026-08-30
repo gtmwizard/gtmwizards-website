@@ -1,26 +1,30 @@
 ---
 import { hero, heroSpec } from '../data/home-content';
+import Sparks from './Sparks.astro';
 ---
 
-<section class="hero gridpaper">
+<section class="hero section--dark" data-motion-hero>
+  <Sparks />
   <div class="container hero__inner">
     <div class="hero__copy">
-      <p class="eyebrow">{hero.eyebrow}</p>
-      <h1>{hero.heading}</h1>
-      <p class="lede">{hero.sub}</p>
-      <div class="hero__ctas">
+      <p class="eyebrow" data-motion-item>{hero.eyebrow}</p>
+      <h1 data-motion-item>{hero.heading}</h1>
+      <p class="lede" data-motion-item>{hero.sub}</p>
+      <div class="hero__ctas" data-motion-item>
         <a class="btn btn--primary" href={hero.primaryCta.href}>{hero.primaryCta.label}</a>
         <a class="btn btn--ghost" href={hero.secondaryCta.href}>{hero.secondaryCta.label}</a>
       </div>
     </div>
-    <aside class="spec hero__spec" aria-label="Example campaign datasheet">
+    <aside class="spec hero__spec" data-motion-item aria-label="Example campaign datasheet">
       <p class="spec__head">{heroSpec.title}</p>
       {heroSpec.rows.map((row) => (
-        <div class="spec__row">
+        <div class:list={['spec__row', { 'spec__row--trigger': 'cycle' in row && row.cycle }]}>
           <span class="spec__label">{row.label}</span>
           <span class="spec__value">
             {'live' in row && row.live && <span class="dot dot--live" aria-hidden="true"></span>}
-            {row.value}
+            {'cycle' in row && row.cycle
+              ? <span data-motion-trigger data-cycle={JSON.stringify(heroSpec.triggerCycle)}>{row.value}</span>
+              : row.value}
           </span>
         </div>
       ))}
@@ -29,11 +33,17 @@ import { hero, heroSpec } from '../data/home-content';
 </section>
 
 <style>
+  /* Plum band. .section--dark repaints the tokens, so the eyebrow goes
+     lilac, the datasheet turns translucent and the live dot goes bright
+     green with no extra rules here. The sparks sit behind everything. */
   .hero {
-    border-bottom: 1px solid var(--line-soft);
-    padding-block: clamp(3.5rem, 9vw, 6.5rem);
+    position: relative;
+    border-bottom: 0;
+    padding-block: clamp(4rem, 10vw, 7.5rem);
   }
   .hero__inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: 1.25fr 0.9fr;
     gap: clamp(2rem, 5vw, 4rem);

@@ -9,16 +9,14 @@ const insights = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.coerce.date(),
+    /** Set when a post is meaningfully revised, for article:modified_time. */
+    updated: z.coerce.date().optional(),
+    author: z.string().default('gtmWizards'),
+    /** Root-relative or absolute override for the share image. */
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });
 
-const glossary = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/glossary' }),
-  schema: z.object({
-    term: z.string(),
-    description: z.string(),
-  }),
-});
-
-export const collections = { insights, glossary };
+export const collections = { insights };

@@ -1,7 +1,7 @@
-# Handoff — gtmwizards.com
+# Handoff: gtmwizards.com
 
 Everything a developer (or future Claude session) needs to take over this
-project. Last updated: 2026-07-25.
+project. Last updated: 2026-08-22.
 
 ## What this is
 
@@ -9,7 +9,7 @@ Static marketing site for gtmWizards, a done-for-you outbound agency for
 traditional industries (DACH / Benelux / international), owned by the
 founders of hubsell.com (outbound platform) and kadanco.com (B2B data).
 Core positioning: provable tech and data, native-language outbound
-(DE/NL/EN), senior operators, no lock-in — "the agency you can graduate
+(DE/NL/EN), senior operators, no lock-in, "the agency you can graduate
 from" (clients can in-source onto hubsell).
 
 Architecture intentionally mirrors the `hubsell-website` repo so both
@@ -23,7 +23,7 @@ sites stay maintainable by the same people.
 | Hosting    | Cloudflare Pages (build: `npm run build`, output: `dist`)  |
 | Forms      | Pages Function `functions/api/contact.ts` → Plunk          |
 | Assets     | Cloudflare R2 behind `PUBLIC_ASSETS_BASE` custom domain    |
-| Theme      | shadcn preset `b2qMGARRY` (olive base, emerald theme, rhea style, Instrument Sans, radius 0.625rem) as CSS variables |
+| Theme      | Plum and green. Accent `#17E769`, dark sections `#2B0A33`, ink `#0C0D0E`, Instrument Sans, radius 0.625rem, as CSS variables. Light mode only |
 | Fonts      | Self-hosted via `@fontsource` (GDPR / DACH requirement)    |
 | i18n       | Astro built-in; en live, de/nl prepped as redirect stubs   |
 
@@ -37,10 +37,10 @@ src/data/            ALL site copy (typed TS). Components never hold copy.
   faqs.ts, testimonials.ts, navigation.ts, seo.ts, assets.ts
 src/components/      Section components (Hero, GraduationPath, Nav, …)
 src/layouts/         BaseLayout (head/meta/theme/nav/footer), PageLayout, LegalLayout
-src/content/         Markdown collections: insights/ (blog), glossary/
+src/content/         Markdown collections: insights/ (blog)
 src/i18n/            ui.ts (locale registry), utils.ts (path helpers)
 src/styles/global.css  Token layer + all shared styles
-src/pages/           Routes — see docs/SITEMAP.md
+src/pages/           Routes, see docs/SITEMAP.md
 functions/api/       contact.ts (Pages Function)
 scripts/             upload-assets.mjs (local → R2 sync)
 public/assets/       Placeholder logos (mirrors R2 paths for local dev)
@@ -48,8 +48,18 @@ public/assets/       Placeholder logos (mirrors R2 paths for local dev)
 
 ## Behaviors to know
 
-- **Dark mode**: `.dark` class on `<html>`. Toggle in nav; no-flash inline
-  script in `BaseLayout` head reads localStorage + system preference.
+- **No dark mode.** Removed on 2026-08-22. The page rhythm is a plum
+  `.section--dark` band on a white page; the band repaints its own tokens
+  so child components restyle with no extra CSS.
+- **Sparks.** `Sparks.astro` scatters the wordmark's four-point spark
+  across a dark band, slowly twinkling, reduced-motion safe. It is on the
+  hero and the dark CTA band. Drop it in as the first child of any
+  `position: relative` `.section--dark` and give the real content
+  `z-index: 1`. Positions, sizes and opacities are all in that one file.
+  Light sections keep `.gridpaper` instead.
+- **Colour rules.** White on green fails at 1.66:1, and green fails as
+  type on white. On light surfaces the accent is plum `#7A2A8C`. Green
+  appears on light surfaces only as a fill.
 - **Section-aware header**: script in `Nav.astro` re-tints the sticky
   header per section under it (`base` / `raised` / `dark`). Auto-detects
   `.section--raised` and the footer; override with
@@ -58,14 +68,14 @@ public/assets/       Placeholder logos (mirrors R2 paths for local dev)
   purpose (new brand, no fake proof). Homepage section renders as soon as
   the array is non-empty.
 - **Sitemap**: locale URLs excluded until listed in `translatedRoutes`
-  (`src/i18n/ui.ts`) — same policy as hubsell-website.
+  (`src/i18n/ui.ts`), same policy as hubsell-website.
 
 ## i18n: launching German (or Dutch)
 
 URLs are translated per locale (e.g. `/de/loesungen/kaltakquise`), with
 `routeMap` in `src/i18n/ui.ts` as the single source of truth mapping
 English paths to localized slugs. The nav/footer switchers and hreflang
-all read from it. Current slugs are drafts — review, then freeze before
+all read from it. Current slugs are drafts. Review, then freeze before
 launch (changing slugs later means permanent redirects).
 
 1. Review/freeze the locale's slugs in `routeMap`.
@@ -81,7 +91,7 @@ launch (changing slugs later means permanent redirects).
 ## Repository & deployment
 
 - GitHub: https://github.com/gtmwizard/gtmwizards-website (branch `main`).
-- Hosting: Cloudflare Pages connected to the repo — every push to `main`
+- Hosting: Cloudflare Pages connected to the repo. Every push to `main`
   builds and deploys production; pushes to other branches create preview
   deployments with unique URLs.
 - Pages build settings: framework preset **Astro**, build command
@@ -110,19 +120,167 @@ Local R2 upload creds go in `.env` (see `.env.example`), used only by
       `legal-notice.md` (Impressum is mandatory for Germany, § 5 DDG)
 - [ ] Real logos → `public/assets/` → `npm run assets:sync` → set
       `PUBLIC_ASSETS_BASE`
-- [ ] OG image (`/assets/og-image.png`) — referenced in assets.ts, not
-      yet wired into BaseLayout meta
+- [ ] OG image: a working 1200 x 630 version is in `public/assets/og-image.png`
+      with its source SVG beside it. Replace with a final design if you want.
 - [ ] Set Pages env vars; test contact form end to end
 - [ ] Verify the "handover" claim wording against actual contracts
       (campaigns/data live in client's hubsell workspace from day one)
 - [ ] First testimonials into `src/data/testimonials.ts` when available
 
+## Motion
+
+All motion is choreographed in **`src/scripts/motion.ts`**, one file, loaded
+once from `BaseLayout`. Components carry a hook attribute at most
+(`data-motion-hero`, `data-motion-item`, `data-motion-rail`) and never a timing
+value. Two constants at the top of that file, `EASE` and `DUR`, set the feel of
+the whole site.
+
+- **Library:** `animejs` v4, bundled from npm, never from a CDN. A German site
+  that self-hosts its fonts for GDPR reasons must not then hand visitor IPs to
+  a US CDN. Cost is about 16 KB gzipped, the only JS bundle on the site.
+- **What animates:** the hero entrance on load (eyebrow, headline, lede,
+  buttons, then the datasheet filling in row by row), scroll reveals for every
+  other section via one shared IntersectionObserver, the sparks fading in
+  before handing off to their CSS twinkle loop, and the graduation rail, where
+  the connector draws itself and each marker springs in as the line reaches it.
+- **What it degrades to:** an inline script in `BaseLayout` sets
+  `data-motion="on"` on `<html>` only when JS is running and the visitor has
+  not asked for reduced motion. `global.css` hides reveal targets only under
+  that attribute. The same script arms a 2.5 second fallback timer that strips
+  the attribute if `motion.ts` never runs, so a blocked bundle, a JS error or
+  a slow network all end with a readable page rather than a blank one.
+  `motion.ts` clears that timer as its first action.
+- **If you add a new section component**, its `.eyebrow`, `h2`, `.lede` and
+  `.card` elements are picked up automatically. Opt out with `data-no-motion`
+  on the section. If you introduce a new structural class that should reveal,
+  add it to `REVEAL` in `motion.ts` **and** to the matching selector list in
+  `global.css`. They must stay in sync or you get a flash of hidden content.
+
+## Open Graph and share cards
+
+Every page emits a full Open Graph set from `BaseLayout`. Nothing needs to be
+done per page unless you want to override the share image.
+
+- **Always emitted:** `og:type`, `og:site_name`, `og:title`, `og:description`,
+  `og:url`, `og:locale` plus `og:locale:alternate` for the other two languages,
+  `og:image` with `:type`, `:width`, `:height` and `:alt`, and the matching
+  `twitter:card`, `twitter:title`, `twitter:description` and `twitter:image`.
+- **Insight posts** switch to `og:type="article"` and add
+  `article:published_time`, `article:modified_time` (from an optional `updated`
+  date in frontmatter) and `article:author`.
+- **Per-page override:** pass `ogImage` and `ogImageAlt` to `BaseLayout` or
+  `PageLayout`, or set `image` and `imageAlt` in an insight post's frontmatter.
+  Root-relative paths are fine, they get resolved to absolute automatically.
+
+**The absolute URL trap.** Open Graph requires a fully qualified image URL.
+`ASSETS.ogImage` is only absolute when `PUBLIC_ASSETS_BASE` is set, so it is
+relative in local dev and in any build missing that env var. `BaseLayout`
+runs it through `new URL(..., Astro.site)`, which passes an already absolute
+R2 URL straight through and resolves a relative one against the site origin.
+Do not bypass that.
+
+**The image.** `public/assets/og-image.png`, 1200 x 630 (1.91:1), which is
+LinkedIn's preferred ratio and above its 1200 x 627 minimum. The source is
+`public/assets/og-image.source.svg`, so it can be re-rendered or edited. It is
+a working version built from the brand assets, not a final design.
+
+**Testing.** Scrapers cannot see localhost, so this can only be verified after
+deploy. LinkedIn caches aggressively and there is no manual purge, so check
+with the LinkedIn Post Inspector before sharing any URL widely. Facebook's
+Sharing Debugger and Slack both re-scrape on demand.
+
+## Language and locales
+
+**The site is English only, in British English.** `<html lang>` is `en-GB`.
+The entire i18n layer was removed on 25 August 2026: no locales in
+`astro.config.mjs`, no language switcher, no top bar, no hreflang, no
+`og:locale:alternate`, and no redirect stubs. The build went from 53 HTML
+files to 17 as a result.
+
+This is not a decision against translating later. The German and Dutch slugs
+were already worked out and are parked in `docs/TRANSLATION-ROUTES.md`, along
+with the steps to bring a locale back and the two traps that bit us before.
+
+**German is an offer, not a frame.** Plenty of clients never sell into a
+German-speaking market and need everything else the site describes. So German
+lives in one dedicated band (`LanguageEdge.astro`) rather than running through
+the hero, the datasheet, the pillars and every signal example. If you find
+yourself adding "native German" to copy outside that section, that is the
+thing this decision was meant to stop.
+
+**Benelux is gone** (D24). Dutch is no longer claimed as a delivery language.
+`SITE.languages` is now English and German, and it describes what the service
+delivers, not what the site is published in.
+
+## The thread and the sparks
+
+Two devices tie the page together across section boundaries.
+
+**The thread.** One continuous line down the left margin of the whole page,
+with the wordmark's spark as a node at the top of each section. It is *not*
+one long SVG. Every `main > section` draws its own segment via `::before`,
+and because the segments are contiguous they read as a single line. That
+buys two things for free: the line recolours per band, since `--line` is
+already remapped inside `.section--dark`, and it draws progressively on
+scroll without any scroll-linked animation.
+
+The reveal is a CSS transition on `.is-threaded`, not an Anime.js tween,
+because pseudo-elements cannot be targeted from JavaScript. `motion.ts` only
+adds the class. This is the one place where timing values live outside
+`motion.ts`; they are in `global.css` beside the rule.
+
+The thread hides below 48rem, where the margin runs out and it would crowd
+the copy.
+
+**Sparks across the seams.** `Sparks.astro` now takes `tone` (`dark` or
+`light`) and `density` (`full` or `seam`). Light bands get plum and deep
+green at roughly a tenth opacity, which is texture rather than decoration.
+Several sparks are positioned outside 0 to 100 percent on purpose so they
+hang over the edge into the neighbouring band.
+
+Two things make that safe, and both will look like mistakes to a future
+reader who does not know why they are there:
+
+- `overflow-x: clip` on `html` and `body`. `clip` rather than `hidden`,
+  because `hidden` creates a scroll container and would break the sticky nav.
+- `main > section > .container { position: relative; z-index: 1 }`. The
+  sparks layer is positioned, so without this it paints over the copy in any
+  section whose container is not itself positioned.
+
 ## Decisions log
+
+- Continuum (2026-08-26): a thread down the page plus sparks crossing the
+  section seams, so the bands stop reading as separate slabs. Chosen over
+  overlapping cards, which would have cost far more per instance.
+- English only (2026-08-25): i18n layer removed entirely, language switcher
+  and top bar deleted, Benelux and Dutch dropped per D24. Slugs parked in
+  docs/TRANSLATION-ROUTES.md.
+- Positioning (2026-08-25): signal-led outbound. Every campaign starts from an
+  observable event. Low volume is the consequence, which is what allows sending
+  from the client's own domain. German de-framed into its own section. Kadanco
+  removed as a data claim and replaced with a named tools strip.
+- Open Graph (2026-08-23): full OG and Twitter card set, article metadata on
+  insight posts, per-page image overrides. Fixed two bugs found on the way:
+  the share image URL could be emitted relative (invalid for OG), and
+  `<html lang>` was hardcoded to `en` on every page including the German and
+  Dutch routes.
+- Motion (2026-08-22): Anime.js adopted after a side-by-side against a
+  CSS-only build. The entrances look near identical either way; the library
+  was chosen for the timeline choreography and for the SVG rail draw, which
+  CSS cannot do. It is the first and only JS bundle on the site.
+- Brand (2026-08-22): plum and green palette, real gtmWizards wordmark
+  and favicon in place, dark mode removed, glossary removed, every em
+  dash and en dash swept out with `npm run check:dashes` to keep it that
+  way. Instrument Sans kept: it is already self-hosted and GDPR-clean,
+  and it suits this brand better than Kadanco's Fira Sans.
+- Positioning (2026-08-22): gtmWizards moves to the Kadanco Group story,
+  merged with the outbound offer already on this site. Copy rewrite is a
+  separate, later drop.
 
 - Astro 5 → 7 (2026-07-25): resolved all `npm audit` findings; matches
   hubsell-website's major version.
 - shadcn preset applied as raw CSS variables, not a Tailwind/React
-  conversion — a static marketing site gains nothing from the runtime,
+  conversion. A static marketing site gains nothing from the runtime,
   and the token layer maps 1:1 if shadcn components are added later.
 - Display font Bricolage Grotesque was dropped in favor of preset-faithful
   Instrument Sans everywhere; revert = one line (`--font-display`).

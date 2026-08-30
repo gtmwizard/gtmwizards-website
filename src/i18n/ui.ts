@@ -1,4 +1,4 @@
-// Locale registry — hubsell pattern, extended with translated URLs.
+// Locale registry, hubsell pattern, extended with translated URLs.
 // A locale becomes live when `liveLocales[loc]` is true; its URLs enter
 // the sitemap only for paths listed in translatedRoutes.
 
@@ -32,7 +32,7 @@ export const translatedRoutes: Record<string, string[]> = {
 // WITHOUT the locale prefix. Single source of truth for the language
 // switcher, hreflang alternates, and (later) the actual page files under
 // src/pages/de|nl. Paths not listed fall back to the English path.
-// DRAFT slugs — review before any locale goes live, then FREEZE:
+// DRAFT slugs, review before any locale goes live, then FREEZE:
 // changing slugs after launch means permanent redirects.
 export const routeMap: Record<string, Partial<Record<Locale, string>>> = {
   '/': { de: '/', nl: '/' },
@@ -65,8 +65,18 @@ export const routeMap: Record<string, Partial<Record<Locale, string>>> = {
   '/book-a-call': { de: '/termin-buchen', nl: '/afspraak-boeken' },
   '/contact': { de: '/kontakt', nl: '/contact' },
   '/insights': { de: '/insights', nl: '/insights' },
-  '/glossary': { de: '/glossar', nl: '/begrippenlijst' },
   '/privacy': { de: '/datenschutz', nl: '/privacy' },
   '/terms': { de: '/agb', nl: '/voorwaarden' },
   '/legal-notice': { de: '/impressum', nl: '/colofon' },
+};
+
+/**
+ * Open Graph wants full locale codes (language plus region), not the bare
+ * language tags used in our URLs and hreflang. Mapped here so the two
+ * cannot drift apart.
+ */
+export const ogLocales: Record<string, string> = {
+  en: 'en_GB',
+  de: 'de_DE',
+  nl: 'nl_NL',
 };

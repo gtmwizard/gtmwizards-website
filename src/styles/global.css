@@ -1,113 +1,99 @@
 /* ==========================================================================
-   gtmWizards — global styles & design tokens
-   Theme: shadcn preset b2qMGARRY
-     base color: olive · theme: emerald · style: rhea
-     font: Instrument Sans · radius: 0.625rem (default) · icons: lucide
-   Token values extracted verbatim from shadcn-ui/ui
-   (apps/v4/registry/themes.ts) — olive scaffold with emerald overrides.
-   Layer 1: shadcn semantic tokens (:root / .dark) — 1:1 with the preset,
-            so a future shadcn/Tailwind adoption maps directly.
-   Layer 2: site aliases (--paper, --ink, …) that all components consume.
-   Fonts are self-hosted (@fontsource) for GDPR compliance in DACH.
+   gtmWizards, global styles and design tokens
+   Palette: plum and green (direction C)
+     accent #17E769 · deep #2B0A33 · ink #0C0D0E
+   Type: Instrument Sans (body and display), IBM Plex Mono (spec labels).
+   Both self-hosted via @fontsource for GDPR compliance in DACH.
+   Layer 1: semantic tokens, shadcn variable names kept so a future
+            shadcn or Tailwind adoption still maps 1:1.
+   Layer 2: site aliases (--paper, --ink, ...) that all components consume.
+   Light mode only. There is no dark-mode toggle.
+   Two rules that are easy to break:
+     1. Green is a LIGHT colour. Ink on green passes at 11.6:1.
+        White on green is 1.66:1 and fails. Never white on green.
+     2. Green also fails as type on white. On light surfaces the accent
+        is plum. Green appears on light surfaces only as a fill.
    ========================================================================== */
 
 :root {
-  /* ---- shadcn tokens: olive base (light) ---- */
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.153 0.006 107.1);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.153 0.006 107.1);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.153 0.006 107.1);
-  /* emerald theme overrides */
-  --primary: oklch(0.508 0.118 165.612);
-  --primary-foreground: oklch(0.979 0.021 166.113);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  /* olive continues */
-  --muted: oklch(0.966 0.005 106.5);
-  --muted-foreground: oklch(0.58 0.031 107.3);
-  --accent: oklch(0.966 0.005 106.5);
-  --accent-foreground: oklch(0.228 0.013 107.4);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.93 0.007 106.5);
-  --input: oklch(0.93 0.007 106.5);
-  --ring: oklch(0.737 0.021 106.9);
-  /* emerald chart ramp */
-  --chart-1: oklch(0.845 0.143 164.978);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.596 0.145 163.225);
-  --chart-4: oklch(0.508 0.118 165.612);
-  --chart-5: oklch(0.432 0.095 166.913);
+  /* ---- brand ---- */
+  --green: #17E769;        /* primary accent, fills only on light surfaces */
+  --green-hover: #12C95B;  /* pressed and hover state for green fills */
+  --green-deep: #0A7A40;   /* the only green safe as type on white, 5.4:1 */
+  --plum-deep: #2B0A33;    /* dark sections, hero, CTA band */
+  --plum: #7A2A8C;         /* links and accents on light surfaces, 8.3:1 */
+  --lilac: #C9A6D6;        /* eyebrows and secondary type on dark sections */
 
-  /* ---- radius scale (shadcn convention) ---- */
+  /* ---- radius scale ---- */
+  --radius: 0.625rem;
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.4);
 
-  /* ---- fonts (preset: instrument-sans; mono kept for spec labels) ---- */
+  /* ---- semantic tokens (light) ---- */
+  --background: #FFFFFF;
+  --foreground: #0C0D0E;
+  --card: #FFFFFF;
+  --card-foreground: #0C0D0E;
+  --popover: #FFFFFF;
+  --popover-foreground: #0C0D0E;
+  --primary: var(--green);
+  --primary-foreground: #0C0D0E;
+  --primary-hover: var(--green-hover);
+  /* Pale surfaces sit close to neutral on purpose. Plum at 4% reads as
+     pink next to the green, which looks like a mistake rather than a
+     choice, so the chroma is pulled almost all the way out. */
+  --secondary: #F4F3F5;
+  --secondary-foreground: #2B0A33;
+  --muted: #F4F3F5;
+  --muted-foreground: #6A5A6E;
+  --accent: #F7F6F9;
+  --accent-foreground: #2B0A33;
+  --destructive: #C8324B;
+  --border: #E5E3E9;
+  --input: #E5E3E9;
+  --ring: #7A2A8C;
+
+  /* ---- fonts ---- */
   --font-sans: 'Instrument Sans Variable', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
   /* ---- site aliases consumed by components ---- */
   --paper: var(--background);
   --paper-raised: var(--card);
-  --surface-alt: var(--muted); /* raised sections */
+  --surface-alt: var(--muted);      /* raised sections */
   --ink: var(--foreground);
-  --ink-soft: oklch(0.286 0.016 107.4); /* olive chart-5 */
+  --ink-soft: #3A2F3D;              /* body copy one step down from ink */
   --steel: var(--muted-foreground);
   --line: var(--border);
-  --line-soft: oklch(0.962 0.006 106.5);
+  --line-soft: #EFEEF2;
   --brand: var(--primary);
-  --brand-strong: oklch(0.432 0.095 166.913); /* emerald hover */
-  --brand-tint: oklch(0.965 0.055 166.113); /* emerald wash */
-  --ok: oklch(0.596 0.145 163.225);
+  --brand-strong: var(--plum);      /* link colour. Green fails on white */
+  --brand-tint: #F3EDF6;
+  --ok: var(--green-deep);          /* status dots on light surfaces */
   --skip: var(--destructive);
+  --footer-bg: #0C0D0E;             /* ink, so it separates from a plum CTA */
+  --shadow-colour: rgba(43, 10, 51, 0.35);
   --font-display: var(--font-sans);
   --font-body: var(--font-sans);
   --max-w: 72rem;
 }
 
-/* Dark mode: toggled by adding class="dark" on <html> (see ThemeToggle
-   + the no-flash script in BaseLayout). Olive dark + emerald dark. */
-.dark {
-  color-scheme: dark;
-  --background: oklch(0.153 0.006 107.1);
-  --foreground: oklch(0.988 0.003 106.5);
-  --card: oklch(0.228 0.013 107.4);
-  --card-foreground: oklch(0.988 0.003 106.5);
-  --primary: oklch(0.432 0.095 166.913);
-  --primary-foreground: oklch(0.979 0.021 166.113);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.286 0.016 107.4);
-  --muted-foreground: oklch(0.737 0.021 106.9);
-  --accent: oklch(0.286 0.016 107.4);
-  --accent-foreground: oklch(0.988 0.003 106.5);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.58 0.031 107.3);
-  /* dark values for literal-valued site aliases (var()-based aliases
-     follow the tokens above automatically) */
-  --ink-soft: oklch(0.86 0.012 106.9);
-  --line-soft: oklch(1 0 0 / 7%);
-  --brand-strong: oklch(0.696 0.17 162.48); /* lighter emerald on dark */
-  --brand-tint: oklch(0.262 0.051 172.552);
-  --ok: oklch(0.696 0.17 162.48);
-}
-
 * { box-sizing: border-box; }
 
 html {
+  /* Sparks hang over section edges on purpose. `clip` contains that
+     horizontally without creating a scroll container the way `hidden` would,
+     so position: sticky on the nav keeps working. */
+  overflow-x: clip;
   color-scheme: light;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
+  overflow-x: clip;
   margin: 0;
   background: var(--background);
   color: var(--foreground);
@@ -135,6 +121,8 @@ p { margin: 0 0 1em; }
 a { color: var(--brand-strong); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
+::selection { background: var(--green); color: var(--primary-foreground); }
+
 :focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
@@ -156,36 +144,29 @@ img, svg { max-width: 100%; height: auto; }
 .section--raised { background: var(--surface-alt); border-block: 1px solid var(--line-soft); }
 
 /* ---------- contrast sections ----------
-   Light mode: olive-dark bands on the white page (strong light/dark
-   rhythm). Dark mode: the same bands become "less dark" elevated
-   surfaces, so contrast comes from dark vs less-dark. Child components
-   restyle automatically because they consume the remapped variables. */
+   Plum bands on the white page give the light and dark rhythm. Child
+   components restyle automatically because they consume the remapped
+   variables below rather than literal colours. */
 .section--dark {
-  background: oklch(0.153 0.006 107.1);
-  color: oklch(0.988 0.003 106.5);
-  --ink: oklch(0.988 0.003 106.5);
-  --ink-soft: oklch(0.86 0.012 106.9);
-  --steel: oklch(0.737 0.021 106.9);
-  --card: oklch(0.228 0.013 107.4);
-  --paper: oklch(0.153 0.006 107.1);
+  background: var(--plum-deep);
+  color: #FFFFFF;
+  --ink: #FFFFFF;
+  --ink-soft: rgba(255, 255, 255, 0.78);
+  --steel: var(--lilac);
+  --card: rgba(255, 255, 255, 0.05);
+  --card-foreground: #FFFFFF;
+  --paper: var(--plum-deep);
   --paper-raised: var(--card);
-  --surface-alt: oklch(0.19 0.008 107.2);
-  --line: oklch(1 0 0 / 12%);
-  --line-soft: oklch(1 0 0 / 7%);
-  --input: oklch(1 0 0 / 15%);
-  --brand-strong: oklch(0.696 0.17 162.48);
-  --brand-tint: oklch(0.262 0.051 172.552);
-  --ok: oklch(0.696 0.17 162.48);
-}
-html.dark .section--dark {
-  background: oklch(0.21 0.011 107.2);
-  --paper: oklch(0.21 0.011 107.2);
-  --card: oklch(0.262 0.015 107.4);
-  --paper-raised: var(--card);
-  --surface-alt: oklch(0.24 0.013 107.3);
+  --surface-alt: #3A1044;
+  --line: rgba(255, 255, 255, 0.16);
+  --line-soft: rgba(255, 255, 255, 0.09);
+  --input: rgba(255, 255, 255, 0.16);
+  --brand-strong: var(--green);
+  --ring: var(--green);
+  --ok: var(--green);
 }
 
-/* Mono eyebrow with a trailing rule — the datasheet label */
+/* Mono eyebrow with a trailing rule, the datasheet label */
 .eyebrow {
   display: flex;
   align-items: center;
@@ -231,8 +212,9 @@ html.dark .section--dark {
 .btn:hover { text-decoration: none; }
 .btn:active { transform: translateY(1px); }
 
+/* Green fill, ink type. Works on every surface. */
 .btn--primary { background: var(--primary); color: var(--primary-foreground); }
-.btn--primary:hover { background: var(--brand-strong); }
+.btn--primary:hover { background: var(--primary-hover); color: var(--primary-foreground); }
 
 .btn--ghost {
   background: transparent;
@@ -240,6 +222,7 @@ html.dark .section--dark {
   border-color: var(--line);
 }
 .btn--ghost:hover { border-color: var(--ring); background: var(--accent); }
+.section--dark .btn--ghost:hover { background: rgba(255, 255, 255, 0.07); }
 
 /* ---------- cards & grids ---------- */
 
@@ -269,7 +252,7 @@ html.dark .section--dark {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 20px 45px -30px oklch(0.153 0.006 107.1 / 0.35);
+  box-shadow: 0 20px 45px -30px var(--shadow-colour);
 }
 .spec__head {
   font-family: var(--font-mono);
@@ -322,6 +305,103 @@ html.dark .section--dark {
   html { scroll-behavior: auto; }
   .dot--live { animation: none; }
   * { transition-duration: 0.01ms !important; }
+}
+
+/* ---------- the thread ----------
+   One continuous line down the left margin of the whole page, with a spark
+   at the top of each section.
+
+   It is not one long SVG. Each section draws its own segment, top to bottom,
+   and because the segments are contiguous they read as a single line. That
+   buys two things for free: the line recolours itself per band, because
+   --line is already remapped inside .section--dark, and it draws
+   progressively as you scroll rather than needing scroll-linked animation.
+
+   The segment and node are pseudo-elements, so the reveal is a CSS
+   transition rather than an Anime.js tween. Pseudo-elements cannot be
+   targeted by JS. src/scripts/motion.ts only adds the .is-threaded class. */
+
+main > section {
+  position: relative;
+}
+
+/* The sparks layer is positioned, so without this it would paint on top of
+   the copy in any section whose container is not itself positioned. */
+main > section > .container {
+  position: relative;
+  z-index: 1;
+}
+
+main > section::before,
+main > section::after {
+  content: '';
+  position: absolute;
+  /* Sits in the outer margin on wide screens, tucks toward the viewport
+     edge on narrow ones, always clear of the container's text edge. */
+  left: max(1rem, calc((100% - var(--max-w)) / 2 - 1.35rem));
+  pointer-events: none;
+}
+
+/* The segment. */
+main > section::before {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+}
+
+/* The node: the wordmark's spark, masked so it takes a token colour. */
+main > section::after {
+  top: 0;
+  width: 11px;
+  height: 11px;
+  margin-left: -5px;
+  background: var(--brand);
+  -webkit-mask: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20d%3D%22M33.33%2033.33L50%200L66.67%2033.33L100%2050L66.67%2066.67L50%20100L33.33%2066.67L0%2050Z%22%2F%3E%3C%2Fsvg%3E') center / contain no-repeat;
+  mask: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20d%3D%22M33.33%2033.33L50%200L66.67%2033.33L100%2050L66.67%2066.67L50%20100L33.33%2066.67L0%2050Z%22%2F%3E%3C%2Fsvg%3E') center / contain no-repeat;
+}
+
+/* Below the point where the margin runs out, the thread would crowd the
+   copy, so it goes. */
+@media (max-width: 48rem) {
+  main > section::before,
+  main > section::after { display: none; }
+}
+
+/* Draws in as each section arrives. Static and fully drawn without motion. */
+[data-motion='on'] main > section::before {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 900ms cubic-bezier(0.16, 0.84, 0.44, 1);
+}
+[data-motion='on'] main > section::after {
+  opacity: 0;
+  scale: 0.4;
+  transition:
+    opacity 420ms cubic-bezier(0.16, 0.84, 0.44, 1),
+    scale 420ms cubic-bezier(0.16, 0.84, 0.44, 1);
+}
+[data-motion='on'] main > section.is-threaded::before { transform: scaleY(1); }
+[data-motion='on'] main > section.is-threaded::after { opacity: 1; scale: 1; }
+
+/* ---------- motion ----------
+   These rules only bite when the inline script in BaseLayout has set
+   data-motion="on", which happens only with JS running and reduced motion
+   not requested. Keep this selector list in sync with REVEAL in
+   src/scripts/motion.ts. If the module fails to load, the fallback timer
+   in BaseLayout strips the attribute and everything below stops applying. */
+
+[data-motion='on'] main .eyebrow,
+[data-motion='on'] main h2,
+[data-motion='on'] main .lede,
+[data-motion='on'] main .card,
+[data-motion='on'] main .faq__item,
+[data-motion='on'] main .rail__stage,
+[data-motion='on'] main .spec,
+[data-motion='on'] main .cta,
+[data-motion='on'] main .spec__row,
+[data-motion='on'] main .rail__marker {
+  opacity: 0;
 }
 
 /* ---------- fine grid backdrop (hero) ---------- */

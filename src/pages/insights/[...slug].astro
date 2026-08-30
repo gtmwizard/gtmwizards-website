@@ -14,7 +14,16 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  ogType="article"
+  ogImage={post.data.image}
+  ogImageAlt={post.data.imageAlt}
+  publishedTime={post.data.date}
+  modifiedTime={post.data.updated}
+  author={post.data.author}
+>
   <article class="section">
     <div class="container prose">
       <p class="eyebrow">

@@ -2,7 +2,6 @@
 import { SITE } from '../data/site';
 import { footerNav } from '../data/navigation';
 import { ASSETS } from '../data/assets';
-import LanguageSwitcher from './LanguageSwitcher.astro';
 const year = new Date().getFullYear();
 ---
 
@@ -10,11 +9,10 @@ const year = new Date().getFullYear();
   <div class="container">
     <div class="footer__top">
       <div class="footer__brand">
-        <img class="footer__logo-img" src={ASSETS.logoDark} alt={SITE.name} width="170" height="28" loading="lazy" />
+        <img class="footer__logo-img" src={ASSETS.logoDark} alt={SITE.name} width="125" height="24" loading="lazy" />
         <p class="footer__tag">{SITE.tagline}</p>
         <p class="footer__powered">
-          Powered by <a href={SITE.hubsellUrl}>hubsell</a> · Data by
-          <a href={SITE.kadancoUrl}>Kadanco</a>
+          Powered by <a href={SITE.hubsellUrl}>hubsell</a>
         </p>
       </div>
       <div class="footer__cols">
@@ -33,7 +31,6 @@ const year = new Date().getFullYear();
     <div class="footer__bottom">
       <p>© {year} {SITE.name}. All rights reserved.</p>
       <div class="footer__meta">
-        <LanguageSwitcher />
         <a href={SITE.linkedin} rel="noopener">LinkedIn</a>
       </div>
     </div>
@@ -42,12 +39,13 @@ const year = new Date().getFullYear();
 
 <style>
   .footer {
-    background: oklch(0.153 0.006 107.1); /* olive dark */
-    color: oklch(0.85 0.012 106.9);
-    padding-block: clamp(2.5rem, 6vw, 4rem) 1.5rem;
-    margin-top: clamp(2rem, 6vw, 4rem);
+    background: var(--footer-bg);
+    color: rgba(255, 255, 255, 0.82);
+    /* No margin-top. The last section runs straight into the footer, so any
+       margin here shows the white body background as a bar. */
+    padding-block: clamp(3rem, 6vw, 4.5rem) 1.5rem;
   }
-  .footer a { color: oklch(0.94 0.006 106.5); }
+  .footer a { color: #FFFFFF; }
   .footer__top {
     display: grid;
     grid-template-columns: 1.2fr 2.4fr;
@@ -60,7 +58,7 @@ const year = new Date().getFullYear();
     font-size: 0.74rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: oklch(0.72 0.02 106.9);
+    color: var(--lilac);
   }
   .footer__cols {
     display: grid;
@@ -72,12 +70,12 @@ const year = new Date().getFullYear();
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: oklch(0.72 0.02 106.9);
+    color: var(--lilac);
     margin-bottom: 0.7rem;
   }
   .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; }
-  .footer ul a { font-size: 0.9rem; color: oklch(0.85 0.012 106.9); }
-  .footer ul a:hover { color: #fff; }
+  .footer ul a { font-size: 0.9rem; color: rgba(255, 255, 255, 0.82); }
+  .footer ul a:hover { color: var(--green); }
   .footer__meta { display: flex; gap: 1.4rem; align-items: center; }
   .footer__bottom {
     display: flex;

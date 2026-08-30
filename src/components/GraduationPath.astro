@@ -4,28 +4,18 @@
 import { graduation } from '../data/home-content';
 ---
 
-<section class="section section--dark" id="graduate" data-motion-rail>
+<section class="section section--dark" id="graduate">
   <div class="container">
     <p class="eyebrow">{graduation.eyebrow}</p>
     <h2>{graduation.heading}</h2>
     <p class="lede">{graduation.sub}</p>
 
     <ol class="rail">
-      <svg
-        class="rail__line"
-        viewBox="0 0 1000 2"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path d="M0 1 H1000" data-motion-rail-line vector-effect="non-scaling-stroke" />
-      </svg>
       {graduation.stages.map((stage, i) => (
         <li class="rail__stage">
           <span class="rail__marker" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          <div class="rail__card">
-            <h3>{stage.label}</h3>
-            <p>{stage.text}</p>
-          </div>
+          <h3>{stage.label}</h3>
+          <p>{stage.text}</p>
         </li>
       ))}
     </ol>
@@ -44,34 +34,22 @@ import { graduation } from '../data/home-content';
     gap: 1.1rem;
     position: relative;
   }
-  /* The connector is an SVG rather than a pseudo-element so the motion module
-     can draw it stroke-first. It runs through the centre of the marker row,
-     above the cards. Cards are translucent on a dark band, so a line behind
-     them would show through, which is why the markers sit outside the card. */
-  .rail__line {
+  .rail::before {
+    content: '';
     position: absolute;
     top: 1.05rem;
-    left: 2.6rem;
-    right: 2.6rem;
-    width: auto;
-    height: 2px;
-    overflow: visible;
-    z-index: 0;
-  }
-  .rail__line path {
-    fill: none;
-    stroke: var(--line);
-    stroke-width: 1;
+    left: 2rem;
+    right: 2rem;
+    height: 1px;
+    background: var(--line);
   }
   .rail__stage {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.4rem;
     position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
   }
-  /* Solid fill, so the connector passes behind the number rather than
-     through it. */
   .rail__marker {
     display: inline-grid;
     place-items: center;
@@ -79,23 +57,12 @@ import { graduation } from '../data/home-content';
     height: 2.1rem;
     border-radius: 50%;
     background: var(--brand);
-    color: var(--primary-foreground);
+    color: #fff;
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    transform-origin: center;
-    position: relative;
-    z-index: 2;
+    margin-bottom: 0.9rem;
   }
-  .rail__card {
-    margin-top: 1.1rem;
-    width: 100%;
-    flex: 1;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    padding: 1.4rem;
-  }
-  .rail__card p { margin-bottom: 0; color: var(--ink-soft); font-size: 0.97rem; }
+  .rail__stage p { margin-bottom: 0; color: var(--ink-soft); font-size: 0.97rem; }
   .rail__note {
     margin-top: 1.4rem;
     font-family: var(--font-mono);
@@ -105,6 +72,6 @@ import { graduation } from '../data/home-content';
   }
   @media (max-width: 56rem) {
     .rail { grid-template-columns: 1fr; }
-    .rail__line { display: none; }
+    .rail::before { display: none; }
   }
 </style>

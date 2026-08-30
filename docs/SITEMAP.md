@@ -1,8 +1,8 @@
-# Sitemap: gtmwizards.com
+# Sitemap — gtmwizards.com
 
 Route inventory. Status: **live** (real content), **placeholder** (must be
 replaced before launch), **stub** (auto-generated redirect). Last updated:
-2026-08-22.
+2026-07-25.
 
 ## English (default locale, at `/`)
 
@@ -22,9 +22,13 @@ replaced before launch), **stub** (auto-generated redirect). Last updated:
 | `/insights`                                | `pages/insights/index.astro`             | live        | Lists `src/content/insights/` |
 | `/insights/why-outbound-agencies-fear-your-independence` | content collection         | live        | Starter post |
 | `/insights/native-language-outbound-dach-benelux`        | content collection         | live        | Starter post |
+| `/glossary`                                | `pages/glossary/index.astro`             | live        | Lists `src/content/glossary/` |
+| `/glossary/icp`                            | content collection                       | live        | |
+| `/glossary/deliverability`                 | content collection                       | live        | |
+| `/glossary/multichannel-outreach`          | content collection                       | live        | |
 | `/privacy`                                 | `pages/privacy.md`                       | placeholder | Needs counsel-reviewed text |
 | `/terms`                                   | `pages/terms.md`                         | placeholder | Needs counsel-reviewed text |
-| `/legal-notice`                            | `pages/legal-notice.md`                  | placeholder | Impressum, legally required (DE) |
+| `/legal-notice`                            | `pages/legal-notice.md`                  | placeholder | Impressum — legally required (DE) |
 | `/404`                                     | `pages/404.astro`                        | live        | |
 
 ## Non-page endpoints
@@ -39,18 +43,16 @@ replaced before launch), **stub** (auto-generated redirect). Last updated:
 
 | Prefix | Status | Behavior today |
 | ------ | ------ | -------------- |
-| `/de/*`| stub   | Redirects to English; excluded from sitemap; switchers show "Deutsch, soon". Live URLs will use TRANSLATED slugs from `routeMap` (e.g. `/de/loesungen/kaltakquise`, `/de/ueber-uns`, `/de/impressum`) |
+| `/de/*`| stub   | Redirects to English; excluded from sitemap; switchers show "Deutsch — soon". Live URLs will use TRANSLATED slugs from `routeMap` (e.g. `/de/loesungen/kaltakquise`, `/de/ueber-uns`, `/de/impressum`) |
 | `/nl/*`| stub   | Same as `/de` (e.g. `/nl/oplossingen/koude-acquisitie`, `/nl/over-ons`) |
 
 To take a locale live, see docs/HANDOFF.md → "i18n: launching German".
 
 ## Planned / not yet built
 
-- Customer stories (`/customerstories`), add as a content collection
+- Customer stories (`/customerstories`) — add as a content collection
   once the first references exist (hubsell has the reference pattern).
-- Comparison pages (`/vs/*`), competitive SEO pages (e.g. vs Throxy),
+- Comparison pages (`/vs/*`) — competitive SEO pages (e.g. vs Throxy),
   worth building after positioning is validated in sales calls.
-- Glossary, removed on 2026-08-22. It will be rebuilt from scratch
-  later rather than carried over.
-- Pricing page, deliberately absent for now; pricing is discussed on the
+- Pricing page — deliberately absent for now; pricing is discussed on the
   strategy call while the pilot offer stabilizes.

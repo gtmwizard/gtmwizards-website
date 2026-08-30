@@ -1,11 +1,11 @@
-# gtmwizards.com, the Astro site
+# gtmwizards.com — Astro site
 
 Static marketing site for gtmWizards, mirroring the architecture of
 `hubsell-website`: Astro (`output: 'static'`) on Cloudflare Pages, all copy
 in typed data files, long-form content in markdown collections, and forms
 handled by a Pages Function.
 
-Repo: https://github.com/gtmwizard/gtmwizards-website, pushes to `main`
+Repo: https://github.com/gtmwizard/gtmwizards-website — pushes to `main`
 deploy to production via Cloudflare Pages; other branches get preview URLs.
 
 ## Stack
@@ -14,7 +14,7 @@ deploy to production via Cloudflare Pages; other branches get preview URLs.
 - **Theme** → shadcn preset `b2qMGARRY` (base color olive, theme emerald,
   style rhea, Instrument Sans, radius 0.625rem). Tokens live as CSS
   variables in `src/styles/global.css`: the `:root` block is 1:1 with the
-  shadcn scaffold (plus a `.dark` scaffold), and site aliases map onto it , 
+  shadcn scaffold (plus a `.dark` scaffold), and site aliases map onto it —
   change a token there and the whole site follows. A future shadcn/Tailwind
   adoption can reuse the same variables unchanged.
 - **Light/dark mode** → toggle in the nav top bar; no-flash inline script
@@ -44,13 +44,13 @@ deploy to production via Cloudflare Pages; other branches get preview URLs.
 ```
 src/
   layouts/          BaseLayout (head/meta/theme/nav/footer), PageLayout, LegalLayout
-  components/       Section components, dumb renderers of src/data content
+  components/       Section components — dumb renderers of src/data content
   data/             ALL copy lives here (site.ts, home-content.ts, solutions-content.ts,
                     faqs.ts, testimonials.ts, navigation.ts, seo.ts, assets.ts)
-  content/          Markdown collections: insights/ (blog)
+  content/          Markdown collections: insights/ (blog), glossary/
   i18n/             ui.ts (locales, routeMap), utils.ts (path helpers)
   pages/            index, about, book-a-call, contact, solutions/, insights/,
-                    legal .md pages, 404
+                    glossary/, legal .md pages, 404
 functions/api/contact.ts   Contact-form handler (Pages Function)
 scripts/upload-assets.mjs  Local → R2 asset sync
 public/            robots.txt, _headers, _redirects, favicon.svg, assets/
@@ -70,7 +70,7 @@ npm run build    # outputs to dist/
 
 - Build command: `npm run build` · Output directory: `dist` · Branch: `main`
 - Env vars: `PLUNK_API_KEY` (secret), `CONTACT_TO`, `PUBLIC_ASSETS_BASE`
-  (build-time, redeploy after changing)
+  (build-time — redeploy after changing)
 
 ## Editing content
 
@@ -82,7 +82,7 @@ npm run build    # outputs to dist/
 - Testimonials → `src/data/testimonials.ts` (homepage section renders
   once the array is non-empty; empty on purpose until real references)
 
-## Before launch: TODO
+## Before launch — TODO
 
 See the full checklist in `docs/HANDOFF.md`. Highlights:
 

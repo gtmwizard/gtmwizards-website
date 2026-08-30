@@ -8,14 +8,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "assets:dry": "node --env-file=.env scripts/upload-assets.mjs --dry-run",
-    "assets:sync": "node --env-file=.env scripts/upload-assets.mjs",
-    "check:dashes": "node scripts/check-dashes.mjs"
+    "assets:sync": "node --env-file=.env scripts/upload-assets.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/instrument-sans": "^5.1.0",
     "@fontsource/ibm-plex-mono": "^5.1.0",
-    "animejs": "^4.5.0",
     "astro": "^7.1.3"
   },
   "devDependencies": {

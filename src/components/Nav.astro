@@ -2,13 +2,15 @@
 import { SITE } from '../data/site';
 import { mainNav } from '../data/navigation';
 import { ASSETS } from '../data/assets';
+import TopBar from './TopBar.astro';
 ---
 
 <header class="nav" id="site-header" data-over="base">
+  <TopBar />
   <div class="container nav__inner">
     <a class="nav__logo" href="/" aria-label={`${SITE.name} home`}>
-      <img class="nav__logo-img nav__logo-img--light" src={ASSETS.logoLight} alt={SITE.name} width="125" height="24" />
-      <img class="nav__logo-img nav__logo-img--dark" src={ASSETS.logoDark} alt="" width="125" height="24" aria-hidden="true" />
+      <img class="nav__logo-img nav__logo-img--light" src={ASSETS.logoLight} alt={SITE.name} width="170" height="28" />
+      <img class="nav__logo-img nav__logo-img--dark" src={ASSETS.logoDark} alt="" width="170" height="28" aria-hidden="true" />
     </a>
 
     <input type="checkbox" id="nav-toggle" class="nav__toggle" aria-hidden="true" />
@@ -102,18 +104,20 @@ import { ASSETS } from '../data/assets';
     border-bottom-color: var(--line);
   }
   .nav[data-over='dark'] {
-    background: color-mix(in srgb, var(--plum-deep) 92%, transparent);
-    border-bottom-color: rgba(255, 255, 255, 0.12);
-    color: #FFFFFF;
-    --line: rgba(255, 255, 255, 0.18);
-    --line-soft: rgba(255, 255, 255, 0.10);
-    --steel: var(--lilac);
-    --accent: rgba(255, 255, 255, 0.08);
-    --ring: var(--green);
+    background: oklch(0.153 0.006 107.1 / 0.9); /* olive dark */
+    border-bottom-color: oklch(1 0 0 / 10%);
+    color: oklch(0.94 0.006 106.5);
+    --line: oklch(1 0 0 / 18%);
+    --line-soft: oklch(1 0 0 / 10%);
+    --steel: oklch(0.78 0.018 106.9);
+    --accent: oklch(1 0 0 / 8%);
   }
   .nav[data-over='dark'] .nav__links > a,
-  .nav[data-over='dark'] .nav__group summary { color: #FFFFFF; }
-  .nav[data-over='dark'] .nav__burger span { background: #FFFFFF; }
+  .nav[data-over='dark'] .nav__group summary { color: oklch(0.94 0.006 106.5); }
+  .nav[data-over='dark'] .nav__burger span { background: oklch(0.94 0.006 106.5); }
+  :global(html.dark) .nav[data-over='dark'] {
+    background: oklch(0.21 0.011 107.2 / 0.9);
+  }
 
   .nav__inner {
     display: flex;
@@ -125,9 +129,11 @@ import { ASSETS } from '../data/assets';
   .nav__logo:hover { text-decoration: none; }
   .nav__logo-img { display: block; height: 24px; width: auto; }
   .nav__logo-img--dark { display: none; }
-  /* swap the wordmark when the header sits over a dark section */
-  .nav[data-over='dark'] .nav__logo-img--light { display: none; }
-  .nav[data-over='dark'] .nav__logo-img--dark { display: block; }
+  /* swap logo on dark header band or in dark mode */
+  .nav[data-over='dark'] .nav__logo-img--light,
+  :global(html.dark) .nav__logo-img--light { display: none; }
+  .nav[data-over='dark'] .nav__logo-img--dark,
+  :global(html.dark) .nav__logo-img--dark { display: block; }
 
   .nav__links {
     display: flex;
@@ -164,7 +170,7 @@ import { ASSETS } from '../data/assets';
     color: var(--popover-foreground);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
-    box-shadow: 0 18px 40px -24px var(--shadow-colour);
+    box-shadow: 0 18px 40px -24px oklch(0.153 0.006 107.1 / 0.4);
     padding: 0.5rem;
     display: grid;
     min-width: 17rem;
@@ -175,7 +181,7 @@ import { ASSETS } from '../data/assets';
     color: var(--ink);
     font-size: 0.93rem;
   }
-  /* menuAccent: bold (preset), filled hover state */
+  /* menuAccent: bold (preset) — filled hover state */
   .nav__dropdown a:hover {
     background: var(--primary);
     color: var(--primary-foreground);

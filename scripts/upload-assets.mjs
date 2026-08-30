@@ -1,5 +1,5 @@
 // Sync /public/assets to the R2 bucket. Runs on your machine with your R2
-// keys (never in the deployed site), same principle as hubsell's
+// keys (never in the deployed site) — same principle as hubsell's
 // migrate-assets script. Usage:
 //   cp .env.example .env  (fill R2_* values)
 //   node scripts/upload-assets.mjs [--dry-run]

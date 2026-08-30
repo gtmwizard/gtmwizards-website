@@ -5,7 +5,7 @@ date: 2026-07-10
 ---
 
 Traditional industries in DACH and Benelux are relationship markets. Buyers
-notice, instantly, when an email was written in English and run through a
+notice — instantly — when an email was written in English and run through a
 translator. The grammar may survive; the register does not.
 
 Natively written outreach changes three things:
@@ -18,5 +18,5 @@ Natively written outreach changes three things:
 3. **Replies you can actually read.** When prospects respond in their own
    language, someone on your side has to understand the nuance. We do.
 
-gtmWizards runs campaigns natively in German, Dutch, and English. One
+gtmWizards runs campaigns natively in German, Dutch, and English — one
 team, three markets, no translation layer.

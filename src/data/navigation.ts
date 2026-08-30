@@ -16,6 +16,7 @@ export const mainNav: (NavLink | NavGroup)[] = [
   { label: 'Solutions', links: solutionsNav },
   { label: 'About', href: '/about' },
   { label: 'Insights', href: '/insights' },
+  { label: 'Glossary', href: '/glossary' },
 ];
 
 export const footerNav: { heading: string; links: NavLink[] }[] = [
@@ -33,7 +34,8 @@ export const footerNav: { heading: string; links: NavLink[] }[] = [
     heading: 'Resources',
     links: [
       { label: 'Insights', href: '/insights' },
-      { label: 'hubsell, our platform', href: SITE.hubsellUrl },
+      { label: 'Glossary', href: '/glossary' },
+      { label: 'hubsell — our platform', href: SITE.hubsellUrl },
     ],
   },
   {

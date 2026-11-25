@@ -1,16 +1,16 @@
 ---
-// The signature section: the three-stage handover rail. This is the one
-// claim no competitor can copy, so it gets the most deliberate treatment.
-import { graduation } from '../data/home-content';
+// The signature section: the three-stage rail from signal to booked meeting.
+// Copy lives in donePath in src/data/home-content.ts.
+import { donePath } from '../data/home-content';
 import SectionRail from './SectionRail.astro';
 ---
 
-<section class="section section--dark" id="graduate" data-motion-rail>
-  <SectionRail label={graduation.label} />
+<section class="section section--dark" id="done-for-you" data-motion-rail>
+  <SectionRail label={donePath.label} />
   <div class="container">
-    <p class="eyebrow">{graduation.eyebrow}</p>
-    <h2>{graduation.heading}</h2>
-    <p class="lede">{graduation.sub}</p>
+    <p class="eyebrow">{donePath.eyebrow}</p>
+    <h2>{donePath.heading}</h2>
+    <p class="lede">{donePath.sub}</p>
 
     <ol class="rail">
       <svg
@@ -21,7 +21,7 @@ import SectionRail from './SectionRail.astro';
       >
         <path d="M0 1 H1000" data-motion-rail-line vector-effect="non-scaling-stroke" />
       </svg>
-      {graduation.stages.map((stage, i) => (
+      {donePath.stages.map((stage, i) => (
         <li class="rail__stage">
           <span class="rail__marker" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
           <div class="rail__card">
@@ -32,7 +32,7 @@ import SectionRail from './SectionRail.astro';
       ))}
     </ol>
 
-    <p class="rail__note">{graduation.note}</p>
+    <p class="rail__note">{donePath.note}</p>
   </div>
 </section>
 

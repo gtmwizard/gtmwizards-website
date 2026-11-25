@@ -22,7 +22,7 @@ export const OG_IMAGE = {
   width: 1200,
   height: 630,
   type: 'image/png',
-  alt: 'gtmWizards: outbound for hard-to-reach industries, on tech you can take over.',
+  alt: 'gtmWizards: outbound for hard-to-reach industries, done for you.',
 } as const;
 
 export const ASSETS = {

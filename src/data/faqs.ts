@@ -9,7 +9,7 @@ export type Faq = { q: string; a: string };
 export const faqs: Faq[] = [
   {
     q: 'Do I need to set anything up?',
-    a: 'No. We build lists, write sequences, warm sending infrastructure, and run all channels on hubsell. Your part is the strategy sessions in week one and approving the meetings we book.',
+    a: 'Almost nothing. We find the signals, build the lists, write and send the messages, make the calls and book the meetings, all on hubsell. Your part is the strategy session in week one, connecting a mailbox on your own domain (we walk you through it), and turning up to the meetings.',
   },
   {
     q: 'Who actually does the work, AI or humans?',
@@ -25,7 +25,7 @@ export const faqs: Faq[] = [
   },
   {
     q: 'How is this different from other outbound agencies?',
-    a: 'Two structural differences. Campaigns run on hubsell, a platform our co-founder built and runs, so the tech has a name and you can inspect it. And every contact enters a campaign because of a signal we can point to, not because a list was bought. The engagement is then designed so you can in-source it: your campaigns live in hubsell and can be handed to your team.',
+    a: 'Two structural differences. We are part of hubsell, so campaigns run on our own platform rather than a rented seat, and the tech has a name you can look up. And every contact enters a campaign because of a signal we can point to, not because a list was bought.',
   },
   {
     q: 'How fast will I see meetings?',
@@ -40,7 +40,7 @@ export const faqs: Faq[] = [
     a: 'Yes. hubsell syncs with the common CRMs, and qualified meetings arrive with full context either way.',
   },
   {
-    q: 'What happens to my data if we stop working together?',
-    a: 'It is yours. Lists, sequences, and results accumulate in your hubsell workspace from day one and go with you, whether you in-source, pause, or leave.',
+    q: 'What exactly do I get?',
+    a: 'Qualified meetings in your calendar. Each one comes with the signal that started it, the conversation so far and our qualification notes, plus a weekly report on what was sent, what came back and what we changed.',
   },
 ];

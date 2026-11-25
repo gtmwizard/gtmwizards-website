@@ -5,14 +5,15 @@ export const SITE = {
   name: 'gtmWizards',
   domain: 'gtmwizards.com',
   url: 'https://www.gtmwizards.com',
-  tagline: 'Outbound for hard-to-reach industries. On tech you can take over.',
+  tagline: 'Outbound for hard-to-reach industries, done for you.',
   description:
-    'gtmWizards runs signal-led outbound for traditional industries. Campaigns start from something that actually happened, send from your own domain, and are built so you can take them over. Done for you today, in-sourced by you whenever you are ready.',
+    'gtmWizards is the done-for-you outbound team of hubsell. We run signal-led outbound for traditional industries: every campaign starts from something that actually happened and sends from your own domain. Our team does the work, you get booked meetings.',
   // TODO: replace with the real booking link before launch.
   bookingUrl: 'https://cal.com/gtmwizards/strategy-call',
   contactEmail: 'hello@gtmwizards.com',
   linkedin: 'https://www.linkedin.com/company/gtmwizards',
-  // Sibling companies owned by the same founders, the provable-tech story.
+  // gtmWizards is hubsell's done-for-you service (same company, hubsell UG).
+  // Kadanco is named alongside it as the data side.
   hubsellUrl: 'https://www.hubsell.com',
   kadancoUrl: 'https://www.kadanco.com',
   // Languages the SERVICE delivers in, not languages the site is published in.

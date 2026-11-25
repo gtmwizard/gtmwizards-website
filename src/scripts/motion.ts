@@ -160,9 +160,9 @@ function revealSection(section: HTMLElement): void {
 }
 
 /* ------------------------------------------------------------------------
-   The graduation rail: the one place the library earns its keep.
+   The done-for-you rail: the one place the library earns its keep.
    The connector draws itself, and each marker springs in as the line
-   reaches it, so the motion says "we hand this over in three stages".
+   reaches it, so the motion says "from signal to meeting in three stages".
    ------------------------------------------------------------------------ */
 
 function railDraw(section: HTMLElement): void {

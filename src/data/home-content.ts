@@ -7,7 +7,7 @@ export const hero = {
   heading: 'Qualified meetings with buyers who ignore everyone else.',
   sub: `They ignore everyone else because nothing else has a reason to exist. We wait for a signal, a role opened, a stand booked at a trade fair, an event attended, then write one message in their language. Fewer messages, sent from your own domain.`,
   primaryCta: { label: 'Apply for a strategy call', href: '/book-a-call' },
-  secondaryCta: { label: 'How the handover works', href: '/solutions/platform-handover' },
+  secondaryCta: { label: 'What we do for you', href: '/solutions/done-for-you' },
 } as const;
 
 // The "datasheet" card next to the hero, a snapshot of a running campaign.
@@ -68,7 +68,7 @@ export const proofStrip = {
   items: [
     {
       title: 'hubsell',
-      text: 'Every campaign runs on hubsell, the outbound platform our co-founder built and runs. You can inspect it, demo it, and one day run it yourself.',
+      text: 'gtmWizards is the done-for-you team of hubsell, the outbound platform we build and run. Every campaign runs on it, so you can ask to see exactly what is being sent for you, and why.',
       href: SITE.hubsellUrl,
       linkLabel: 'See the platform',
     },
@@ -120,7 +120,7 @@ export const tools = {
     {
       name: 'hubsell',
       role: 'Outreach platform',
-      text: 'Campaigns, sequences, sending and CRM sync. Built and run by our co-founder Karan, which is why the handover at the end of an engagement is a transfer rather than a rebuild.',
+      text: 'Campaigns, sequences, sending and CRM sync. Our own product, built and run by the same company, so the people running your campaigns can change the tool when a campaign needs it.',
     },
     {
       name: 'Claude',
@@ -154,32 +154,35 @@ export const pillars = {
       text: 'No lookalike domains, no warm-up schedules, no sending infrastructure between you and the buyer. Volume stays low enough that your real domain does the sending, and replies land in a real inbox.',
     },
     {
-      title: 'No lock-in, by design',
-      text: 'Pilot first, then quarterly. Fair pricing, low commitment. And when you want to in-source, we hand you the platform instead of a goodbye.',
+      title: 'Nothing for you to run',
+      text: 'No tools to learn, no SDRs to hire, no dashboards to watch. Pilot first, then quarterly, and only if the meetings earn it.',
     },
   ],
 } as const;
 
-export const graduation = {
-  label: 'Handover',
-  eyebrow: 'The exit path',
-  heading: 'The agency you can graduate from',
-  sub: 'Every other agency is designed to keep you dependent. gtmWizards is designed to make itself optional. Your campaigns, sequences, and data live in hubsell, the platform our co-founder built and runs, so in-sourcing is a handover, not a rebuild.',
+// The signature dark band: what happens between a signal and a meeting, and
+// who does it. Three stages on the rail; the last one is the only part that
+// is the client's job, which is the whole offer in one picture.
+export const donePath = {
+  label: 'Done for you',
+  eyebrow: 'Done for you',
+  heading: 'Our team does the work. You take the meetings.',
+  sub: 'Everything between the signal and the booked meeting is our job: finding the companies, writing and sending the messages, making the calls, handling the replies and the objections. What reaches you is a meeting in your calendar.',
   stages: [
     {
-      label: 'Done for you',
-      text: 'We run everything: lists, messaging, sending, calling, replies, booking. You show up and close.',
+      label: 'We find them',
+      text: 'Signals watched in your category, the companies that matter kept, the right person at each one found and verified. Every contact has a reason to be there.',
     },
     {
-      label: 'Done with you',
-      text: 'Your team joins the workflow inside hubsell. We coach, you learn the playbooks on live campaigns.',
+      label: 'We reach and qualify them',
+      text: 'Email from your own domain, calls in the buyer\u2019s language, LinkedIn in between. Replies answered, objections handled, fit and timing checked.',
     },
     {
-      label: 'Done by you',
-      text: 'You take over the hubsell account, campaigns, sequences, data, and playbooks included. We step back, or stay on call.',
+      label: 'You take the meeting',
+      text: 'A qualified meeting lands in your calendar, with the signal that started it, the conversation so far and our qualification notes attached.',
     },
   ],
-  note: 'No other outbound agency can offer this, because no other agency has a co-founder who can sign the handover.',
+  note: 'Your part: one strategy session in week one, and turning up to the meetings.',
 } as const;
 
 export const channels = {
@@ -220,7 +223,7 @@ export const timeline = {
   label: 'Ramp up',
   eyebrow: 'Ramp-up',
   heading: 'Live within the first week',
-  sub: 'Pilot first. Then quarterly, if the numbers earn it. No long-term contracts, we would rather make a name than make you a hostage.',
+  sub: 'Pilot first. Then quarterly, if the numbers earn it. No long-term contracts: we would rather earn the renewal than lock you in.',
   steps: [
     {
       phase: 'Days 1 to 2',
@@ -247,7 +250,7 @@ export const timeline = {
 
 export const homeCta = {
   label: 'Next step',
-  heading: 'Start with a pilot. Keep the platform.',
+  heading: 'Start with a pilot. Judge us on meetings.',
   sub: 'Apply for a strategy call. If we don\u2019t believe we can book you meetings in your market and language, we will tell you on that call.',
   primaryCta: { label: 'Apply for a strategy call', href: '/book-a-call' },
   secondaryCta: { label: 'Or write to us', href: '/contact' },

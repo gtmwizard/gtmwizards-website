@@ -6,13 +6,13 @@ const org = {
   name: SITE.name,
   url: SITE.url,
   description: SITE.description,
-  // sameAs is for other URLs that refer to THIS entity. Kadanco is the parent
-  // company and hubsell is a separate company, so neither belongs there.
+  // sameAs is for other URLs that refer to THIS entity. gtmWizards is a
+  // service of hubsell UG, so hubsell is the parent, not a sameAs.
   sameAs: [SITE.linkedin],
   parentOrganization: {
     '@type': 'Organization',
-    name: 'Kadanco UG (haftungsbeschraenkt)',
-    url: SITE.kadancoUrl,
+    name: 'hubsell UG (haftungsbeschr\u00e4nkt)',
+    url: SITE.hubsellUrl,
   },
   knowsLanguage: ['en', 'de'],
 };

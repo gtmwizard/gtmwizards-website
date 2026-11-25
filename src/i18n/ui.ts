@@ -57,10 +57,6 @@ export const routeMap: Record<string, Partial<Record<Locale, string>>> = {
     de: '/loesungen/komplett-service',
     nl: '/oplossingen/volledig-uitbesteed',
   },
-  '/solutions/platform-handover': {
-    de: '/loesungen/plattform-uebernahme',
-    nl: '/oplossingen/platform-overdracht',
-  },
   '/about': { de: '/ueber-uns', nl: '/over-ons' },
   '/book-a-call': { de: '/termin-buchen', nl: '/afspraak-boeken' },
   '/contact': { de: '/kontakt', nl: '/contact' },

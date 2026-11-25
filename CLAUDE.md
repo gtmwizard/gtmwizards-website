@@ -3,64 +3,22 @@
 Instructions for Claude when working on gtmwizards-website. Read this
 before making changes or delivering builds.
 
-## Delivery format
+## How we work (since 2026-11-25)
 
-Every delivery is a **tarball** (`.tar.gz`), never a zip.
+Claude works on this repo directly from Claude Code, started in the hubsell
+workspace folder (`~/Coding/hubsell`). The tarball drops from claude.ai chats
+are retired. The plan for this site is
+`.claude/skills/plans/gtmwizards-launch.md` (Jira epic HUB-792).
 
-### Tarball naming convention
-
-```
-gtmwizards-website-<YYYYMMDD>-<HHMM>.tar.gz
-```
-
-- `<YYYYMMDD>-<HHMM>`, date and time of the drop, Germany time zone.
-- Example: `gtmwizards-website-20260822-1050.tar.gz`
-
-The unique name matters: the file lands in `~/Downloads`, and macOS
-renames duplicate filenames to `file (1).tar.gz`, which silently breaks
-copy-pasted commands. Never reuse a tarball name.
-
-### Tarball contents
-
-- One top-level folder `gtmwizards-website/`.
-- Exclude: `node_modules/`, `dist/`, `.astro/`, `.env`.
-- Must build cleanly (`npm run build`) before delivery.
-
-## How to give copy-pastable commands
-
-Assumptions that always hold:
-- The tarball is in `~/Downloads`.
-- The terminal is already `cd`'d into the project root.
-- The machine is a Mac (zsh).
-
-Rules:
-1. One single fenced `bash` block, everything pastable in one go.
-2. First line extracts with the **exact versioned filename**:
-   `tar -xzf ~/Downloads/gtmwizards-website-<YYYYMMDD>-<HHMM>.tar.gz --strip-components=1`
-3. Include `npm install` **only** when dependencies changed, and say so.
-4. Last line is `npm run dev` (or `npm run build` if that is the point).
-5. No `cd` commands, no `sudo`, no `git` unless explicitly relevant.
-6. After the block, at most 1 or 2 sentences on what to verify.
-
-## Git workflow
-
-The repo lives at https://github.com/gtmwizard/gtmwizards-website and
-auto-deploys to Cloudflare Pages on push to `main`.
-
-After extracting each tarball, the update ritual is:
-
-```
-git add -A
-git commit -m "Drop <YYYYMMDD>-<HHMM> from Claude"
-git push
-```
-
-Rules for Claude:
-- Remind about the commit step when delivering a drop, but keep the
-  extract commands and the git commands in SEPARATE blocks (extraction
-  must stay pastable on its own).
-- Never include `git push --force` or history rewrites in instructions.
-- Assume pushes to `main` deploy to production immediately.
+- The repo is https://github.com/gtmwizard/gtmwizards-website. Every push to
+  `main` deploys production on Cloudflare Pages; other branches get preview
+  deployments.
+- Work on a branch named after the Jira ticket, e.g.
+  `feature/HUB-793-done-for-you-copy`. Commit locally; ask Karan before
+  pushing. Karan alone merges and deploys this site.
+- Before every commit: `npm run check:dashes` and `npm run build` must pass.
+- Never start the dev server; give Karan the command (`npm run dev`).
+- Never `git push --force` or rewrite history.
 
 ## Project conventions
 

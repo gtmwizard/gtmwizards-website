@@ -9,7 +9,6 @@ export const solutionsNav: NavLink[] = [
   { label: 'Cold calling', href: '/solutions/cold-calling' },
   { label: 'Deliverability', href: '/solutions/deliverability' },
   { label: 'Done for you', href: '/solutions/done-for-you' },
-  { label: 'Platform handover', href: '/solutions/platform-handover' },
 ];
 
 export const mainNav: (NavLink | NavGroup)[] = [

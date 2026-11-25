@@ -33,8 +33,8 @@ export const solutions: Solution[] = [
         text: 'Every meeting is checked against your criteria: company fit, decision authority, and timing. Objections are handled in the conversation by our senior team. You approve which meetings land on your calendar.',
       },
       {
-        title: 'Your data stays yours',
-        text: 'Lists and enrichment live in your hubsell workspace from day one. If you ever in-source, the data comes with you, it was never hostage material.',
+        title: 'The reason travels with the meeting',
+        text: 'Every meeting arrives with the signal that put the company on the list, the conversation so far and our qualification notes. You walk in knowing why they said yes.',
       },
     ],
   },
@@ -129,9 +129,13 @@ export const solutions: Solution[] = [
       'We run your entire outbound end to end: lists, messaging, sending, calling, replies, and booking. You show up and close.',
     hero: {
       heading: 'Everything handled. Nothing hidden.',
-      sub: 'No dashboards to babysit, no tools to learn, no one to hire. We take the whole prospecting burden. Unlike every other agency, we do it on a platform you can see, audit, and eventually take over.',
+      sub: 'No dashboards to babysit, no tools to learn, no one to hire. Our team takes the whole prospecting job, from the first signal to the booked meeting. We run it on hubsell, our own platform, so nothing is rented and nothing is hidden.',
     },
     sections: [
+      {
+        title: 'What you get: meetings in your calendar',
+        text: 'Qualified meetings with decision-makers who fit your ICP, booked into your calendar with the full context. Not a list to work through, not replies to chase.',
+      },
       {
         title: 'Live within the first week',
         text: 'Strategy on days 1 to 2, buildout on days 3 to 5, launch from day 5. Pilots are designed to show real signal inside the first weeks, not to pad a retainer.',
@@ -143,32 +147,6 @@ export const solutions: Solution[] = [
       {
         title: 'Honest reporting',
         text: 'Weekly updates written by the operators running your campaigns. Real reply analysis and A/B testing, no \u201cAI agents learning your business\u201d theatre.',
-      },
-    ],
-  },
-  {
-    slug: 'platform-handover',
-    navLabel: 'Platform handover',
-    title: 'Platform handover',
-    seoTitle: 'In-source your outbound: the platform handover',
-    description:
-      'The reason gtmWizards is the agency you can graduate from: your campaigns run on hubsell, and hubsell can become yours.',
-    hero: {
-      heading: 'The agency you can graduate from',
-      sub: 'The dirty secret of outbound agencies is dependency: the tooling, data, and playbooks are theirs, so leaving means starting over. gtmWizards is built the other way around. Your campaigns live in hubsell (the platform our founders own), so in-sourcing is a handover, not a rebuild.',
-    },
-    sections: [
-      {
-        title: 'Done for you → done with you → done by you',
-        text: 'Start fully managed. When you are ready, your team joins the workflow inside hubsell and learns the playbooks on live campaigns. Finally, you take over the account, campaigns, sequences, data, and processes included.',
-      },
-      {
-        title: 'Nothing held hostage',
-        text: 'Lists, messaging, results history, all of it accumulates in your workspace from day one. The longer we work together, the more you own, not the more you owe.',
-      },
-      {
-        title: 'Why nobody else offers this',
-        text: 'Agencies rent their tools, so they cannot hand them over. We own ours. That is the structural difference between gtmWizards and every \u201coutbound partner\u201d with a proprietary black box.',
       },
     ],
   },

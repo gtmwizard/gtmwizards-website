@@ -1,16 +1,18 @@
 # Handoff: gtmwizards.com
 
 Everything a developer (or future Claude session) needs to take over this
-project. Last updated: 2026-08-22.
+project. Last updated: 2026-11-25.
 
 ## What this is
 
-Static marketing site for gtmWizards, a done-for-you outbound agency for
-traditional industries (DACH / Benelux / international), owned by the
-founders of hubsell.com (outbound platform) and kadanco.com (B2B data).
-Core positioning: provable tech and data, native-language outbound
-(DE/NL/EN), senior operators, no lock-in, "the agency you can graduate
-from" (clients can in-source onto hubsell).
+Static marketing site for gtmWizards, the done-for-you outbound service of
+hubsell (same company, hubsell UG; Kadanco is named alongside it). Our team
+runs everything, from the signal to the booked meeting, and the customer
+gets booked meetings. Core positioning: signal-led outbound for traditional
+industries, sent from the client's own domain, senior operators, German as
+an add-on, campaigns run on hubsell (named tech, not a rented black box).
+The "agency you can graduate from" handover story was dropped on
+2026-11-25.
 
 Architecture intentionally mirrors the `hubsell-website` repo so both
 sites stay maintainable by the same people.
@@ -130,8 +132,6 @@ Local R2 upload creds go in `.env` (see `.env.example`), used only by
 - [ ] OG image: a working 1200 x 630 version is in `public/assets/og-image.png`
       with its source SVG beside it. Replace with a final design if you want.
 - [ ] Set Pages env vars; test contact form end to end
-- [ ] Verify the "handover" claim wording against actual contracts
-      (campaigns/data live in client's hubsell workspace from day one)
 - [ ] First testimonials into `src/data/testimonials.ts` when available
 
 ## Motion
@@ -256,6 +256,14 @@ reader who does not know why they are there:
 
 ## Decisions log
 
+- Done for you (2026-11-25, Karan): gtmWizards is hubsell's done-for-you
+  service, the customer gets booked meetings. The graduation / handover
+  story is dropped: the graduation band became the done-for-you rail
+  (`DoneForYouPath.astro`, `donePath` in `home-content.ts`: we find them,
+  we reach and qualify them, you take the meeting),
+  `/solutions/platform-handover` and the insight post on agency lock-in
+  were removed and redirect (`public/_redirects`). JSON-LD parent is now
+  hubsell UG. HUB-793.
 - Continuum (2026-08-26): a thread down the page plus sparks crossing the
   section seams, so the bands stop reading as separate slabs. Chosen over
   overlapping cards, which would have cost far more per instance.

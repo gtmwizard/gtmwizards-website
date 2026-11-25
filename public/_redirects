@@ -1,2 +1,8 @@
 # Add redirects here as the sitemap evolves, e.g.:
 # /old-path /new-path 301
+
+# 2026-11-25: the platform handover offer was dropped (HUB-793).
+/solutions/platform-handover /solutions/done-for-you 301
+/solutions/platform-handover/ /solutions/done-for-you/ 301
+/insights/why-outbound-agencies-fear-your-independence /insights/ 301
+/insights/why-outbound-agencies-fear-your-independence/ /insights/ 301
